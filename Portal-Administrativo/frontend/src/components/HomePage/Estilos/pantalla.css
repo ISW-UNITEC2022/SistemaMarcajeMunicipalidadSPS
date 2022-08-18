@@ -1,0 +1,58 @@
+.title {
+    /* Bienvenido */
+    position: absolute;
+    width: 238px;
+    height: 49px;
+    left: 599px;
+    top: 510px;
+
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 49px;
+
+    /* identical to box height */
+    color: #078C03;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.instruc {
+    /* Inicie sesión para ingresar al portal. */
+    position: absolute;
+    width: 331px;
+    height: 27px;
+    left: 552px;
+    top: 573px;
+
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 27px;
+
+    color: #202020;
+}
+
+.rect_centro {
+    /* Rectangle 26 */
+    position: absolute;
+    width: 515px;
+    height: 578px;
+    left: 461px;
+    top: 223px;
+
+    background: #F2F2F2;
+    border-radius: 10px;
+}
+
+.fondo {
+    /* Fondo */
+    position: absolute;
+    width: 1440px;
+    height: 1024px;
+    left: calc(50% - 1440px/2);
+    top: calc(50% - 1024px/2);
+
+    background: #02732A;
+}

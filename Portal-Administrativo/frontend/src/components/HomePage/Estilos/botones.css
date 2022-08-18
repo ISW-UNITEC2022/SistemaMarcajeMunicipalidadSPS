@@ -1,0 +1,47 @@
+.log_in{
+    /* Rectangle 29 */
+    position: absolute;
+    width: 388px;
+    height: 80px;
+    left: 525px;
+    top: 651px;
+
+    background: #02732A;
+    border-radius: 10px;
+
+
+    /* Iniciar Sesion */
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 41px;
+
+    /* identical to box height */
+    text-align: center;
+    color: #F2F2F2;
+}
+
+.log_out{
+    /* Rectangle 29 */
+    position: absolute;
+    width: 388px;
+    height: 80px;
+    left: 525px;
+    top: 651px;
+
+    background: #BF0404;
+    border-radius: 10px;
+
+
+    /* Iniciar Sesion */
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 41px;
+
+    /* identical to box height */
+    text-align: center;
+    color: #F2F2F2;
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import LoginButton from './components/LoginButton'
-import LogoutButton from './components/LogoutButton'
+import LoginButton from './components/HomePage/Botones/LoginButton'
+import LogoutButton from './components/HomePage/Botones/LogoutButton'
 import Profile from './components/Profile'
 import { useAuth0 } from '@auth0/auth0-react'
 import './components/styles.css'
@@ -28,8 +28,9 @@ function App() {
         isAuthenticated ? <LogoutButton></LogoutButton> : <LoginButton></LoginButton>
       }
 
-      <br></br>
       <Profile></Profile>
+
+      
     </div>
   );
 }
