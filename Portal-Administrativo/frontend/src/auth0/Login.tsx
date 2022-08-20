@@ -1,6 +1,6 @@
 import React from 'react';
-import App from '../App';
 import { Auth0Provider } from '@auth0/auth0-react';
+import HomePage from "../components/HomePage/HomePage"
 
 function Login () {
     const domain = process.env.REACT_APP_AUTH_DOMAIN!;
@@ -15,7 +15,7 @@ function Login () {
                 redirectUri = { window.location.origin }
             >
 
-                <App />
+                <HomePage />
 
             </Auth0Provider>
 
