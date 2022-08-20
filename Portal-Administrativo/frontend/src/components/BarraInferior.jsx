@@ -1,7 +1,7 @@
 import React from "react";
 import Box from '@mui/material/Box';
 
-function BarraInferior(props) {
+function BarraInferior() {
 	return (
 		<div>
 			<Box
