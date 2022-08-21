@@ -13,7 +13,7 @@ function App() {
   const onButtonClickHandler = () => {
     window.alert('Cerrando Sesión')
   };
-  
+
   return (
     <div>
       <div className='BackApp'>
