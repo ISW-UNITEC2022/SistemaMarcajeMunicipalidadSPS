@@ -8,6 +8,9 @@ import BarraInferior from './components/BarraInferior';
 import HomeIcon from '@mui/icons-material/Home';
 import CajaTitulo from './components/CajaTitulo';
 import Grid from '@mui/material/Grid';
+import HomePage from './components/HomePage/HomePage';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 
 function App() {
   const onButtonClickHandler = () => {
@@ -15,23 +18,11 @@ function App() {
   };
 
   return (
-    <div>
-      <div className='BackApp'>
-          <BarraSuperior></BarraSuperior>
-          <CajaTitulo input={"Información Empleados"}/>
-      </div>
-      <div className="App">
-        <BotonA>Cerrar Sesión</BotonA>
-        <BotonV>
-          Configurar Datos de Perfil
-        </BotonV>
-        <BotonHome>
-          <HomeIcon style={{ fontSize: 40 }}/>
-        </BotonHome>
-      </div>
-      <div className='BackApp'>
-          <BarraInferior></BarraInferior>
-      </div>
+    <div className="App">
+      <BrowserRouter>
+      <Routes></Routes>
+      </BrowserRouter>
+      <Route path="/" element={<HomePage />}></Route>
     </div>
   );
 }
