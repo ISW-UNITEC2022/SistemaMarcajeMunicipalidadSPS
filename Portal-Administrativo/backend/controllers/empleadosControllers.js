@@ -1,5 +1,6 @@
 import { db } from '../db/db.js'
 import { CustomError } from '../utils/CustomError.js'
+import bcrypt from 'bcrypt'
 
 //Ruta /api/empleados GET
 //Descripcion Devuelve la informacion de todos los empleados
@@ -30,6 +31,118 @@ export const obtenerEmpleados = async (_req, res, next) => {
       throw new CustomError('No hay ningun empleado', 404)
     }
     res.json(empleados)
+  } catch (error) {
+    next(error)
+  }
+}
+
+//Ruta /api/empleados POST
+//Descripcion crea un nuevo empleado
+/*
+Body
+{ idempleado: string, 
+  idsupervisor: string,
+  nombre: string,
+  apellido: string,
+  correo: string,
+  password: string,
+  distrito: int | null
+  departamento: string
+}
+*/
+export const crearEmpleado = async (req, res, next) => {
+  try {
+    const {
+      idempleado,
+      idsupervisor,
+      nombre,
+      apellido,
+      correo,
+      password,
+      distrito,
+      departamento,
+    } = req.body
+    let salt = bcrypt.genSaltSync()
+    let hashpassword = bcrypt.hashSync(password, salt)
+    let [user] = await db('empleados').insert(
+      {
+        idempleado,
+        idsupervisor,
+        nombre,
+        apellido,
+        correo,
+        hashpassword,
+        distrito,
+        departamento,
+      },
+      [
+        'idempleado',
+        'idsupervisor',
+        'nombre',
+        'apellido',
+        'correo',
+        'distrito',
+        'departamento',
+      ]
+    )
+    if (user) {
+      let [idrol] = await db('rolxempleado').insert(
+        {
+          idempleado: user.idempleado,
+          idrol: 1, // Rol de empleado por default
+        },
+        ['idrol']
+      )
+      if (!idrol) {
+        throw new CustomError('No se pudo asignar el rol al empleado')
+      } else user.rol = 'Empleado'
+    }
+    res.json(user)
+  } catch (error) {
+    console.log(error)
+    if (error.constraint === 'correo_unico')
+      next(new CustomError('El correo ya esta en uso'))
+    else if (error.constraint === 'empleados_pkey')
+      next(new CustomError('La identidad del empleado ya esta en uso'))
+    else if (error.constraint == 'empleados_departamento_check')
+      next(new CustomError('El departamento no es valido'))
+    else if (error.constraint == 'empleados_distrito_check')
+      next(new CustomError('El distrito no es valido'))
+
+    next(error)
+  }
+}
+
+//Ruta /api/empleados/auth POST
+//Descripcion valida usuario y contraseña
+//Body { correo: string, password: string }
+export const authEmpleado = async (req, res, next) => {
+  try {
+    const { correo, password } = req.body
+    let [user] = await db
+      .select('hashpassword')
+      .from('empleados')
+      .where('correo', '=', correo)
+    let success = await bcrypt.compare(password, user.hashpassword)
+    let userInfo
+    if (success) {
+      userInfo = await db
+        .select(
+          'idempleado',
+          'idsupervisor',
+          'nombre',
+          'apellido',
+          'correo',
+          'departamento',
+          'distrito',
+          'status'
+        )
+        .from('empleados')
+        .where('correo', correo)
+    } else {
+      throw new CustomError('Correo o contraseña incorrectos')
+    }
+    res.json(userInfo[0])
   } catch (error) {
     next(error)
   }
