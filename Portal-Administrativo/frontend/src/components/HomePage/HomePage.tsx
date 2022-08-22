@@ -6,7 +6,7 @@ import LogoutButton from './Botones/LogoutButton'
 import { useAuth0 } from '@auth0/auth0-react'
 
 
-function App() {
+function HomePage() {
     const { isAuthenticated, isLoading } = useAuth0()
 
     if (isLoading) {
@@ -34,7 +34,7 @@ function App() {
 
                     isAuthenticated ?
                         <div className='instruc'>
-                            Cierre sesión para cambiae de usuario.
+                            Cierre sesión para cambiar de usuario.
                         </div>
 
                         :
@@ -53,4 +53,4 @@ function App() {
     );
 }
 
-export default App;
+export default HomePage;
