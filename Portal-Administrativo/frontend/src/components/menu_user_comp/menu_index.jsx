@@ -8,7 +8,6 @@ import Logo from "./logo.png";
 export default function TaskList(){
 
     const [open, setOpen]=useState(false);
-  
     const abrir=()=>{
       setOpen(!open);
       if(open2==true)
@@ -16,7 +15,6 @@ export default function TaskList(){
     }
 
     const [open2, setOpen2]=useState(false);
-  
     const abrir2=()=>{
       setOpen2(!open2);
       if(open==true)
@@ -25,11 +23,10 @@ export default function TaskList(){
 
   return(
     <div className='menu_user'>
-  
     <img src={Logo} className='logo'/>
 
     <div className='caja'>
-        <Button onClick={abrir} variant="contained" 
+        <Button onClick={abrir} variant="contained"
         style={{
           backgroundColor: '#F2B705',
           width:300,

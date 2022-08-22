@@ -9,6 +9,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import CajaTitulo from './components/CajaTitulo';
 import Grid from '@mui/material/Grid';
 import HomePage from './components/HomePage/HomePage';
+import TaskList from './components/menu_user_comp/menu_index';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
@@ -20,9 +21,14 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Routes></Routes>
+      <Routes>
+      <Route path="/" element={<HomePage />}>
+      **<Route index element={<HomePage />}></Route>*
+      <Route path="menu_principal" element={<TaskList />}/>
+     {/*<Route path="crear-empleado" element={<Componente Crear Empleado />}></Route>  --->En esta ruta poner la pantalla de crear empleado*/ }
+      </Route>
+      </Routes>
       </BrowserRouter>
-      <Route path="/" element={<HomePage />}></Route>
     </div>
   );
 }
