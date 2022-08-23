@@ -44,7 +44,7 @@ const SplitButton = ({input}) => {
 
   return (
     <React.Fragment>
-      <ButtonGroup 
+      <ButtonGroup
         sx = {{
         backgroundColor: '#078c03',
         borderTopLeftRadius: 0,

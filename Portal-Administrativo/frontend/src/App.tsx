@@ -25,7 +25,7 @@ function App() {
       <Route path="/" element={<HomePage />}>
       **<Route index element={<HomePage />}></Route>*
       <Route path="menu_principal" element={<TaskList />}/>
-     {/*<Route path="crear-empleado" element={<Componente Crear Empleado />}></Route>  --->En esta ruta poner la pantalla de crear empleado*/ }
+     {/*<Route path="crear-empleado" element={<Componente Crear Empleado />}></Route>  --->En esta ruta poner la pantalla de crear empleado*/}
       </Route>
       </Routes>
       </BrowserRouter>
