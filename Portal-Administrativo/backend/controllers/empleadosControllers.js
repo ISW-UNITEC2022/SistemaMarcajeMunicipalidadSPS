@@ -1,6 +1,7 @@
 import { db } from '../db/db.js'
 import { CustomError } from '../utils/CustomError.js'
 import bcrypt from 'bcrypt'
+import { dateToTimeString } from '../utils/convertTime.js'
 
 //Ruta /api/empleados GET
 //Descripcion Devuelve la informacion de todos los empleados
@@ -49,6 +50,8 @@ Body
   password: string,
   distrito: int | null
   departamento: string
+  horaentrada:
+  horasalida: 
 }
 */
 export const crearEmpleado = async (req, res, next) => {
@@ -65,6 +68,8 @@ export const crearEmpleado = async (req, res, next) => {
     } = req.body
     let salt = bcrypt.genSaltSync()
     let hashpassword = bcrypt.hashSync(password, salt)
+    let entrada = dateToTimeString(new Date().setHours(8, 30, 0, 0))
+    let salida = dateToTimeString(new Date().setHours(17, 30, 0, 0))
     let [user] = await db('empleados').insert(
       {
         idempleado,
@@ -75,6 +80,8 @@ export const crearEmpleado = async (req, res, next) => {
         hashpassword,
         distrito,
         departamento,
+        horaentrada: entrada,
+        horasalida: salida,
       },
       [
         'idempleado',
@@ -84,6 +91,8 @@ export const crearEmpleado = async (req, res, next) => {
         'correo',
         'distrito',
         'departamento',
+        'horaentrada',
+        'horasalida',
       ]
     )
     if (user) {
@@ -124,6 +133,9 @@ export const authEmpleado = async (req, res, next) => {
       .select('hashpassword')
       .from('empleados')
       .where('correo', '=', correo)
+    if (!user) {
+      throw new CustomError('Correo o contraseña incorrectos', 401)
+    }
     let success = await bcrypt.compare(password, user.hashpassword)
     let userInfo
     if (success) {
@@ -136,12 +148,14 @@ export const authEmpleado = async (req, res, next) => {
           'correo',
           'departamento',
           'distrito',
-          'status'
+          'status',
+          'horaentrada',
+          'horasalida'
         )
         .from('empleados')
         .where('correo', correo)
     } else {
-      throw new CustomError('Correo o contraseña incorrectos')
+      throw new CustomError('Correo o contraseña incorrectos', 401)
     }
     res.json(userInfo[0])
   } catch (error) {

@@ -11,9 +11,18 @@ export const notFound = (req, res, next) => {
 export const errorHandler = (err, _req, res, _next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode
   if (!(err instanceof CustomError)) {
+    let info = {
+      error: err.message,
+      stack: err.stack,
+    }
     err = new CustomError(undefined, statusCode)
+    if (process.env.ENVIRONMENT === 'development') {
+      err.info = info
+    }
+    res.status(statusCode)
+  } else {
+    res.status(err.status)
   }
-  res.status(statusCode)
   res.json({
     message: err.message,
     status: err.status,
