@@ -1,65 +1,68 @@
-  
-  .sub{
-    height: auto;
-    width: auto;
-    display: flex;
-    align-items: left;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-size: 16px;
-    padding-top: 10px;
-  }
-  
-  .sub:hover{
-    color:#AB5302;
-    text-decoration: underline;
-  }
-  
-  a{
-    color:#3B2C01;
-    text-decoration: none;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&display=swap');
 
-  .menu_user{
-    background-color: #F2F2F2;
-    text-align: center;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+.sub {
+  height: auto;
+  width: auto;
+  display: flex;
+  align-items: left;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-size: 16px;
+  padding-top: 10px;
 }
 
-.caja_R{
-    display: flex;
-    position: absolute;
-    transition: 0.3s all;
-    bottom:270px;
+.sub:hover {
+  color: #AB5302;
+  text-decoration: underline;
 }
 
-.caja{
+a {
+  color: #3B2C01;
+  text-decoration: none;
+}
+
+.menu_user {
+  background-color: #F2F2F2;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  margin-bottom: -80px;
+}
+
+.caja_R {
+  display: flex;
+  position: absolute;
+  transition: 0.3s all;
+  bottom: 270px;
+}
+
+.caja {
   display: flex;
   position: absolute;
 }
 
-.caja_R2{
-    display: flex;
-    position: absolute;
-    transition: 0.3s all;
-    bottom:140px;
+.caja_R2 {
+  display: flex;
+  position: absolute;
+  transition: 0.3s all;
+  bottom: 140px;
 }
 
-.down{
+.down {
   color: #FFEF05;
-  font-size:30px;
+  font-size: 30px;
   display: flex;
   position: absolute;
   top: 0px;
-  right:15px;
+  right: 15px;
 }
 
-.point{
+.point {
   font-size: 10px;
   display: flex;
   flex-direction: column;
@@ -70,9 +73,25 @@
   padding-top: 7px;
 }
 
-.logo{
+.logo {
   height: 200px;
   width: auto;
-  position: absolute;
-  top: 100px;
+  top: 200px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.BackApp {
+  background-color: #f2f2f2;
+}
+
+.SupApp {
+  display: flex;
+  height: 100%;
+}
+
+.PiedePagina {
+  background-color: #f2f2f2;
+  align-items: flex-end;
 }

@@ -18,7 +18,7 @@ function FormularioEmpleado() {
 				<BarraSuperior></BarraSuperior>
 				<div className='SupApp'>
 					<div style={{ flex: 3 }}>
-						<MenuUsuario input={"Andrea Rodriguez"}></MenuUsuario>
+						<MenuUsuario></MenuUsuario>
 					</div>
 					<div style={{ flex: 3 }}>
 						<CajaTitulo input={"Crear Empleados"} />

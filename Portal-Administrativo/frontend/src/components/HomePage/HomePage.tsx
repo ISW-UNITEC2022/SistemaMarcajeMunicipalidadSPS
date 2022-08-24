@@ -4,17 +4,20 @@ import './Estilos/pantalla.css';
 import LoginButton from './Botones/LoginButton'
 import LogoutButton from './Botones/LogoutButton'
 import { useAuth0 } from '@auth0/auth0-react'
-
+import { Auth0Provider } from '@auth0/auth0-react';
+import { Link, Navigate, Outlet } from "react-router-dom";
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 function HomePage() {
-    const { isAuthenticated, isLoading } = useAuth0()
+    const { isAuthenticated, isLoading } = useAuth0();
 
-    if (isLoading) {
-        return (
-            <h1>
-                Estamos cargando los datos de tu perfil a nuestra aplicacion.
-            </h1>
-        )
+    const navigate = useNavigate();
+    const navigateToMenuPrincipal = () => {
+        navigate('/menu_principal');
+    };
+
+    if (isAuthenticated) {
+        navigateToMenuPrincipal();
     }
 
     return (
@@ -32,11 +35,12 @@ function HomePage() {
 
                 {
 
-                    isAuthenticated ?
+                    isAuthenticated
+                        ?
                         <div className='instruc'>
-                            Cierre sesión para cambiar de usuario.
-                        </div>
+                            Cierre sesion para cambiar de usuario.
 
+                        </div>
                         :
                         <div className='instruc'>
                             Inicie sesión para ingresar al portal.
@@ -44,10 +48,7 @@ function HomePage() {
 
                 }
 
-                {
-                    isAuthenticated ? <LogoutButton></LogoutButton> : <LoginButton></LoginButton>
-                }
-
+                {isAuthenticated ? <LogoutButton /> : <LoginButton />}
             </div>
         </div>
     );

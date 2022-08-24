@@ -12,13 +12,16 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import { useState } from 'react';
 import { useRef } from 'react';
+import { useAuth0 } from '@auth0/auth0-react'
+import { useNavigate } from 'react-router-dom';
 
-const options = [<div><SettingsIcon/> Configurar Perfil</div>, <div><LogoutIcon/> Cerrar Sesión</div>];
-
-const SplitButton = ({input}) => {
+const SplitButton = () => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const { isAuthenticated, logout, user} = useAuth0();
+  
+  const options = [<div><SettingsIcon/> Configurar Perfil</div>, <div><LogoutIcon/> Cerrar Sesión</div>];
 
   const handleClick = () => {
     console.info(`You clicked ${options[selectedIndex]}`);
@@ -40,6 +43,18 @@ const SplitButton = ({input}) => {
     }
 
     setOpen(false);
+  };
+
+  const navigate = useNavigate();
+  const navigateToHomeScreen = () => {
+      navigate('/');
+  };
+
+  const log_out = () => {
+    logout();
+    if (!isAuthenticated ) {
+      navigateToHomeScreen();
+    }
   };
 
   return (
@@ -70,7 +85,7 @@ const SplitButton = ({input}) => {
             },
           }}
           onClick={handleToggle}
-        >{input}
+        >{"Andrea Aguirre"}
           <ExpandMoreIcon sx={{fontSize: 32,}}></ExpandMoreIcon>
         </Button>
       </ButtonGroup>
