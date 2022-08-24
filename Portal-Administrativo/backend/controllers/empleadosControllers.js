@@ -32,6 +32,7 @@ export const obtenerEmpleados = async (_req, res, next) => {
     }
     res.json(empleados)
   } catch (error) {
+    console.log(error);
     next(error)
   }
 }
@@ -40,7 +41,7 @@ export const obtenerEmpleados = async (_req, res, next) => {
 //Descripcion crea un nuevo empleado
 /*
 Body
-{ idempleado: string, 
+{ idempleado: string,
   idsupervisor: string,
   nombre: string,
   apellido: string,
