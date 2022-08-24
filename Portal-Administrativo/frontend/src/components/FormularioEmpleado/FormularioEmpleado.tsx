@@ -67,7 +67,7 @@ function FormularioEmpleado() {
 						<TextBox input={"Departamento"} width={"61ch"}></TextBox>
 					</div>
 					<div className='aaa'>
-						<BotonV input={"Registrar"} width={"47.4ch"}></BotonV>
+						<BotonV input={"Registrar"} width={"47.4ch"} type={""}></BotonV>
 					</div>
 				</div>
 				<div className='PiedePagina'>

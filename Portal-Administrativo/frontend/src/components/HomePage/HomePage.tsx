@@ -4,21 +4,10 @@ import './Estilos/pantalla.css';
 import LoginButton from './Botones/LoginButton'
 import LogoutButton from './Botones/LogoutButton'
 import { useAuth0 } from '@auth0/auth0-react'
-import { Auth0Provider } from '@auth0/auth0-react';
-import { Link, Navigate, Outlet } from "react-router-dom";
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Link, Navigate, Outlet } from 'react-router-dom';
 
 function HomePage() {
     const { isAuthenticated, isLoading } = useAuth0();
-
-    const navigate = useNavigate();
-    const navigateToMenuPrincipal = () => {
-        navigate('/menu_principal');
-    };
-
-    if (isAuthenticated) {
-        navigateToMenuPrincipal();
-    }
 
     return (
         <div className="fondo">

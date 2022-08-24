@@ -3,21 +3,16 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import BotonV from './BotonV';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import SettingsIcon from '@mui/icons-material/Settings';
-import LogoutIcon from '@mui/icons-material/Logout';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
-import MenuItem from '@mui/material/MenuItem';
-import MenuList from '@mui/material/MenuList';
 import { useState } from 'react';
 import { useRef } from 'react';
+import LogoutButton from './HomePage/Botones/LogoutButton';
 
 const SplitButton = ({ input }) => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -93,14 +88,18 @@ const SplitButton = ({ input }) => {
                   display: 'flex',
                 }}
               >
-                <BotonV input={"Configurar Perfil"} width={"450px"}></BotonV>
+                <BotonV input={"Configurar Perfil"} width={"450px"} type={""}></BotonV>
               </div>
               <div
                 sx={{
                   display: 'flex',
                 }}
               >
-                <BotonV input={"Cerrar Sesión"} width={"450px"}></BotonV>
+                <BotonV input={"Cerrar Sesión"} width={"450px"} type={"logout"}></BotonV>
+              </div>
+
+              <div>
+                <LogoutButton></LogoutButton>
               </div>
             </Paper>
           </Grow>

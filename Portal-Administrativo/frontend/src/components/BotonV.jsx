@@ -1,18 +1,21 @@
 import React from "react";
-
 import { styled } from "@mui/material/styles";
 import MuiButton from "@mui/material/Button";
 import Button from "@mui/material/Button";
 import { inputBaseClasses } from "@mui/material";
+import { useAuth0 } from '@auth0/auth0-react'
+import { useNavigate } from 'react-router-dom';
 
-const BotonV = ({ input, width }) => {
+const BotonV = ({ input, width, type }) => {  
   const handleClick = (e) => {
     e.preventDefault();
     console.log('The link was clicked.');
   }
 
+  const { isAuthenticated, logout } = useAuth0();
+
   return (
-    <Button onClick={handleClick}
+    <Button onClick={logout()}
       sx={{
         width: { width },
         height: 45,

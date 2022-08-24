@@ -3,8 +3,9 @@ import '../Estilos/botones.css';
 
 const LogoutButton = () => {
     const { logout } = useAuth0();
+
     return (
-        <button className = 'log_out' onClick={() => logout()}>
+        <button onClick={() => logout()} className = 'log_out' >
             Cerrar Sesion
         </button>
     )
