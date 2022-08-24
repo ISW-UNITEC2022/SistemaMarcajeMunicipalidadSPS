@@ -6,8 +6,13 @@ import Button from "@mui/material/Button";
 import { inputBaseClasses } from "@mui/material";
 
 const BotonV = ({ input, width }) => {
+  const handleClick = (e) => {
+    e.preventDefault();
+    console.log('The link was clicked.');
+  }
+
   return (
-    <Button
+    <Button onClick={handleClick}
       sx={{
         width: { width },
         height: 45,
@@ -20,7 +25,8 @@ const BotonV = ({ input, width }) => {
         backgroundColor: '#02732A ',
         color: '#f2f2f2',
 
-        marginBottom: '40px',
+        marginTop: '2px',
+        
 
         '&:hover': {
           backgroundColor: '#80E673',
