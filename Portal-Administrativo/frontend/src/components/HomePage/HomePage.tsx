@@ -5,6 +5,8 @@ import LoginButton from './Botones/LoginButton'
 import LogoutButton from './Botones/LogoutButton'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Routes, Route, useNavigate, Link, Navigate, Outlet } from 'react-router-dom';
+import TaskList from '../menu_user_comp/menu_index';
+import FormularioEmpleado from '../FormularioEmpleado/FormularioEmpleado';
 
 function HomePage() {
     const { isAuthenticated, isLoading } = useAuth0();
@@ -27,7 +29,7 @@ function HomePage() {
                     isAuthenticated
                         ?
                         <div className='instruc'>
-                            Cierre sesion para cambiar de usuario.
+                         { /*  Cierre sesion para cambiar de usuario.*/}
 
                         </div>
                         :
@@ -36,8 +38,7 @@ function HomePage() {
                         </div>
 
                 }
-
-                {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+             {isAuthenticated ? <TaskList /> : <LoginButton />}
             </div>
         </div>
     );
