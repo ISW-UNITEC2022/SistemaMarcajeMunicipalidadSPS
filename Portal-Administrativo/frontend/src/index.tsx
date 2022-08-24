@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Login from './auth0/Login';
+import FormularioEmpleado from './components/FormularioEmpleado/FormularioEmpleado';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(
@@ -9,7 +10,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Login />
+    <FormularioEmpleado />
   </React.StrictMode>
 );
 

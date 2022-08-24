@@ -7,16 +7,16 @@ function BarraInferior() {
 			<Box
 				sx={{
 					minHeight: 20,
-					flex: 1,
 					backgroundColor: '#013613',
+					flex: 1,
 
 					fontSize: 11,
 					fontWeight: 'bold',
-  				fontFamily: 'sans-serif',
-  				fontStyle: 'normal',
-  				textTransform: 'none',
+					fontFamily: 'sans-serif',
+					fontStyle: 'normal',
+					textTransform: 'none',
 					color: '#f2f2f2',
-					
+
 					display: 'flex',
 					justifyContent: 'center',
 					alignItems: 'center',
@@ -26,7 +26,7 @@ function BarraInferior() {
 			</Box>
 		</div>
 	);
-	
+
 }
 
 export default BarraInferior;

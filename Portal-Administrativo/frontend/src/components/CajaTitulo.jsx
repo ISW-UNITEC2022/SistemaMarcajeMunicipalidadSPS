@@ -7,7 +7,7 @@ const CajaTitulo = ({ input }) => (
 			minHeight: 60,
 			backgroundColor: '#F2B705',
 
-			fontSize: 22,
+			fontSize: 30,
 			fontWeight: 'bold',
  			fontFamily: 'sans-serif',
   		fontStyle: 'normal',

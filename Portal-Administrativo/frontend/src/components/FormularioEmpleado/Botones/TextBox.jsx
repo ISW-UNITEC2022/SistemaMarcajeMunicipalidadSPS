@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from "@mui/material";
 
-export default function FormPropsTextFields() {
+const FormPropsTextFields = ({input, width}) => {
 
 	const theme = createTheme({
 		components: {
@@ -20,22 +20,26 @@ export default function FormPropsTextFields() {
 		<Box
 			component="form"
 			sx={{
-				'& .MuiTextField-root': { m: 1, width: '25ch' },
+				'& .MuiTextField-root': { 
+					marginRight: '10px',
+					marginBottom: '10px',
+					width: {width} },
 			}}
 			noValidate
 			autoComplete="off"
+
 		>
 			<div>
 				<ThemeProvider theme={theme}>
 					<TextField
 						required
 						id="outlined-required"
-						label="Nombres"
-
+						label={input}
+					
 						sx={{
-
 							'& label.Mui-focused': {
 								color: '#02732A',
+								top: '6px'
 							},
 							'& .MuiInput-underline:after': {
 								borderBottomColor: '#02732A',
@@ -43,10 +47,10 @@ export default function FormPropsTextFields() {
 							'& .MuiOutlinedInput-root': {
 								'& fieldset': {
 									borderColor: '#02732A',
+									height: '55px',
 								},
 								'&:hover fieldset': {
 									borderColor: '#02732A',
-									
 								},
 								'&.Mui-focused fieldset': {
 									borderColor: '#02732A',
@@ -59,3 +63,5 @@ export default function FormPropsTextFields() {
 		</Box>
 	);
 }
+
+export default FormPropsTextFields;
