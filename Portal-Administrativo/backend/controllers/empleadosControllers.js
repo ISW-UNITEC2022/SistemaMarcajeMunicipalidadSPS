@@ -49,8 +49,8 @@ Body
   password: string,
   distrito: int | null
   departamento: string
-  horaentrada: { hora: string, tiempo: 'am' | 'pm' }
-  horasalida: { hora: string, tiempo: 'am' | 'pm' }
+  horaentrada: string
+  horasalida: string
 }
 */
 export const crearEmpleado = async (req, res, next) => {
@@ -69,8 +69,6 @@ export const crearEmpleado = async (req, res, next) => {
     } = req.body
     let salt = bcrypt.genSaltSync()
     let hashpassword = bcrypt.hashSync(password, salt)
-    let entrada = objectToTimeString(horaentrada)
-    let salida = objectToTimeString(horasalida)
     let [user] = await db('empleados').insert(
       {
         idempleado,
@@ -81,8 +79,8 @@ export const crearEmpleado = async (req, res, next) => {
         hashpassword,
         distrito,
         departamento,
-        horaentrada: entrada,
-        horasalida: salida,
+        horaentrada,
+        horasalida,
       },
       [
         'idempleado',
