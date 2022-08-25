@@ -42,13 +42,9 @@ export const obtenerEmpleados = async (_req, res, next) => {
 //Descripcion crea un nuevo empleado
 /*
 Body
-<<<<<<< HEAD
+
 { idempleado: string,
-  idsupervisor: string,
-=======
-{ idempleado: string, 
   idsupervisor: string | null,
->>>>>>> d933aac57ac9e54d52b92ff331bfb54a8842a97d
   nombre: string,
   apellido: string,
   correo: string,
