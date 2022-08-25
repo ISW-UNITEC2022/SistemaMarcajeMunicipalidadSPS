@@ -9,12 +9,11 @@ return(
     <div className={`ventana ${props.children==false ? 'hide' : ''}`} >
 
         <div>
-            <a href="/crear_empleado"><div className='sub'><div className='point'><i class="fa-solid fa-circle"></i></div>Crear nuevo empleado</div></a> 
+            <a href=""><div className='sub'><div className='point'><i class="fa-solid fa-circle"></i></div>Crear nuevo empleado</div></a> 
             <a href="" ><div className='sub'><div className='point'><i class="fa-solid fa-circle"></i></div>Modificar empleado</div></a> 
             <a href="" ><div className='sub'><div className='point'><i class="fa-solid fa-circle"></i></div>Informacion de empleados</div></a> 
             <a href="" ><div className='sub'><div className='point'><i class="fa-solid fa-circle"></i></div>Estado empleados</div></a> 
         </div>
-        
     </div>
 )
 
