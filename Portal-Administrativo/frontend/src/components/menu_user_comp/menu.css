@@ -24,8 +24,8 @@ a {
 .menu_user {
   background-color: #F2F2F2;
   text-align: center;
-  min-height: 100vh;
-  max-height: 100vh;
+  min-height: 88.8vh;
+  max-height: 88.8vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,7 +39,7 @@ a {
   display: flex;
   position: absolute;
   transition: 0.3s all;
-  bottom: 270px;
+  margin-top: 140px;
 }
 
 .caja {
@@ -51,7 +51,7 @@ a {
   display: flex;
   position: absolute;
   transition: 0.3s all;
-  bottom: 140px;
+  margin-top: 400px;
 }
 
 .down {
