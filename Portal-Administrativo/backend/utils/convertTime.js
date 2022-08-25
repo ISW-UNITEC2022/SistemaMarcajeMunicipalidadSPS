@@ -7,3 +7,15 @@ export const dateToTimeString = (dataD) => {
   const postTime = hrs + ':' + mins
   return postTime
 }
+
+export const objectToTimeString = (time) => {
+  let [hora, minuto] = time.hora.split(':')
+  hora = parseInt(hora)
+  minuto = parseInt(minuto)
+  if (time.tiempo.toLowerCase() === 'pm') {
+    hora += 12
+  }
+  if (hora <= 9) hora = '0' + hora
+  if (minuto < 10) minuto = '0' + minuto
+  return hora + ':' + minuto
+}

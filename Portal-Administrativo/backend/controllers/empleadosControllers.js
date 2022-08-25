@@ -1,7 +1,7 @@
 import { db } from '../db/db.js'
 import { CustomError } from '../utils/CustomError.js'
 import bcrypt from 'bcrypt'
-import { dateToTimeString } from '../utils/convertTime.js'
+import { dateToTimeString, objectToTimeString } from '../utils/convertTime.js'
 
 //Ruta /api/empleados GET
 //Descripcion Devuelve la informacion de todos los empleados
@@ -42,15 +42,15 @@ export const obtenerEmpleados = async (_req, res, next) => {
 /*
 Body
 { idempleado: string, 
-  idsupervisor: string,
+  idsupervisor: string | null,
   nombre: string,
   apellido: string,
   correo: string,
   password: string,
   distrito: int | null
   departamento: string
-  horaentrada:
-  horasalida: 
+  horaentrada: { hora: string, tiempo: 'am' | 'pm' }
+  horasalida: { hora: string, tiempo: 'am' | 'pm' }
 }
 */
 export const crearEmpleado = async (req, res, next) => {
@@ -64,11 +64,13 @@ export const crearEmpleado = async (req, res, next) => {
       password,
       distrito,
       departamento,
+      horaentrada,
+      horasalida,
     } = req.body
     let salt = bcrypt.genSaltSync()
     let hashpassword = bcrypt.hashSync(password, salt)
-    let entrada = dateToTimeString(new Date().setHours(8, 30, 0, 0))
-    let salida = dateToTimeString(new Date().setHours(17, 30, 0, 0))
+    let entrada = objectToTimeString(horaentrada)
+    let salida = objectToTimeString(horasalida)
     let [user] = await db('empleados').insert(
       {
         idempleado,
@@ -108,7 +110,6 @@ export const crearEmpleado = async (req, res, next) => {
     }
     res.json(user)
   } catch (error) {
-    console.log(error)
     if (error.constraint === 'correo_unico')
       next(new CustomError('El correo ya esta en uso'))
     else if (error.constraint === 'empleados_pkey')
