@@ -8,7 +8,6 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import { useState } from 'react';
 import { useRef } from 'react';
-import LogoutButton from './HomePage/Botones/LogoutButton';
 
 const SplitButton = ({ input }) => {
   const [open, setOpen] = useState(false);
@@ -98,9 +97,6 @@ const SplitButton = ({ input }) => {
                 <BotonV input={"Cerrar Sesión"} width={"450px"} type={"logout"}></BotonV>
               </div>
 
-              <div>
-                <LogoutButton></LogoutButton>
-              </div>
             </Paper>
           </Grow>
         )}

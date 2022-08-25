@@ -15,7 +15,6 @@ function FormularioEmpleado() {
 	return (
 		<div>
 			<div className='BackApp'>
-				<BarraSuperior></BarraSuperior>
 				<div className='SupApp'>
 					<div style={{ flex: 3 }}>
 						<MenuUsuario input={"Andrea Rodriguez"}></MenuUsuario>
@@ -69,9 +68,6 @@ function FormularioEmpleado() {
 					<div className='aaa'>
 						<BotonV input={"Registrar"} width={"47.4ch"} type={""}></BotonV>
 					</div>
-				</div>
-				<div className='PiedePagina'>
-					<BarraInferior></BarraInferior>
 				</div>
 			</div>
 		</div>

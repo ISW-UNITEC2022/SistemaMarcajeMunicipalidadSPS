@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
+import BarraSuperior from './components/BarraSuperior';
+import BarraInferior from './components/BarraInferior';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
+    <BarraSuperior></BarraSuperior>
     <App />
+    <BarraInferior></BarraInferior>
   </React.StrictMode>
 );
 

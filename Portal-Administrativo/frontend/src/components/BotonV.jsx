@@ -12,10 +12,10 @@ const BotonV = ({ input, width, type }) => {
     console.log('The link was clicked.');
   }
 
-  const { isAuthenticated, logout } = useAuth0();
+  const { logout } = useAuth0();
 
   return (
-    <Button onClick={logout()}
+    <Button onClick={() => logout()}
       sx={{
         width: { width },
         height: 45,
