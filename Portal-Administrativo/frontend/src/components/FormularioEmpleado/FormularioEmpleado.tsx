@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState, useEffect} from 'react'
 import './Estilos/FormularioEmpleado.css'
 import BarraSuperior from '../BarraSuperior';
 import BarraInferior from '../BarraInferior';
@@ -11,7 +11,63 @@ import PasswordBox from './Botones/PasswordBox';
 import DropdownBox from './Botones/DropdownBox';
 import { Box, Grid } from '@mui/material';
 
-function FormularioEmpleado() {
+export default  function FormularioEmpleado() {
+
+	const [empleado, setEmpleado] = useState({
+		idempleado: '', 
+  		idsupervisor: '',
+  		nombre: '',
+  		apellido: '',
+  		correo: '',
+  		password: '',
+		confpassword: '',
+  		distrito: 0,
+  		departamento: '',
+  		horaentrada: { hora: 0, tiempo: ''},
+  		horasalida: { hora: 0, tiempo: '' },
+	  });
+
+	const handleChange = (e) => {
+		setEmpleado({
+		  ...empleado,
+		  [e.target.name]: e.target.value,
+		});
+	  };
+	
+	  let { idempleado,idsupervisor,nombre,apellido,correo,password,confpassword,distrito,departamento,horaentrada,horasalida } = empleado;
+	  const delay = ms => new Promise(res => setTimeout(res, ms));
+
+	  	const handleSubmit=()=>{
+			if(idempleado==='' || idsupervisor==='' || nombre==='' || apellido==='' || correo==='' || password==='' && confpassword!=password){
+				return console.log('campos vacios');
+			}
+
+			const requestInit = {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(empleado),
+			  };
+
+			fetch('http://localhost:4000/api/empleados/auth',requestInit)
+			.then(res=>res.json())
+			.then(res=>console.log(res));
+
+			  setEmpleado({
+				idempleado: '', 
+  				idsupervisor: '',
+  				nombre: '',
+  				apellido: '',
+  				correo: '',
+  				password: '',
+				confpassword: '',
+  				distrito: 0,
+  				departamento: '',
+  				horaentrada: { hora: 0, tiempo: ''},
+  				horasalida: { hora: 0, tiempo: '' },
+			  })
+
+		}
+
 	return (
 		<div>
 			<div className='BackApp'>
@@ -32,18 +88,18 @@ function FormularioEmpleado() {
 				<div className="Content">
 					<p className='texto'>Ingrese los datos correspondientes.</p>
 					<div className="aaa">
-						<TextBox input={"No° Identidad"} width={"61ch"}></TextBox>
+						<TextBox input={"No° Identidad"} width={"61ch"} onChange={handleChange}></TextBox>
 					</div>
 					<div className="aaa">
-						<TextBox input={"Nombres"} width={"30ch"}></TextBox>
-						<TextBox input={"Apellidos"} width={"30ch"}></TextBox>
+						<TextBox input={"Nombres"} width={"30ch"} onChange={handleChange}></TextBox>
+						<TextBox input={"Apellidos"} width={"30ch"} onChange={handleChange}></TextBox>
 					</div>
 					<div className="aaa">
-						<TextBox input={"Correo Electrónico"} width={"61ch"}></TextBox>
+						<TextBox input={"Correo Electrónico"} width={"61ch"} onChange={handleChange}></TextBox>
 					</div>
 					<div className="aaa">
-						<PasswordBox input={"Contraseña"}></PasswordBox>
-						<PasswordBox input={"Confirmar Contraseña"}></PasswordBox>
+						<PasswordBox input={"Contraseña"} onChange={handleChange}></PasswordBox>
+						<PasswordBox input={"Confirmar Contraseña"} onChange={handleChange}></PasswordBox>
 						<div className='asterisco'>*</div>
 						<p className='advertencia'>
 							Favor rellenar todas las casillas. 
@@ -53,25 +109,25 @@ function FormularioEmpleado() {
 							existente por empleado</p>
 					</div>
 					<div className="aaa">
-						<DropdownBox input={"Hora Entrada"} width={"18.8ch"} type={"hora"} ></DropdownBox>
-						<DropdownBox input={"Horario"} width={"10ch"} type={"horario"}></DropdownBox>
-						<DropdownBox input={"Hora Salida"} width={"18.8ch"} type={"hora"} ></DropdownBox>
-						<DropdownBox input={"Horario"} width={"10ch"} type={"horario"}></DropdownBox>
+						<DropdownBox input={"Hora Entrada"} width={"18.8ch"} type={"hora"} onChange={handleChange} ></DropdownBox>
+						<DropdownBox input={"Horario"} width={"10ch"} type={"horario"} onChange={handleChange}></DropdownBox>
+						<DropdownBox input={"Hora Salida"} width={"18.8ch"} type={"hora"} onChange={handleChange} ></DropdownBox>
+						<DropdownBox input={"Horario"} width={"10ch"} type={"horario"} onChange={handleChange}></DropdownBox>
 					</div>
 					<div className="aaa">
 						<TextBox input={"Zona"} width={"40ch"}></TextBox>
-						<DropdownBox input={"Distritos"} width={"20ch"} type={"distrito"}></DropdownBox>
+						<DropdownBox input={"Distritos"} width={"20ch"} type={"distrito"} onChange={handleChange}></DropdownBox>
 					</div>
 					<div className="aaa">
-						<TextBox input={"Departamento"} width={"61ch"}></TextBox>
+						<TextBox input={"Departamento"} width={"61ch"} onChange={handleChange}></TextBox>
 					</div>
+					<form onSubmit={handleSubmit}>
 					<div className='aaa'>
 						<BotonV input={"Registrar"} width={"47.4ch"} type={""}></BotonV>
 					</div>
+					</form>
 				</div>
 			</div>
 		</div>
 	);
 }
-
-export default FormularioEmpleado;
