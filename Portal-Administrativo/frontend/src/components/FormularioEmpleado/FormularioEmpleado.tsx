@@ -88,18 +88,18 @@ export default  function FormularioEmpleado() {
 				<div className="Content">
 					<p className='texto'>Ingrese los datos correspondientes.</p>
 					<div className="aaa">
-						<TextBox input={"No° Identidad"} width={"61ch"} onChange={handleChange}></TextBox>
+						<TextBox input={"No° Identidad"} width={"61ch"}></TextBox>
 					</div>
 					<div className="aaa">
-						<TextBox input={"Nombres"} width={"30ch"} onChange={handleChange}></TextBox>
-						<TextBox input={"Apellidos"} width={"30ch"} onChange={handleChange}></TextBox>
+						<TextBox input={"Nombres"} width={"30ch"}></TextBox>
+						<TextBox input={"Apellidos"} width={"30ch"}></TextBox>
 					</div>
 					<div className="aaa">
-						<TextBox input={"Correo Electrónico"} width={"61ch"} onChange={handleChange}></TextBox>
+						<TextBox input={"Correo Electrónico"} width={"61ch"}></TextBox>
 					</div>
 					<div className="aaa">
-						<PasswordBox input={"Contraseña"} onChange={handleChange}></PasswordBox>
-						<PasswordBox input={"Confirmar Contraseña"} onChange={handleChange}></PasswordBox>
+						<PasswordBox input={"Contraseña"}></PasswordBox>
+						<PasswordBox input={"Confirmar Contraseña"}></PasswordBox>
 						<div className='asterisco'>*</div>
 						<p className='advertencia'>
 							Favor rellenar todas las casillas. 
@@ -109,17 +109,17 @@ export default  function FormularioEmpleado() {
 							existente por empleado</p>
 					</div>
 					<div className="aaa">
-						<DropdownBox input={"Hora Entrada"} width={"18.8ch"} type={"hora"} onChange={handleChange} ></DropdownBox>
-						<DropdownBox input={"Horario"} width={"10ch"} type={"horario"} onChange={handleChange}></DropdownBox>
-						<DropdownBox input={"Hora Salida"} width={"18.8ch"} type={"hora"} onChange={handleChange} ></DropdownBox>
-						<DropdownBox input={"Horario"} width={"10ch"} type={"horario"} onChange={handleChange}></DropdownBox>
+						<DropdownBox input={"Hora Entrada"} width={"18.8ch"} type={"hora"}></DropdownBox>
+						<DropdownBox input={"Horario"} width={"10ch"} type={"horario"}></DropdownBox>
+						<DropdownBox input={"Hora Salida"} width={"18.8ch"} type={"hora"}></DropdownBox>
+						<DropdownBox input={"Horario"} width={"10ch"} type={"horario"}></DropdownBox>
 					</div>
 					<div className="aaa">
 						<TextBox input={"Zona"} width={"40ch"}></TextBox>
-						<DropdownBox input={"Distritos"} width={"20ch"} type={"distrito"} onChange={handleChange}></DropdownBox>
+						<DropdownBox input={"Distritos"} width={"20ch"} type={"distrito"}></DropdownBox>
 					</div>
 					<div className="aaa">
-						<TextBox input={"Departamento"} width={"61ch"} onChange={handleChange}></TextBox>
+						<TextBox input={"Departamento"} width={"61ch"}></TextBox>
 					</div>
 					<form onSubmit={handleSubmit}>
 					<div className='aaa'>
