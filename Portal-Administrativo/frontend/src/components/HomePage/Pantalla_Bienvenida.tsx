@@ -33,11 +33,12 @@ function Pantalla_Bienvenida() {
                         </div>
                 }
 
-                {isAuthenticated
-                ?
-                    <></>
-                :
-                    <LoginButton />
+                {
+                    isAuthenticated
+                        ?
+                        <></>
+                        :
+                        <LoginButton />
                 }
             </div>
         </div>
