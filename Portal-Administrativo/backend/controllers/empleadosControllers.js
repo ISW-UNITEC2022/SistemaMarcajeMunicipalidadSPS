@@ -1,7 +1,6 @@
 import { db } from '../db/db.js'
 import { CustomError } from '../utils/CustomError.js'
 import bcrypt from 'bcrypt'
-import { dateToTimeString, objectToTimeString } from '../utils/convertTime.js'
 
 //Ruta /api/empleados GET
 //Descripcion Devuelve la informacion de todos los empleados
@@ -105,7 +104,7 @@ export const crearEmpleado = async (req, res, next) => {
       let [idrol] = await db('rolxempleado').insert(
         {
           idempleado: user.idempleado,
-          idrol: 1, // Rol de empleado por default
+          idrol: 2, // Rol de empleado por default
         },
         ['idrol']
       )

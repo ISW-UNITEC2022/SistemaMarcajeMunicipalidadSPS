@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import { errorHandler, notFound } from './middlewares/errorMiddleware.js'
 import rutasEmpleados from './routes/empleados.js'
+import rutasSupervisores from './routes/supervisores.js'
 
 dotenv.config()
 const port = process.env.PORT | 4000
@@ -11,7 +12,7 @@ app.use(express.json())
 
 //Rutas
 app.use('/api/empleados', rutasEmpleados)
-
+app.use('/api/supervisores', rutasSupervisores)
 //Middlewares
 app.use(notFound)
 app.use(errorHandler)
