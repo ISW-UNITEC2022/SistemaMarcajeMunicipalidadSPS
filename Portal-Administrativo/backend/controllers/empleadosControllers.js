@@ -17,6 +17,7 @@ export const obtenerEmpleados = async (_req, res, next) => {
         'departamento',
         'distrito',
         'status',
+        'zona',
         'nombrerol as rol'
       )
       .from('empleados')
@@ -33,7 +34,7 @@ export const obtenerEmpleados = async (_req, res, next) => {
     }
     res.json(empleados)
   } catch (error) {
-    console.log(error);
+    console.log(error)
     next(error)
   }
 }
@@ -50,6 +51,7 @@ Body
   correo: string,
   password: string,
   distrito: int | null
+  zona: string | null
   departamento: string
   horaentrada: string
   horasalida: string
@@ -65,6 +67,7 @@ export const crearEmpleado = async (req, res, next) => {
       correo,
       password,
       distrito,
+      zona,
       departamento,
       horaentrada,
       horasalida,
@@ -83,6 +86,7 @@ export const crearEmpleado = async (req, res, next) => {
         departamento,
         horaentrada,
         horasalida,
+        zona,
       },
       [
         'idempleado',
@@ -94,6 +98,7 @@ export const crearEmpleado = async (req, res, next) => {
         'departamento',
         'horaentrada',
         'horasalida',
+        'zona',
       ]
     )
     if (user) {
@@ -150,7 +155,8 @@ export const authEmpleado = async (req, res, next) => {
           'distrito',
           'status',
           'horaentrada',
-          'horasalida'
+          'horasalida',
+          'zona'
         )
         .from('empleados')
         .where('correo', correo)
