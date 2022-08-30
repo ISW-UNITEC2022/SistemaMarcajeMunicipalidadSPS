@@ -4,9 +4,6 @@ import TaskList from './components/menu_user_comp/menu_index';
 import FormularioEmpleado from './components/FormularioEmpleado/FormularioEmpleado'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from './components/HomePage/HomePage';
-import Login from './auth0/Login'
-
-
 
 function App() {
   const onButtonClickHandler = () => {
@@ -14,15 +11,13 @@ function App() {
   };
 
   return (
-    
-      <BrowserRouter>
-        <Routes>
-          <Route path="/menu_principal" element={<TaskList />} />
-          <Route path="/crear_empleado" element={<FormularioEmpleado />} />
-          <Route path="/" element={<Login />} />
-        </Routes>
-      </BrowserRouter>
-   
+    <BrowserRouter>
+      <Routes>
+        <Route path="/menu_principal" element={<TaskList />} />
+        <Route path="/crear_empleado" element={<FormularioEmpleado />} />
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
