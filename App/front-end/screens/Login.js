@@ -1,9 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import { StyleSheet, Text, AppRegistry ,View,Button,Dimensions,Image,TextInput,TouchableOpacity } from 'react-native';
-
+import axios from "axios";
 
 const Login = ({navigation}) => {
+ 
+const Auth= () =>{
+axios.post('https://proyecto-isw1.herokuapp.com/api/empleados/auth', {
+  correo: 'nancy@gmail.com',
+  password: 'Hola123',
+}).then(response => {
+  console.log(response)
+}).catch(error => {
+  console.log(error)
+}) 
+}
+
   return (
     <View style={styles.container}>
        <View style={styles.shape_conatiner}>
@@ -38,7 +50,7 @@ const Login = ({navigation}) => {
               <TextInput secureTextEntry={true}  style={styles.input}
             placeholder='Contraseña'  placeholderTextColor={"#fff"} ></TextInput>
 
-              <TouchableOpacity style={styles.buttonContainer} onPress={() => navigation.navigate('Menu')} >
+            <TouchableOpacity style={styles.buttonContainer} onPress={() => navigation.navigate('Menu')} >
               <Text style={styles.textbutton}> Ingresar </Text>
               </TouchableOpacity>
       </View> 

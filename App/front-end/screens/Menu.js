@@ -166,7 +166,7 @@ const Menu = ({navigation}) => {
      }]}/>
      </View>
   <View style={styles.container}>
-    <Image source={require('../src/assets/logo.png')} style={styles.logo} />
+    <Image source={require('../assets/logo.png')} style={styles.logo} />
     <BotonMarca1 state={false}></BotonMarca1>  
     <BotonMarca state={true}></BotonMarca>
     <TouchableOpacity disabled={true} style={styles.horario}>
