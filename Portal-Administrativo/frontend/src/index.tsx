@@ -2,14 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Login from './auth0/Login';
+import Prueba from './components/modificar_empl/modificar.index'
 import reportWebVitals from './reportWebVitals';
+import BarraS from './components/BarraSuperior';
+import BarraI from './components/BarraInferior';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Login />
+    <BarraS />
+    <Prueba />
+    <BarraI />
   </React.StrictMode>
 );
 
