@@ -7,3 +7,18 @@
     color: #202020;
   }
   
+  .asterisco {
+    font-size: 100px;
+    color: #BF0404;
+  
+    margin-top: -20px;
+    margin-left: 103vh;
+    margin-bottom: -110px;
+  }
+  
+  .advertencia {
+    color: #202020;
+    margin-left: 140vh;
+    margin-bottom: 55px;
+    width: 300px;
+  }

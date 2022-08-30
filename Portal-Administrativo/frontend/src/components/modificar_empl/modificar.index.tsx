@@ -13,7 +13,13 @@ function Modificar() {
         <User  input='Andrea Rodriguez'/>
         <BotonH/>
         <div className="vent">
-        
+        <div className='asterisco'>*</div>
+						<p className='advertencia'>
+							Favor rellenar todas las casillas. 
+							Cada campo es obligatorio y fundamental 
+							para la información de los colaboradores.
+							Favor utilizar un correo electrónico ya 
+							existente por empleado</p>
         </div>
     </div>
   );

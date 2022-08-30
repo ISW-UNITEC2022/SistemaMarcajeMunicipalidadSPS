@@ -18,7 +18,7 @@ const CajaTitulo = ({ input }) => (
 			display: 'flex',
 			justifyContent: 'center',
   			alignItems: 'center',
-			position: 'absolute',
+			
 			marginLeft: '66vh'
 		}}>
 			{input}
