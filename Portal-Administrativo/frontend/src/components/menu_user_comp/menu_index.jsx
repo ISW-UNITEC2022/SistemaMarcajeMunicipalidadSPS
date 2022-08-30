@@ -3,7 +3,7 @@ import './menu.css';
 import Button from '@mui/material/Button';
 import Menu_emp from './menu_em';
 import Menu_re from './menu_re';
-import Logo from "./logo.png";
+import Logo from "../logo.png";
 
 export default function TaskList(){
 

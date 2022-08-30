@@ -3,7 +3,7 @@ import './modificar.css';
 import Caja from '../CajaTitulo';
 import BotonH from '../BotonHome';
 import User from '../MenuUsuario';
-
+import HomeIcon from '@mui/icons-material/Home';
 
 function Modificar() {
 
@@ -17,7 +17,7 @@ function Modificar() {
 						<Caja input={"Crear Empleados"} />
 					</div>
 					<div style={{ flex: 3 }}>
-						<BotonH></BotonH>
+						<BotonH><HomeIcon/></BotonH>
 					</div>
 				</div>
         <div className="vent">
