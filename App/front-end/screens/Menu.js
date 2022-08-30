@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity,TouchableHighlight,Button,Alert,Image} from 'react-native';
+
 export class BotonMarca extends React.Component {
-
-
   state={
     entrada:false,
+    pressed:false
   }
 
   marcar = () =>{
@@ -15,7 +15,10 @@ export class BotonMarca extends React.Component {
       [
         {
           text: "Sí",
-          onPress: () => console.log("Cancel Pressed"),
+          onPress: () => 
+          this.setState({
+            pressed:true,
+          }),
           style: "No"
         },
         { text: "No", onPress: () => console.log("OK Pressed") }
@@ -30,9 +33,9 @@ export class BotonMarca extends React.Component {
 
     return (
     <View >
-      {this.state.entrada?
-      <TouchableOpacity onPress={()=>this.marcar()} style={[styles.button, styles.green]}  >
-        <View style={[styles.button,styles.green]}>
+      {this.state.pressed?
+      <TouchableOpacity disabled={true} onPress={()=>this.marcar()} style={[styles.button, styles.gray]}  >
+        <View>
         <Text style={styles.textStyle}>Marcar Salida</Text>
         </View>
       </TouchableOpacity>:
@@ -79,6 +82,7 @@ export class BotonMarca1 extends React.Component {
 
   state={
     entrada:true,
+    pressed:false
   }
 
   marcar = () =>{
@@ -88,7 +92,10 @@ export class BotonMarca1 extends React.Component {
       [
         {
           text: "Sí",
-          onPress: () => console.log("Cancel Pressed"),
+          onPress: () => 
+          this.setState({
+            pressed:true,
+          }),
           style: "No"
         },
         { text: "No", onPress: () => console.log("OK Pressed") }
@@ -103,15 +110,15 @@ export class BotonMarca1 extends React.Component {
 
     return (
     <View>
-      {this.state.entrada?
-      <TouchableOpacity onPress={()=>this.marcar()} style={[styles.button, styles.yellow]}  >
+      {this.state.pressed?
+      <TouchableOpacity disabled={true} onPress={()=>this.marcar()} style={[styles.button, styles.gray]}  >
         <View>
           <Text style={styles.textStyle}>Marcar Entrada</Text>
         </View>
       </TouchableOpacity>:
       <TouchableOpacity onPress={()=>this.marcar()} style={[styles.button, styles.yellow]}  >
       <View>
-        <Text>Marcar Salida</Text>
+        <Text style={styles.textStyle}>Marcar Entrada</Text>
       </View>
     </TouchableOpacity>
   }
@@ -145,14 +152,6 @@ const styles4 = StyleSheet.create({
 });
 
 const Menu = ({navigation}) => {
-
- /* let [fontsLoaded] = useFonts({
-    'open-sans': require('./src/assets/fonts/OpenSans-Regular.ttf'),
-  });
-  if (!fontsLoaded) {
-    console.log("valio burguer :(");
-    return <AppLoading />;
-  } */
   return (
   <View style={styles.container}> 
     <View style={styles.shape_conatiner}>
@@ -167,7 +166,7 @@ const Menu = ({navigation}) => {
      }]}/>
      </View>
   <View style={styles.container}>
-    <Image source={require('../assets/logo.png')} style={styles.logo} />
+    <Image source={require('../src/assets/logo.png')} style={styles.logo} />
     <BotonMarca1 state={false}></BotonMarca1>  
     <BotonMarca state={true}></BotonMarca>
     <TouchableOpacity disabled={true} style={styles.horario}>
@@ -282,7 +281,10 @@ const styles = StyleSheet.create({
     borderRadius:5,
     marginTop:39
   },
-  
+  gray:{
+    backgroundColor:'#252525',
+    fontSize:'30px'
+  }
 
 });
 
