@@ -5,12 +5,14 @@ import rutasEmpleados from './routes/empleados.js'
 import rutasSupervisores from './routes/supervisores.js'
 
 import favicon from 'serve-favicon'
+import cors from 'cors'
 
 dotenv.config()
 const port = process.env.PORT || 4000
 
 const app = express()
 app.use(express.json())
+app.use(cors())
 app.use(favicon('favicon.ico'))
 
 //Rutas
