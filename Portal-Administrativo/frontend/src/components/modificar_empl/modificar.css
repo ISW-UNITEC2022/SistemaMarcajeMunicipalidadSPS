@@ -22,3 +22,8 @@
     margin-bottom: 55px;
     width: 300px;
   }
+
+  .SupApp {
+    display: flex;
+    height: 100%;
+  }

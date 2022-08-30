@@ -9,9 +9,17 @@ function Modificar() {
 
   return (
     <div>
-        <Caja input='Modificar Empleado'></Caja>
-        <User  input='Andrea Rodriguez'/>
-        <BotonH/>
+        <div className='SupApp'>
+					<div style={{ flex: 3 }}>
+						<User input={"Andrea Rodriguez"}></User>
+					</div>
+					<div style={{ flex: 3 }}>
+						<Caja input={"Crear Empleados"} />
+					</div>
+					<div style={{ flex: 3 }}>
+						<BotonH></BotonH>
+					</div>
+				</div>
         <div className="vent">
         <div className='asterisco'>*</div>
 						<p className='advertencia'>
