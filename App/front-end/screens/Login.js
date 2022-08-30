@@ -5,12 +5,16 @@ import axios from "axios";
 
 const Login = ({navigation}) => {
  
-const Auth= () =>{
+const[correo,setCorreo]=useState();
+const[password,setPassword]=useState();
+
+const Auth= (Correo,Contraseña) =>{
 axios.post('https://proyecto-isw1.herokuapp.com/api/empleados/auth', {
-  correo: 'nancy@gmail.com',
-  password: 'Hola123',
+  correo: Correo,
+  password: Contraseña,
 }).then(response => {
-  console.log(response)
+  console.log(response.status) ;
+  navigation.navigate('Menu')
 }).catch(error => {
   console.log(error)
 }) 
@@ -42,17 +46,19 @@ axios.post('https://proyecto-isw1.herokuapp.com/api/empleados/auth', {
         source = {require('../assets/logo.png')}
       />
       <View style={styles.botton}></View>
+     
       <View style={styles.content}>
             <Text style={styles.texto}> Iniciar Sesión </Text>
             
             <TextInput  style={styles.input}
-            placeholder='Correo electrónico' placeholderTextColor={"#fff"}></TextInput>
+            placeholder='Correo electrónico' placeholderTextColor={"#fff"} onChangeText={(val)=>setCorreo(val)}></TextInput>
               <TextInput secureTextEntry={true}  style={styles.input}
-            placeholder='Contraseña'  placeholderTextColor={"#fff"} ></TextInput>
+            placeholder='Contraseña'  placeholderTextColor={"#fff"} onChangeText={(val)=>setPassword(val)} ></TextInput>
 
-            <TouchableOpacity style={styles.buttonContainer} onPress={() => navigation.navigate('Menu')} >
+            <TouchableOpacity style={styles.buttonContainer} onPress={() => Auth(correo,password)} >
               <Text style={styles.textbutton}> Ingresar </Text>
               </TouchableOpacity>
+
       </View> 
     </View>
   );
