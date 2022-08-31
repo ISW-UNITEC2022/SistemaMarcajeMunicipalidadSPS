@@ -26,11 +26,10 @@ export const marcarEmpleado = async (req, res, next) => {
     let marcajeRepetido = await db('marcaje')
       .transacting(transaction)
       .select('idmarca')
-      .where('tipo', tipo)
-      .andWhere('idempleado', idempleado)
+      .where({ idempleado, tipo })
       .andWhereBetween('fecha', [fechaInicio, fechaFinal])
     if (marcajeRepetido.length > 0) {
-      throw new CustomError(`Ya ha marcado su ${tipo} hoy`)
+      throw new CustomError(`Ya ha marcado su ${tipo} hoy`, 409)
     }
     let [marcaje] = await db('marcaje')
       .transacting(transaction)
@@ -43,7 +42,15 @@ export const marcarEmpleado = async (req, res, next) => {
           longitud: lon,
           google_url: `https://www.google.com/maps/@${lat},${lon}`,
         },
-        ['idempleado', 'fecha', 'tipo', 'latitud', 'longitud', 'google_url']
+        [
+          'idmarca',
+          'idempleado',
+          'fecha',
+          'tipo',
+          'latitud',
+          'longitud',
+          'google_url',
+        ]
       )
     transaction.commit()
     marcaje = {

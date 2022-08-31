@@ -195,7 +195,7 @@ export const obtenerEmpleadoPorId = async (req, res, next) => {
     const { id } = req.params
     let [empleado] = await db
       .select(
-        'idempleado',
+        'empleados.idempleado',
         'idsupervisor',
         'nombre',
         'apellido',
@@ -206,7 +206,7 @@ export const obtenerEmpleadoPorId = async (req, res, next) => {
         'horaentrada',
         'horasalida',
         'idrol',
-        'hashpassword'
+        'zona'
       )
       .from('empleados')
       .innerJoin(
@@ -214,7 +214,7 @@ export const obtenerEmpleadoPorId = async (req, res, next) => {
         'empleados.idempleado',
         'rolxempleado.idempleado'
       )
-      .where('idempleado', id)
+      .where('empleados.idempleado', id)
     if (!empleado) {
       res.status(404)
       throw new CustomError('No se ha encontrado el empleado', 404)
@@ -239,12 +239,70 @@ export const obtenerEmpleadoPorId = async (req, res, next) => {
   nombre: string,
   apellido: string,
   correo: string,
-  password: string,
-  distrito: int | null
-  zona: string | null
-  departamento: string
-  horaentrada: string
-  horasalida: string
+  status: string,
+  distrito: int | null,
+  zona: string | null,
+  departamento: string,
+  horaentrada: string,
+  horasalida: string,
 }
 */
-export const actualizarEmpleado = (req, res, next) => {}
+export const actualizarEmpleado = async (req, res, next) => {
+  try {
+    const {
+      idempleado,
+      idsupervisor,
+      nombre,
+      apellido,
+      correo,
+      distrito,
+      zona,
+      departamento,
+      horaentrada,
+      horasalida,
+      status,
+    } = req.body
+    console.log(req.body)
+    let [empleadoActualizado] = await db('empleados')
+      .where('idempleado', idempleado)
+      .update(
+        {
+          idsupervisor,
+          nombre,
+          apellido,
+          correo,
+          distrito,
+          zona,
+          departamento,
+          horaentrada,
+          horasalida,
+          status,
+        },
+        [
+          'idempleado',
+          'idsupervisor',
+          'nombre',
+          'apellido',
+          'correo',
+          'distrito',
+          'zona',
+          'departamento',
+          'horaentrada',
+          'horasalida',
+          'status',
+        ]
+      )
+    res.json(empleadoActualizado)
+  } catch (error) {
+    if (error.constraint === 'correo_unico')
+      next(new CustomError('El correo ya esta en uso'))
+    else if (error.constraint == 'empleados_departamento_check')
+      next(new CustomError('El departamento no es valido'))
+    else if (error.constraint == 'empleados_distrito_check')
+      next(new CustomError('El distrito no es valido'))
+    else if (error.constraint == 'empleados_status_check')
+      next(new CustomError('El status no es valido'))
+
+    next(error)
+  }
+}
