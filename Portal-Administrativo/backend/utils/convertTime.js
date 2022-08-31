@@ -19,3 +19,17 @@ export const objectToTimeString = (time) => {
   if (minuto < 10) minuto = '0' + minuto
   return hora + ':' + minuto
 }
+
+export const toFormat12h = (horaEn24h) => {
+  let [hora, minuto] = horaEn24h.split(':')
+  hora = parseInt(hora)
+  minuto = parseInt(minuto)
+  let tiempo = 'am'
+  if (hora > 12) {
+    hora -= 12
+    tiempo = 'pm'
+  }
+  if (hora <= 9) hora = '0' + hora
+  if (minuto < 10) minuto = '0' + minuto
+  return hora + ':' + minuto + tiempo
+}

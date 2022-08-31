@@ -1,6 +1,7 @@
 import { db } from '../db/db.js'
 import { CustomError } from '../utils/CustomError.js'
 import bcrypt from 'bcrypt'
+import { toFormat12h } from '../utils/convertTime.js'
 
 //Ruta /api/empleados GET
 //Descripcion Devuelve la informacion de todos los empleados
@@ -17,6 +18,8 @@ export const obtenerEmpleados = async (_req, res, next) => {
         'distrito',
         'status',
         'zona',
+        'horaentrada',
+        'horasalida',
         'nombrerol as rol'
       )
       .from('empleados')
@@ -31,6 +34,13 @@ export const obtenerEmpleados = async (_req, res, next) => {
       res.status(404)
       throw new CustomError('No hay ningun empleado', 404)
     }
+    empleados = empleados.map((empleado) => {
+      return {
+        ...empleado,
+        horaentrada: toFormat12h(empleado.horaentrada),
+        horasalida: toFormat12h(empleado.horasalida),
+      }
+    })
     res.json(empleados)
   } catch (error) {
     console.log(error)
@@ -112,6 +122,11 @@ export const crearEmpleado = async (req, res, next) => {
         throw new CustomError('No se pudo asignar el rol al empleado')
       } else user.rol = 'Empleado'
     }
+    user = {
+      ...user,
+      horaentrada: toFormat12h(user.horaentrada),
+      horasalida: toFormat12h(user.horasalida),
+    }
     res.json(user)
   } catch (error) {
     if (error.constraint === 'correo_unico')
@@ -162,28 +177,74 @@ export const authEmpleado = async (req, res, next) => {
     } else {
       throw new CustomError('Correo o contraseña incorrectos', 401)
     }
-    res.json(userInfo[0])
+    userInfo = {
+      ...userInfo[0],
+      horaentrada: userInfo[0].horaentrada,
+      horasalida: userInfo[0].horasalida,
+    }
+    res.json(userInfo)
   } catch (error) {
     next(error)
   }
 }
 
 //Ruta /api/empleados/:id
-//Descripcion Devuelve el correo y contraseña del empleado
-//especificado en :id
-export const obtenerEmpleado = async (req, res, next) => {
+//Descripcion Devuelve la informacion del empleado con el :id
+export const obtenerEmpleadoPorId = async (req, res, next) => {
   try {
     const { id } = req.params
-    let empleados = await db
-      .select('correo', 'hashpassword')
+    let [empleado] = await db
+      .select(
+        'idempleado',
+        'idsupervisor',
+        'nombre',
+        'apellido',
+        'correo',
+        'departamento',
+        'distrito',
+        'status',
+        'horaentrada',
+        'horasalida',
+        'idrol',
+        'hashpassword'
+      )
       .from('empleados')
+      .innerJoin(
+        'rolxempleado',
+        'empleados.idempleado',
+        'rolxempleado.idempleado'
+      )
       .where('idempleado', id)
-    if (empleados.length < 1) {
+    if (!empleado) {
       res.status(404)
       throw new CustomError('No se ha encontrado el empleado', 404)
     }
-    res.json(empleados)
+    empleado = {
+      ...empleado,
+      horaentrada: toFormat12h(empleado.horaentrada),
+      horasalida: toFormat12h(empleado.horasalida),
+    }
+    res.json(empleado)
   } catch (error) {
     next(error)
   }
 }
+
+//Ruta api/empleados PUT
+//Descripcion modifica la informacion de un empleado
+//Body
+/*{ 
+  idempleado: string,
+  idsupervisor: string | null,
+  nombre: string,
+  apellido: string,
+  correo: string,
+  password: string,
+  distrito: int | null
+  zona: string | null
+  departamento: string
+  horaentrada: string
+  horasalida: string
+}
+*/
+export const actualizarEmpleado = (req, res, next) => {}
