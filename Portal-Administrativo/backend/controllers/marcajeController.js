@@ -27,6 +27,7 @@ export const marcarEmpleado = async (req, res, next) => {
       .transacting(transaction)
       .select('idmarca')
       .where('tipo', tipo)
+      .andWhere('idempleado', idempleado)
       .andWhereBetween('fecha', [fechaInicio, fechaFinal])
     if (marcajeRepetido.length > 0) {
       throw new CustomError(`Ya ha marcado su ${tipo} hoy`)
