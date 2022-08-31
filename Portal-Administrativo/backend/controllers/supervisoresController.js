@@ -1,6 +1,8 @@
 import { db } from '../db/db.js'
 import { CustomError } from '../utils/CustomError.js'
 
+//Ruta api/supervisores GET
+//Descripcion Devuelve una lista con todos los supervisores
 export const obtenerSupervisores = async (_req, res, next) => {
   try {
     let supervisores = await db
@@ -25,13 +27,23 @@ export const obtenerSupervisores = async (_req, res, next) => {
   }
 }
 
+//Ruta api/supervisores POST
+//Descripcion actualiza el rol de un empleado a supervisor
+// y devuelve el idempleado y el id de auth0
+//Body
+/*
+{
+  idempleado: string, el empleado que se va a actualizar
+  idauth0: string
+}
+*/
 export const crearSupervisor = async (req, res, next) => {
   try {
     const { idempleado, idauth0 } = req.body
     let transaction = await db.transaction()
-    let supervisor = await db('supervisor')
+    let [supervisor] = await db('supervisor')
       .transacting(transaction)
-      .returning(['idempleado', 'idsupervisor'])
+      .returning(['idempleado', 'idsupervisor as idauth0'])
       .insert({ idempleado, idsupervisor: idauth0 })
       .catch((err) => {
         transaction.rollback()
