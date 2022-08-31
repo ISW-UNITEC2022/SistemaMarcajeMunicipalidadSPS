@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import { errorHandler, notFound } from './middlewares/errorMiddleware.js'
 import rutasEmpleados from './routes/empleados.js'
 import rutasSupervisores from './routes/supervisores.js'
+import rutasMarcaje from './routes/marcaje.js'
 
 import favicon from 'serve-favicon'
 import cors from 'cors'
@@ -18,6 +19,7 @@ app.use(favicon('favicon.ico'))
 //Rutas
 app.use('/api/empleados', rutasEmpleados)
 app.use('/api/supervisores', rutasSupervisores)
+app.use('/api/marcaje', rutasMarcaje)
 //Middlewares
 app.use(notFound)
 app.use(errorHandler)
