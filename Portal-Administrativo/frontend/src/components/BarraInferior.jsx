@@ -17,9 +17,12 @@ function BarraInferior() {
 					textTransform: 'none',
 					color: '#f2f2f2',
 
-					display: 'flex',
+					width: '100%',
+					textAlign: 'center',
 					justifyContent: 'center',
 					alignItems: 'center',
+					position: 'fixed',
+					bottom: 0,
 				}}
 			>
 				Dirección C3i Municipalidad de San Pedro Sula

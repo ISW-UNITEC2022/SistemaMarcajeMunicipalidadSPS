@@ -1,55 +1,67 @@
-.App {
-  background-color: #f2f2f2;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  /**font-size: calc(10px + 2vmin);**/
-  color: #202020;
-}
 
-.BackApp {
-  background-color: #f2f2f2;
-}
-
-.SupApp {
-  display: flex;
-	height: 100%;
-}
-
-.Content {
-  background-color: #f2f2f2;
-}
-
-.PiedePagina {
-  background-color: #f2f2f2;
-  align-items: flex-end;
-}
-
-.aaa {
+.fila {
   display: flex;
   margin-left: 30px;
+  margin-bottom: 10px;
 }
 
-.texto {
-  margin-top: 50px;
-  margin-left: 30px;
+input:hover {
+  border-color: #02732A;
+}
+
+.horasalida:focus{
+  border: 2px solid #02732A;
+  outline: none;
+}
+
+.horaentrada:focus{
+  border: 2px solid #02732A;
+  outline: none;
+}
+
+input {
+  width: 230px;
+  height: 48px;
+  text-align: center;
+  font-size: 20px;
+  font-family: sans-serif;
+  font-weight: 100;
+  color: #757575;
+  border-radius: 5px;
+  border-color: #02732A;
+  border-width: 1px;
+  margin-right: 12px;
+}
+
+button{
+  background-color: #02732A;
+  color: #f2f2f2;
+  border-radius: 5px;
+  border-color: #02732A;
+  border-width: 1px;
+  font-size: 18px;
+}
+
+button:hover{
+  background-color: #80E673;
+  border-color: #80E673;
+  color: #1F3821;
+}
+
+.horaText {
+  margin-bottom: -10px;
+  margin-top: -2px;
+  margin-left: 13px;
+  margin-right: 128px;
+  color: #757575;
+  font-size: 16.5px;
 }
 
 .asterisco {
-  font-size: 100px;
-  color: #BF0404;
-
-  margin-top: -20px;
-  margin-left: 300px;
-  margin-bottom: -60px;
+  color: red;
 }
 
-.advertencia {
+.instruccion {
   color: #202020;
-  margin-top: 20px;
-  margin-left: 20px;
-  margin-bottom: -55px;
-  width: 300px;
+  margin-top: 25px;
 }

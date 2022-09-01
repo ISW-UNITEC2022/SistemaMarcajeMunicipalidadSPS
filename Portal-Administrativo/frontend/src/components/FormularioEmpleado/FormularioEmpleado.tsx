@@ -1,133 +1,305 @@
-import {useState, useEffect} from 'react'
+import React, { useState, useEffect } from "react";
 import './Estilos/FormularioEmpleado.css'
-import BarraSuperior from '../BarraSuperior';
-import BarraInferior from '../BarraInferior';
-import BotonHome from '../BotonHome';
-import BotonV from '../BotonV';
-import CajaTitulo from '../CajaTitulo';
-import MenuUsuario from '../MenuUsuario';
-import TextBox from './Botones/TextBox';
-import PasswordBox from './Botones/PasswordBox';
-import DropdownBox from './Botones/DropdownBox';
-import { Box, Grid } from '@mui/material';
+import TextBox from './Botones/TextBox.jsx';
+import PasswordBox from './Botones/PasswordBox.jsx';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Axios from "axios";
+import { borderColor, fontSize } from "@mui/system";
 
-export default  function FormularioEmpleado() {
+export default function FormularioBasico() {
+	const url = "https://proyecto-isw1.herokuapp.com/api/empleados";
+	const [data, setData] = useState({
+		idempleado: "",
+		idsupervisor: null,
+		nombre: "",
+		apellido: "",
+		correo: "",
+		password: "",
+		distrito: 0,
+		zona: "",
+		departamento: "",
+		horaentrada: "",
+		horasalida: "",
+	});
 
-	const [empleado, setEmpleado] = useState({
-		idempleado: '', 
-  		idsupervisor: '',
-  		nombre: '',
-  		apellido: '',
-  		correo: '',
-  		password: '',
-		confpassword: '',
-  		distrito: 0,
-  		departamento: '',
-  		horaentrada: { hora: 0, tiempo: ''},
-  		horasalida: { hora: 0, tiempo: '' },
-	  });
+	const [dis, setDis] = React.useState('');
 
-	const handleChange = (e) => {
-		setEmpleado({
-		  ...empleado,
-		  [e.target.name]: e.target.value,
-		});
-	  };
-	
-	  let { idempleado,idsupervisor,nombre,apellido,correo,password,confpassword,distrito,departamento,horaentrada,horasalida } = empleado;
-	  const delay = ms => new Promise(res => setTimeout(res, ms));
+	const handleChangeDis = (event: SelectChangeEvent) => {
+		console.log(dis);
+		setDis(event.target.value);
+		console.log(dis);
+	};
 
-	  	const handleSubmit=()=>{
-			if(idempleado==='' || idsupervisor==='' || nombre==='' || apellido==='' || correo==='' || password==='' && confpassword!=password){
-				return console.log('campos vacios');
-			}
+	const [dep, setDep] = React.useState('');
 
-			const requestInit = {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(empleado),
-			  };
+	const handleChangeDep = (event: SelectChangeEvent) => {
+		console.log(dep);
+		setDep(event.target.value);
+		console.log(dep);
+	};
 
-			fetch('http://localhost:4000/api/empleados/auth',requestInit)
-			.then(res=>res.json())
-			.then(res=>console.log(res));
+	function submit(e) {
+		e.preventDefault();
+		Axios.post(url, {
+			idempleado: data.idempleado,
+			idsupervisor: null,
+			nombre: data.nombre,
+			apellido: data.apellido,
+			correo: data.correo,
+			password: data.password,
+			distrito: dis,
+			zona: data.zona,
+			departamento: dep,
+			horaentrada: data.horaentrada,
+			horasalida: data.horasalida,
+		}).then((res) => {
+			console.log(res.data)
+		})
+	}
 
-			  setEmpleado({
-				idempleado: '', 
-  				idsupervisor: '',
-  				nombre: '',
-  				apellido: '',
-  				correo: '',
-  				password: '',
-				confpassword: '',
-  				distrito: 0,
-  				departamento: '',
-  				horaentrada: { hora: 0, tiempo: ''},
-  				horasalida: { hora: 0, tiempo: '' },
-			  })
-
-		}
+	function handle(e) {
+		const newdata = { ...data };
+		newdata[e.target.id] = e.target.value;
+		setData(newdata);
+		console.log(newdata);
+	}
 
 	return (
 		<div>
-			<div className='BackApp'>
-				<div className='SupApp'>
-					<div style={{ flex: 3 }}>
-						<MenuUsuario input={"Andrea Rodriguez"}></MenuUsuario>
-					</div>
-					<div style={{ flex: 3 }}>
-						<CajaTitulo input={"Crear Empleados"} />
-					</div>
-					<div style={{ flex: 3 }}>
-						<Box></Box>
-					</div>
+			<form onSubmit={(e) => submit(e)}>
+				<div className="fila">
+					<p className="instruccion">
+						Ingrese los datos correspondientes a las siguientes casillas.
+					</p>
 				</div>
-				<div>
-					<BotonHome></BotonHome>
+
+				<div className="fila">
+					<TextBox
+						_width={470}
+						_onChange={(e) => handle(e)}
+						_id={"idempleado"}
+						_value={data.idempleado}
+						_type={"text"}
+						_label={"No° Identidad"}
+					></TextBox>
 				</div>
-				<div className="Content">
-					<p className='texto'>Ingrese los datos correspondientes.</p>
-					<div className="aaa">
-						<TextBox input={"No° Identidad"} width={"61ch"}></TextBox>
-					</div>
-					<div className="aaa">
-						<TextBox input={"Nombres"} width={"30ch"}></TextBox>
-						<TextBox input={"Apellidos"} width={"30ch"}></TextBox>
-					</div>
-					<div className="aaa">
-						<TextBox input={"Correo Electrónico"} width={"61ch"}></TextBox>
-					</div>
-					<div className="aaa">
-						<PasswordBox input={"Contraseña"}></PasswordBox>
-						<PasswordBox input={"Confirmar Contraseña"}></PasswordBox>
-						<div className='asterisco'>*</div>
-						<p className='advertencia'>
-							Favor rellenar todas las casillas. 
-							Cada campo es obligatorio y fundamental 
-							para la información de los colaboradores.
-							Favor utilizar un correo electrónico ya 
-							existente por empleado</p>
-					</div>
-					<div className="aaa">
-						<DropdownBox input={"Hora Entrada"} width={"18.8ch"} type={"hora"}></DropdownBox>
-						<DropdownBox input={"Horario"} width={"10ch"} type={"horario"}></DropdownBox>
-						<DropdownBox input={"Hora Salida"} width={"18.8ch"} type={"hora"}></DropdownBox>
-						<DropdownBox input={"Horario"} width={"10ch"} type={"horario"}></DropdownBox>
-					</div>
-					<div className="aaa">
-						<TextBox input={"Zona"} width={"40ch"}></TextBox>
-						<DropdownBox input={"Distritos"} width={"20ch"} type={"distrito"}></DropdownBox>
-					</div>
-					<div className="aaa">
-						<TextBox input={"Departamento"} width={"61ch"}></TextBox>
-					</div>
-					<form onSubmit={handleSubmit}>
-					<div className='aaa'>
-						<BotonV input={"Registrar"} width={"47.4ch"} type={""}></BotonV>
-					</div>
-					</form>
+
+				<div className="fila">
+					<TextBox
+						_width={220}
+						_onChange={(e) => handle(e)}
+						_id={"nombre"}
+						_value={data.nombre}
+						_type={"text"}
+						_label={"Nombres"}
+					></TextBox>
+
+					<TextBox
+						_width={220}
+						_onChange={(e) => handle(e)}
+						_id={"apellido"}
+						_value={data.apellido}
+						_type={"text"}
+						_label={"Apellidos"}
+					></TextBox>
 				</div>
-			</div>
+
+				<div className="fila">
+					<TextBox
+						_width={220}
+						_onChange={(e) => handle(e)}
+						_id={"correo"}
+						_value={data.correo}
+						_type={"text"}
+						_label={"Correo Electrónico"}
+					></TextBox>
+
+					<PasswordBox
+						_onChange={(e) => handle(e)}
+						_id={"password"}
+						_value={data.password}
+						_label={"Contraseña"}
+					></PasswordBox>
+				</div>
+
+				<div className="fila">
+					<FormControl sx={{ minWidth: 250 }}>
+						<InputLabel
+							sx={{
+								'&.MuiInputLabel-formControl': {
+									'&.Mui-focused': {
+										color: "#02732A",
+									},
+									'.MuiInputLabel-asterisk': {
+										color: "red"
+									}
+								}
+							}}
+							required
+							id="demo-simple-select-autowidth-label">Distrito</InputLabel>
+						<Select
+							required
+							labelId="demo-simple-select-autowidth-label"
+							id="demo-simple-select-autowidth"
+							value={dis}
+							onChange={handleChangeDis}
+							autoWidth
+							label="Distrito"
+							variant='outlined'
+							sx={{
+								marginRight: '12px',
+								marginBottom: '5px',
+								height: 52,
+								size: 'large',
+								'.MuiSelect-icon': {
+									color: '#02732A',
+								},
+								'.MuiOutlinedInput-notchedOutline': {
+									borderColor: '#02732A',
+								},
+								'&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+									borderColor: '#02732A',
+								},
+								'&:hover .MuiOutlinedInput-notchedOutline': {
+									borderColor: '#02732A',
+								},
+							}}
+						>
+							<MenuItem sx={{ width: 120 }} value="" className="MenuItem">
+								<em>None</em>
+							</MenuItem>
+							<MenuItem value={1}>1</MenuItem>
+							<MenuItem value={2}>2</MenuItem>
+							<MenuItem value={3}>3</MenuItem>
+							<MenuItem value={4}>4</MenuItem>
+							<MenuItem value={5}>5</MenuItem>
+							<MenuItem value={6}>6</MenuItem>
+							<MenuItem value={7}>7</MenuItem>
+							<MenuItem value={8}>8</MenuItem>
+							<MenuItem value={9}>9</MenuItem>
+							<MenuItem value={10}>10</MenuItem>
+							<MenuItem value={11}>11</MenuItem>
+							<MenuItem value={12}>12</MenuItem>
+							<MenuItem value={13}>13</MenuItem>
+							<MenuItem value={14}>14</MenuItem>
+							<MenuItem value={15}>15</MenuItem>
+							<MenuItem value={16}>16</MenuItem>
+							<MenuItem value={17}>17</MenuItem>
+							<MenuItem value={18}>18</MenuItem>
+							<MenuItem value={19}>19</MenuItem>
+							<MenuItem value={20}>20</MenuItem>
+						</Select>
+					</FormControl>
+
+					<FormControl sx={{ minWidth: 238 }}>
+						<InputLabel
+							sx={{
+								'&.MuiInputLabel-formControl': {
+									'&.Mui-focused': {
+										color: "#02732A",
+									},
+									'.MuiInputLabel-asterisk': {
+										color: "red"
+									}
+								}
+							}}
+							required
+							id="demo-simple-select-autowidth-label">Departamento</InputLabel>
+						<Select
+							required
+							labelId="demo-simple-select-autowidth-label"
+							id="demo-simple-select-autowidth"
+							value={dep}
+							onChange={handleChangeDep}
+							autoWidth
+							label="Departamento"
+							variant='outlined'
+							sx={{
+								height: 52,
+								marginBottom: '5px',
+								size: 'large',
+								'.MuiSelect-icon': {
+									color: '#02732A',
+								},
+								'.MuiOutlinedInput-notchedOutline': {
+									borderColor: '#02732A',
+								},
+								'&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+									borderColor: '#02732A',
+								},
+								'&:hover .MuiOutlinedInput-notchedOutline': {
+									borderColor: '#02732A',
+								},
+							}}
+						>
+							<MenuItem sx={{ width: 120 }} value="" className="MenuItem">
+								<em>None</em>
+							</MenuItem>
+							<MenuItem value={"Direccion C3i"}>Direccion C3i</MenuItem>
+							<MenuItem value={"CCC"}>CCC</MenuItem>
+							<MenuItem value={"DIEM"}>DIEM</MenuItem>
+							<MenuItem value={"MT"}>MT</MenuItem>
+							<MenuItem value={"AMC"}>AMC</MenuItem>
+						</Select>
+					</FormControl>
+				</div>
+
+				<div className="fila">
+					<TextBox
+						_width={470}
+						_onChange={(e) => handle(e)}
+						_id={"zona"}
+						_value={data.zona}
+						_type={"text"}
+						_label={"Zona"}
+					></TextBox>
+				</div>
+				<div className="fila">
+					<p className="horaText">Hora Entrada <span className="asterisco">*</span></p>
+					<p className="horaText">Hora Salida <span className="asterisco">*</span></p>
+				</div>
+				<div className="fila">
+					<input
+						onChange={(e) => handle(e)}
+						id="horaentrada"
+						value={data.horaentrada}
+						placeholder="Hora de Entrada"
+						type="time"
+						required
+
+						className="horaentrada"
+					/>
+
+					<input
+						onChange={(e) => handle(e)}
+						id="horasalida"
+						value={data.horasalida}
+						placeholder="Hora de Salida"
+						type="time"
+						required
+
+						className="horasalida"
+					/>
+				</div>
+
+				<div className="fila">
+					<button
+						type="submit"
+						className="btn btn-primary"
+						style={{
+							blockSize: "50px",
+							width: "484px",
+							marginTop: "6px",
+						}}
+					>
+						Crear Empleado
+					</button>
+				</div>
+
+			</form>
 		</div>
 	);
 }
