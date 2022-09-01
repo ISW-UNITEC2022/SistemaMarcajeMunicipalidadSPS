@@ -25,18 +25,30 @@ export const marcarEmpleado = async (req, res, next) => {
     let transaction = await db.transaction()
     let marcajeRepetido = await db('marcaje')
       .transacting(transaction)
-      .select('idmarca')
-      .where({ idempleado, tipo })
-      .andWhereBetween('fecha', [fechaInicio, fechaFinal])
+      .select('tipo')
+      .where({ idempleado: idempleado })
+      .andWhereBetween('fecha', [
+        fechaInicio.toLocaleString('en-US', {
+          timeZone: 'America/Tegucigalpa',
+        }),
+        fechaFinal.toLocaleString('en-US', { timeZone: 'America/Tegucigalpa' }),
+      ])
     if (marcajeRepetido.length > 0) {
-      throw new CustomError(`Ya ha marcado su ${tipo} hoy`, 409)
+      let marcas = marcajeRepetido.map((marca) => marca.tipo)
+      if (marcas.includes(tipo)) {
+        throw new CustomError(`Ya ha marcado su ${tipo} hoy`, 409)
+      }
+    } else if (tipo === 'salida') {
+      throw new CustomError(`Aun no ha marcado entrada`, 401)
     }
     let [marcaje] = await db('marcaje')
       .transacting(transaction)
       .insert(
         {
           idempleado,
-          fecha,
+          fecha: fecha.toLocaleString('en-US', {
+            timeZone: 'America/Tegucigalpa',
+          }),
           tipo,
           latitud: lat,
           longitud: lon,
