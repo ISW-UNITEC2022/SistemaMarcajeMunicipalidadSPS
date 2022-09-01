@@ -3,7 +3,6 @@ import './Estilos/botones.css';
 import './Estilos/pantalla.css';
 import LoginButton from './Botones/LoginButton'
 import { useAuth0 } from '@auth0/auth0-react'
-import TaskList from '../menu_user_comp/menu_index';
 
 function Pantalla_Bienvenida() {
     const { isAuthenticated } = useAuth0();
@@ -33,11 +32,12 @@ function Pantalla_Bienvenida() {
                         </div>
                 }
 
-                {isAuthenticated
-                ?
-                    <></>
-                :
-                    <LoginButton />
+                {
+                    isAuthenticated
+                        ?
+                        <></>
+                        :
+                        <LoginButton />
                 }
             </div>
         </div>

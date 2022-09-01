@@ -8,10 +8,14 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import { useState } from 'react';
 import { useRef } from 'react';
+import { useAuth0 } from '@auth0/auth0-react'
+import { useNavigate } from "react-router-dom";
 
 const SplitButton = ({ input }) => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
+  const { isAuthenticated, user } = useAuth0();
+  const navigate = useNavigate();
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -24,6 +28,17 @@ const SplitButton = ({ input }) => {
 
     setOpen(false);
   };
+
+  const usuario = () => {
+    if (isAuthenticated)
+      return user.name;
+    else
+      return 'Error de Autenticacion';
+  };
+
+  if(!isAuthenticated)
+    navigate('/');
+
 
   return (
     <React.Fragment>
@@ -54,7 +69,7 @@ const SplitButton = ({ input }) => {
             },
           }}
           onClick={handleToggle}
-        >{input}
+        >{usuario()}
           <ExpandMoreIcon sx={{ fontSize: 32, }}></ExpandMoreIcon>
         </Button>
       </ButtonGroup>

@@ -5,17 +5,40 @@ import reportWebVitals from './reportWebVitals';
 import App from './App';
 import BarraSuperior from './components/BarraSuperior';
 import BarraInferior from './components/BarraInferior';
+import { Auth0Provider } from '@auth0/auth0-react';
+
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+/*window.onunload = window.onbeforeunload = function(){
+  return "Ud esta abandonando este sitio, su sesion se finalizara";
+};*/
+
+const domain = process.env.REACT_APP_AUTH_DOMAIN!;
+const clientId = process.env.REACT_APP_AUTH_CLIENT_ID!;
+
 root.render(
-  <React.StrictMode>
-    <BarraSuperior></BarraSuperior>
-    <App />
-    <BarraInferior></BarraInferior>
-  </React.StrictMode>
+
+  <Auth0Provider
+    domain={domain}
+    clientId={clientId}
+    redirectUri={window.location.origin}
+  >
+
+      <React.StrictMode>
+        <BarraSuperior></BarraSuperior>
+        <App />
+        <BarraInferior></BarraInferior>
+      </React.StrictMode>
+    
+  </Auth0Provider>
+  
 );
+
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

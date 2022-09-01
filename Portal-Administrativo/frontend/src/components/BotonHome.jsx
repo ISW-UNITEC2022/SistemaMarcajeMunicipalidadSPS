@@ -2,7 +2,7 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import MuiButton from "@mui/material/Button";
 import HomeIcon from '@mui/icons-material/Home';
-
+import { useNavigate } from "react-router-dom";
 
 function BotonHome() {
   const Button = styled(MuiButton)((props) => ({
@@ -27,10 +27,12 @@ function BotonHome() {
     }, 
   }),
   );
-  
+
+  const navigate = useNavigate();
+
   return (
     <div>
-      <Button>
+      <Button onClick={() => navigate("/menu_principal")}>
         <HomeIcon style={{ fontSize: 40 }}/>
       </Button>
     </div>
