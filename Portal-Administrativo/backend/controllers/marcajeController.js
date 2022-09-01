@@ -38,7 +38,7 @@ export const marcarEmpleado = async (req, res, next) => {
       if (marcas.includes(tipo)) {
         throw new CustomError(`Ya ha marcado su ${tipo} hoy`, 409)
       }
-    } else if (tipo === 'salida') {
+    } else if (marcajeRepetido.length <= 0 && tipo === 'salida') {
       throw new CustomError(`Aun no ha marcado entrada`, 401)
     }
     let [marcaje] = await db('marcaje')
