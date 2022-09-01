@@ -19,11 +19,11 @@ export const marcarEmpleado = async (req, res, next) => {
     let fecha = new Date()
     //El rango de tiempo para validar si ya se marco, desde 'hoy' en la mañana hasta la noche
     let fechaInicio = new Date(fecha)
-    fechaInicio.setHours(0, 0, 0)
+    fechaInicio.setHours(0, 0, 0, 0)
     let fechaFinal = new Date(fecha)
-    fechaFinal.setHours(12, 59, 0)
+    fechaFinal.setHours(24, 59, 0, 0)
     let transaction = await db.transaction()
-    let marcajeRepetido = await db('marcaje')
+    let marcas = await db('marcaje')
       .transacting(transaction)
       .select('tipo')
       .where({ idempleado: idempleado })
@@ -33,8 +33,9 @@ export const marcarEmpleado = async (req, res, next) => {
         }),
         fechaFinal.toLocaleString('en-US', { timeZone: 'America/Tegucigalpa' }),
       ])
-    if (marcajeRepetido.length > 0) {
-      let marcas = marcajeRepetido.map((marca) => marca.tipo)
+    throw new CustomError('', 404, marcas)
+    if (marcas.length > 0) {
+      marcas = marcas.map((marca) => marca.tipo)
       if (marcas.includes(tipo)) {
         throw new CustomError(`Ya ha marcado su ${tipo} hoy`, 409)
       }
