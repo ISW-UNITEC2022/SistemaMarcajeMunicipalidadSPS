@@ -33,13 +33,13 @@ export const marcarEmpleado = async (req, res, next) => {
         }),
         fechaFinal.toLocaleString('en-US', { timeZone: 'America/Tegucigalpa' }),
       ])
-    throw new CustomError('', 404, marcas)
     if (marcas.length > 0) {
+      console.log(marcas)
       marcas = marcas.map((marca) => marca.tipo)
       if (marcas.includes(tipo)) {
         throw new CustomError(`Ya ha marcado su ${tipo} hoy`, 409)
       }
-    } else if (marcajeRepetido.length <= 0 && tipo === 'salida') {
+    } else if (marcas.length <= 0 && tipo === 'salida') {
       throw new CustomError(`Aun no ha marcado entrada`, 401)
     }
     let [marcaje] = await db('marcaje')
