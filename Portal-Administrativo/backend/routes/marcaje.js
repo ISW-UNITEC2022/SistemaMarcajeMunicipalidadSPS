@@ -1,8 +1,12 @@
 import { Router } from 'express'
-import { marcarEmpleado } from '../controllers/marcajeController.js'
+import {
+  marcarEmpleado,
+  validarMarca,
+} from '../controllers/marcajeController.js'
 
 const router = Router()
 
 router.route('/').post(marcarEmpleado)
+router.route('/:correo').get(validarMarca)
 
 export default router

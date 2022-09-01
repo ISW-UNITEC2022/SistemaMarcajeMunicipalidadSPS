@@ -1,4 +1,5 @@
 import { db } from '../db/db.js'
+import { getToday, toLocale } from '../utils/convertTime.js'
 import { CustomError } from '../utils/CustomError.js'
 
 //Ruta /api/marcaje POST
@@ -16,12 +17,8 @@ export const marcarEmpleado = async (req, res, next) => {
   try {
     let { idempleado, lat, lon, tipo } = req.body
     tipo = tipo ? 'entrada' : 'salida'
-    let fecha = new Date()
     //El rango de tiempo para validar si ya se marco, desde 'hoy' en la mañana hasta la noche
-    let fechaInicio = new Date(fecha)
-    fechaInicio.setHours(0, 0, 0, 0)
-    let fechaFinal = new Date(fecha)
-    fechaFinal.setHours(24, 59, 0, 0)
+    let [fecha, fechaInicio, fechaFinal] = getToday()
     let transaction = await db.transaction()
     let marcas = await db('marcaje')
       .transacting(transaction)
@@ -68,11 +65,35 @@ export const marcarEmpleado = async (req, res, next) => {
     transaction.commit()
     marcaje = {
       ...marcaje,
-      fecha: marcaje.fecha.toLocaleString('en-US', {
-        timeZone: 'America/Tegucigalpa',
-      }),
+      fecha: toLocale(marcaje.fecha),
     }
     res.json(marcaje)
+  } catch (error) {
+    next(error)
+  }
+}
+
+//Ruta api/marcaje/:correo?tipo=boolean GET
+//Descripcion Devuelve true si el empleado ya marco
+export const validarMarca = async (req, res, next) => {
+  try {
+    const { correo } = req.params
+    let { tipo } = req.query || true
+    tipo = tipo === 'true' ? 'entrada' : 'salida'
+    console.log(tipo)
+    let [_, fechaInicio, fechaFinal] = getToday()
+    console.log(toLocale(fechaInicio), toLocale(fechaFinal))
+    let transaction = await db.transaction()
+    let marcas = await db('empleados')
+      .transacting(transaction)
+      .select('marcaje.tipo')
+      .innerJoin('marcaje', 'empleados.idempleado', 'marcaje.idempleado')
+      .where({ correo: correo, tipo: tipo })
+      .andWhereBetween('fecha', [toLocale(fechaInicio), toLocale(fechaFinal)])
+
+    let marca = marcas.find((m) => m.tipo === tipo)
+    transaction.commit()
+    res.json({ marcado: !marca ? false : true })
   } catch (error) {
     next(error)
   }

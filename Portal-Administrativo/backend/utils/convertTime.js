@@ -33,3 +33,18 @@ export const toFormat12h = (horaEn24h) => {
   if (minuto < 10) minuto = '0' + minuto
   return hora + ':' + minuto + tiempo
 }
+
+export const getToday = () => {
+  let fecha = new Date()
+  let fechaInicio = new Date(fecha)
+  fechaInicio.setHours(0, 0, 0, 0)
+  let fechaFinal = new Date(fecha)
+  fechaFinal.setHours(24, 59, 0, 0)
+  return [fecha, fechaInicio, fechaFinal]
+}
+
+export const toLocale = (date) => {
+  return date.toLocaleString('en-US', {
+    timeZone: 'America/Tegucigalpa',
+  })
+}
