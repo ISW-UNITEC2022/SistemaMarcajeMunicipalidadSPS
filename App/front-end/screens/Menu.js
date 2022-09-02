@@ -1,6 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity,TouchableHighlight,Button,Alert,Image} from 'react-native';
+import { StyleSheet, Text, View, Pressable ,TouchableOpacity,TouchableHighlight,Button,Alert,Image} from 'react-native';
+
+
+
+
+
 
 export class BotonMarca extends React.Component {
   state={
@@ -26,6 +31,8 @@ export class BotonMarca extends React.Component {
     );
   }
 
+
+  
   componentDidMount(){
   }
 
@@ -77,6 +84,7 @@ const styles1 = StyleSheet.create({
   }
 });
 
+
 export class BotonMarca1 extends React.Component {
 
 
@@ -84,6 +92,8 @@ export class BotonMarca1 extends React.Component {
     entrada:true,
     pressed:false
   }
+  
+  
 
   marcar = () =>{
     Alert.alert(
@@ -152,6 +162,20 @@ const styles4 = StyleSheet.create({
 });
 
 const Menu = ({navigation}) => {
+const cerrarsesion = () =>{Alert.alert(
+    "",
+    "Desea cerrar sesión?",
+    [
+      {
+        text: "Sí",
+        onPress: () =>  navigation.navigate('Login'),
+      },
+      { text: "No", onPress: () => console.log("OK Pressed") }
+    ]
+    );
+  }
+
+
   return (
   <View style={styles.container}> 
     <View style={styles.shape_conatiner}>
@@ -165,7 +189,11 @@ const Menu = ({navigation}) => {
       backgroundColor: '#BF0404'
      }]}/>
      </View>
+     <Pressable style={styles.button}   onPress={() => cerrarsesion()} >
+      <Text style={styles.textlog}>CERRAR SESIÓN</Text>
+    </Pressable>
   <View style={styles.container}>
+  
     <Image source={require('../assets/logo.png')} style={styles.logo} />
     <BotonMarca1 state={false}></BotonMarca1>  
     <BotonMarca state={true}></BotonMarca>
@@ -207,6 +235,14 @@ const styles = StyleSheet.create({
     alignContent:'center',
     
   },
+  textlog: {
+    fontSize: 16,
+    left:115,
+    top:-30,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: '#BF0404'
+  },
   texto:{
     color:'#1F3821',
     fontSize: 36,
@@ -238,6 +274,12 @@ const styles = StyleSheet.create({
     backgroundColor:'#80E673',
     textAlign:'center',
     borderRadius:10
+  },
+  logout: {
+    alignItems: 'left',
+    justifyContent: 'left',
+    backgroundColor: '#BF0404',
+    left:10
   },
   
   textbutton:{

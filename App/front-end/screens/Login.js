@@ -1,22 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {Component, useState} from 'react';
-import { StyleSheet, Text, AppRegistry ,View,Button,Dimensions,Image,TextInput,TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, AppRegistry ,View,Button,FlatListItemSeparator,Dimensions,FlatList,Image,TextInput,TouchableOpacity, Alert } from 'react-native';
 import axios from "axios";
 
 const Login = ({navigation}) => {
- 
 const[correo,setCorreo]=useState();
 const[password,setPassword]=useState();
-
 const Auth= (Correo,Contraseña) =>{
 axios.post('https://proyecto-isw1.herokuapp.com/api/empleados/auth', {
   correo: Correo,
   password: Contraseña,
 }).then(response => {
-  console.log(response.status) ;
+  Alert.alert(
+    "Bienvenido",
+    'Bienvenido ' +response.data.nombre + " " + response.data.apellido ,[{text: "OK"}])
   navigation.navigate('Menu')
 }).catch(error => {
   console.log(error)
+  Alert.alert(
+  "Correo o contraseña incorrecta",
+  "Verifica los datos ingresados incorrectamente",[{text: "OK"}])
 }) 
 }
 

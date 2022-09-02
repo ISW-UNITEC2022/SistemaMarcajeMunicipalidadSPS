@@ -15,12 +15,15 @@ const MyStack = () => {
         },
         headerTransparent:true,
         headerTitle:'',
-        headerTintColor:"#02732A"
+        headerTintColor: '#F2F2F2',
+        headerLeftContainerStyle:{
+          paddingLeft: 20,
+        }
       }}
       initialRouteName="Login">
         
         <Stack.Screen  name="Login" component={Login}/>
-        <Stack.Screen  name="Menu" component={Menu}/>
+        <Stack.Screen options={{headerShown: false}}  name="Menu" component={Menu}/>
         </Stack.Navigator>
     </NavigationContainer>
   );
