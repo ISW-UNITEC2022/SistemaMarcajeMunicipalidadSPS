@@ -24,8 +24,7 @@ a {
 .menu_user {
   background-color: #F2F2F2;
   text-align: center;
-  min-height: 88.8vh;
-  max-height: 88.8vh;
+  min-height: 44vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,52 +34,43 @@ a {
   
 }
 
-.caja_R {
+.caja_R{
   display: flex;
   position: absolute;
   transition: 0.3s all;
-  margin-top: 140px;
+  bottom:16vw;
 }
 
-.caja {
-  display: flex;
-  position: absolute;
+.caja{
+display: flex;
+position: absolute;
 }
 
-.caja_R2 {
+.caja_R2{
   display: flex;
   position: absolute;
   transition: 0.3s all;
-  margin-top: 440px;
+  bottom:7vw;
 }
 
-.down {
-  color: #FFEF05;
-  font-size: 30px;
-  display: flex;
-  position: absolute;
-  top: 0px;
-  right: 15px;
+.down{
+color: #FFEF05;
+font-size:30px;
+display: flex;
+position: absolute;
+top: 0vw;
+right:1vw;
 }
 
-.point {
-  font-size: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  left: 30px;
-  padding-top: 7px;
-}
-
-.logo {
-  height: 200px;
-  width: auto;
-  top: 200px;
-  align-items: center;
-  justify-content: center;
-  display: flex;
+.point{
+font-size: 10px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+position: absolute;
+left: 30px;
+padding-top: 0.5vw;
 }
 
 .BackApp {

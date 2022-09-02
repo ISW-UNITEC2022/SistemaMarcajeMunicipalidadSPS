@@ -54,10 +54,8 @@ const SplitButton = ({ input }) => {
         <Button
           sx={{
             backgroundColor: "#078c03",
-            width: 450,
+            width: '33.3vw',
             color: '#f2f2f2',
-
-            fontSize: 18,
             fontWeight: 'bold',
             fontFamily: 'sans-serif',
             fontStyle: 'normal',
@@ -84,7 +82,7 @@ const SplitButton = ({ input }) => {
           <Grow
             sx={{
               backgroundColor: '#078c03',
-              width: 450,
+              width: '33.3vw',
               borderTopLeftRadius: 0,
               borderTopRightRadius: 0,
               borderBottomLeftRadius: 10,
@@ -102,14 +100,14 @@ const SplitButton = ({ input }) => {
                   display: 'flex',
                 }}
               >
-                <BotonV input={"Configurar Perfil"} width={"450px"} type={""}></BotonV>
+                <BotonV input={"Configurar Perfil"} width={ '33.3vw'} type={""}></BotonV>
               </div>
               <div
                 sx={{
                   display: 'flex',
                 }}
               >
-                <BotonV input={"Cerrar Sesión"} width={"450px"} type={"logout"}></BotonV>
+                <BotonV input={"Cerrar Sesión"} width={ '33.3vw'} type={"logout"}></BotonV>
               </div>
 
             </Paper>

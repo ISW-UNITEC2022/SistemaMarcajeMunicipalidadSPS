@@ -6,8 +6,7 @@
   align-items: center;
   display:flex;
   flex-direction: column;
-  min-width:300px;
-  max-width:300px;
+  width:19.6vw;
   min-height:80px;
   max-height:80px;
   background-color: #FFEA60;

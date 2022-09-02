@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 function BotonHome() {
   const Button = styled(MuiButton)((props) => ({
-    width: 80,
-    height: 70,
+    width: '5vw',
+    height: '4vw',
   
     backgroundColor: '#BF0404 ',
     color: '#f2f2f2',
@@ -18,8 +18,8 @@ function BotonHome() {
     borderBottomRightRadius: 10,
     
     position: "absolute",
-    top: 20,
-    right: 10,
+    top: '1.3vw',
+    right: '1vw',
   
     '&:hover': {
       backgroundColor: '#FF9084',

@@ -42,9 +42,9 @@ export default function TaskList() {
         <div className='caja'>
           <Button onClick={abrir} variant="contained"
             style={{
-              width: 300,
-              height: 45,
-              fontSize: 20,
+              width:'19.5vw',
+              height: '3vw',
+              fontSize: '1.5vw',
               fontWeight: 'bold',
               fontFamily: 'sans-serif',
               fontStyle: 'normal',
@@ -62,9 +62,9 @@ export default function TaskList() {
         <div className={`caja_R ${open == true ? 'caja_R2' : ''}`}>
           <Button onClick={abrir2} variant="contained"
             style={{
-              width: 300,
-              height: 45,
-              fontSize: 20,
+              width:'19.5vw',
+              height: '3vw',
+              fontSize: '1.5vw',
               fontWeight: 'bold',
               fontFamily: 'sans-serif',
               fontStyle: 'normal',

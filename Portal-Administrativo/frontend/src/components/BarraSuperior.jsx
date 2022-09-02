@@ -9,7 +9,7 @@ function BarraSuperior(props) {
 		}}>
 			<Box
 				sx={{
-					height: 20,
+					height: '1.4vw',
 					flex: 3,
 					backgroundColor: '#078C03',
 				}}
