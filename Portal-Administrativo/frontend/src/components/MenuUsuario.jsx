@@ -55,10 +55,10 @@ const SplitButton = ({input}) => {
         <Button
           sx = {{
             backgroundColor: "#078c03",
-            width: 450,
+            width: '33.3vw',
             color: '#f2f2f2',
 
-            fontSize: 18,
+            fontSize: '1vw',
             fontWeight: 'bold',
             fontFamily: 'sans-serif',
             fontStyle: 'normal',
@@ -85,7 +85,7 @@ const SplitButton = ({input}) => {
           <Grow
           sx = {{
             backgroundColor: '#078c03',
-            width: 450,
+            width: '33.3vw',
             borderTopLeftRadius: 0,
             borderTopRightRadius: 0,
             borderBottomLeftRadius: 10,
@@ -107,7 +107,7 @@ const SplitButton = ({input}) => {
 
                       sx = {{
                         color: '#f2f2f2',
-                        fontSize: 16,
+                        fontSize: '1vw',
                         fontWeight: 'bold',
                         fontFamily: 'sans-serif',
                         fontStyle: 'normal',

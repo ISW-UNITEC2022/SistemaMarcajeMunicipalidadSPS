@@ -1,5 +1,5 @@
 .vent {
-    min-height: 100vh;
+    min-height: 42.5vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,19 +8,19 @@
   }
   
   .asterisco {
-    font-size: 100px;
+    font-size: 7vw;
+    position: absolute;
+    top: 20vw;
     color: #BF0404;
-  
-    margin-top: -20px;
-    margin-left: 103vh;
-    margin-bottom: -110px;
+    margin-left: 45vw;
   }
   
   .advertencia {
     color: #202020;
-    margin-left: 140vh;
-    margin-bottom: 55px;
-    width: 300px;
+    position: absolute;
+    top: 22vw;
+    margin-left: 70vw;
+    width: 21vw;
   }
 
   .SupApp {

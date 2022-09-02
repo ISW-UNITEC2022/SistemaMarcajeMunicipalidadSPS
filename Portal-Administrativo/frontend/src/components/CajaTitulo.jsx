@@ -4,10 +4,14 @@ import Box from '@mui/material/Box';
 const CajaTitulo = ({ input }) => (
 	<Box
 		sx={{
-			minHeight: 60,
+			minHeight: '5vw',
+			maxHeight: '5vw',
 			backgroundColor: '#F2B705',
-
-			fontSize: 22,
+			top: '1.3vw',
+			position: 'absolute',
+			left:'33.3vw',
+			width:'33.3vw',
+			fontSize: '2vw',
 			fontWeight: 'bold',
  			fontFamily: 'sans-serif',
   		fontStyle: 'normal',

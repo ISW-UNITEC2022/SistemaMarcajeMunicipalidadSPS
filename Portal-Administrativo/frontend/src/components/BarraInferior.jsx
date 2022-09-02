@@ -6,7 +6,7 @@ function BarraInferior() {
 		<div>
 			<Box
 				sx={{
-					minHeight: 20,
+					minHeight: '1vw',
 					flex: 1,
 					backgroundColor: '#013613',
 
@@ -23,7 +23,7 @@ function BarraInferior() {
 					justifyContent: 'center',
 					alignItems: 'center',
 					position: 'absolute',
-					bottommargin: 0,
+					bottom: '0vw',
 				}}
 			>
 				Dirección C3i Municipalidad de San Pedro Sula
