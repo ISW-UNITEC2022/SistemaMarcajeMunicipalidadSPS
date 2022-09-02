@@ -72,20 +72,10 @@ export default  function FormularioEmpleado() {
 	return (
 		<div>
 			<div className='BackApp'>
-				<div className='SupApp'>
-					<div style={{ flex: 3 }}>
-						<MenuUsuario input={"Andrea Rodriguez"}></MenuUsuario>
-					</div>
-					<div style={{ flex: 3 }}>
-						<CajaTitulo input={"Crear Empleados"} />
-					</div>
-					<div style={{ flex: 3 }}>
-						<Box></Box>
-					</div>
-				</div>
-				<div>
-					<BotonHome></BotonHome>
-				</div>
+			<MenuUsuario input={""}></MenuUsuario>
+			<CajaTitulo input={"Crear Empleados"} />
+			<Box></Box>
+			<BotonHome></BotonHome>
 				<div className="Content">
 					<p className='texto'>Ingrese los datos correspondientes.</p>
 					<div className="aaa">
@@ -101,14 +91,14 @@ export default  function FormularioEmpleado() {
 					<div className="aaa">
 						<PasswordBox input={"Contraseña"}></PasswordBox>
 						<PasswordBox input={"Confirmar Contraseña"}></PasswordBox>
-						<div className='asterisco'>*</div>
+					</div>
+					<div className='asterisco'>*</div>
 						<p className='advertencia'>
 							Favor rellenar todas las casillas. 
 							Cada campo es obligatorio y fundamental 
 							para la información de los colaboradores.
 							Favor utilizar un correo electrónico ya 
 							existente por empleado</p>
-					</div>
 					<div className="aaa">
 						<DropdownBox input={"Hora Entrada"} width={"18.8ch"} type={"hora"}></DropdownBox>
 						<DropdownBox input={"Horario"} width={"10ch"} type={"horario"}></DropdownBox>
