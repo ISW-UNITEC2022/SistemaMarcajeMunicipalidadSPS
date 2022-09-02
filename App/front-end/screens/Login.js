@@ -14,7 +14,12 @@ axios.post('https://proyecto-isw1.herokuapp.com/api/empleados/auth', {
   Alert.alert(
     "Bienvenido",
     'Bienvenido ' +response.data.nombre + " " + response.data.apellido ,[{text: "OK"}])
-  navigation.navigate('Menu')
+    navigation.navigate('Menu',{correo:Correo,
+      nombre:response.data.nombre,
+      id:response.data.idempleado,
+      hora_entrada:response.data.horaentrada,
+      hora_salida:response.data.horasalida,
+      apellido:response.data.apellido})
 }).catch(error => {
   console.log(error)
   Alert.alert(
@@ -142,4 +147,3 @@ const styles = StyleSheet.create({
 });
 
 export default Login;
-

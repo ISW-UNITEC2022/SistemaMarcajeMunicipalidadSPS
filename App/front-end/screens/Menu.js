@@ -1,29 +1,74 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Pressable ,TouchableOpacity,TouchableHighlight,Button,Alert,Image} from 'react-native';
-
-
-
-
-
+import { StyleSheet, Text, View, TouchableOpacity,Presable,TouchableHighlight,Button,Alert,Image} from 'react-native';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
+import axios from "axios";
 
 export class BotonMarca extends React.Component {
+
   state={
-    entrada:false,
-    pressed:false
+    entrada:true,
+    pressed:false,
+    correo:this.props.correo,
+    id:this.props.idEmpleado,
   }
 
+  _getLocation = async() =>{
+    const {status} = await Permissions.askAsync(Permissions.LOCATION)
+    if(status!=='granted'){
+      console.log('PERMISSION NOT GRANTED!');
+
+      this.setState({
+        errorMessage:'PERMISSION NOT GRANTED!'
+      });
+    }
+
+    const location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest, maximumAge: 10000});
+    return {
+        latitud:location.coords.latitude,
+        longitud:location.coords.longitude,
+    };
+  }
+
+  enviarMarca=async()=>{
+    console.log("Marcaje:");
+    const location=await this._getLocation();
+    console.log(location);
+    axios.post('https://proyecto-isw1.herokuapp.com/api/marcaje', {
+      lat:location.latitud,
+      lon:location.longitud,
+      idempleado:this.state.id,
+      tipo:false,
+    }).then(response => {
+      console.log(response.status);
+      this.setState({
+        pressed:true,
+      })
+    }).catch(error => {
+      console.log("Error:"+error)
+      console.log(error.response.data);
+      if(error.response.data.status==409){
+        Alert.alert(
+          "",
+          "Ya marcó su entrada hoy.",
+          [
+            { text: "Ok", onPress: () => console.log("OK Pressed") }
+          ]
+        );
+      }
+    });
+  }
+  
   marcar = () =>{
     Alert.alert(
       "",
-      "Desea su marcar su salida dentro del sistema?",
+      "Desea su marcar su entrada dentro del sistema?",
       [
         {
           text: "Sí",
-          onPress: () => 
-          this.setState({
-            pressed:true,
-          }),
+          onPress: () => {  
+            this.enviarMarca();},
           style: "No"
         },
         { text: "No", onPress: () => console.log("OK Pressed") }
@@ -31,11 +76,29 @@ export class BotonMarca extends React.Component {
     );
   }
 
-
-  
   componentDidMount(){
+    console.log("Correo: "+this.state.correo);
+    axios.get('https://proyecto-isw1.herokuapp.com/api/marcaje/'+this.state.correo+'?tipo=false', {
+    }).then(response => {
+      console.log(response);
+      if(response.data.marcado){
+      this.setState({
+        pressed:true,
+      });}
+    }).catch(error => {
+      console.log("Error:"+error)
+      console.log(error.response.data);
+      if(error.response.data.status==409){
+        Alert.alert(
+          "",
+          "Ya marcó su entrada hoy.",
+          [
+            { text: "Ok", onPress: () => console.log("OK Pressed") }
+          ]
+        );
+      }
+    });
   }
-
   render(){
 
     return (
@@ -58,43 +121,62 @@ export class BotonMarca extends React.Component {
   }
 }
 
-const styles1 = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button:{
-    alignItems:'center',
-    height: 80,
-    width:280,
-    justifyContent: 'center',
-    borderRadius:10,
-    margin:50,
-    marginTop: 75,
-    alignItems: 'center'
-
-  },
-  green:{
-    backgroundColor:'green'
-  },
-  yellow:{
-    backgroundColor:'yellow'
-  }
-});
-
-
 export class BotonMarca1 extends React.Component {
 
-
+  
   state={
     entrada:true,
-    pressed:false
+    pressed:false,
+    correo:this.props.correo,
+    id:this.props.idEmpleado,
+  }
+
+  _getLocation = async() =>{
+    const {status} = await Permissions.askAsync(Permissions.LOCATION)
+    if(status!=='granted'){
+      console.log('PERMISSION NOT GRANTED!');
+
+      this.setState({
+        errorMessage:'PERMISSION NOT GRANTED!'
+      });
+    }
+
+    const location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest, maximumAge: 10000});
+    return {
+        latitud:location.coords.latitude,
+        longitud:location.coords.longitude,
+    };
+  }
+
+  enviarMarca=async()=>{
+    console.log("Marcaje:");
+    const location=await this._getLocation();
+    console.log(location);
+    axios.post('https://proyecto-isw1.herokuapp.com/api/marcaje', {
+      lat:location.latitud,
+      lon:location.longitud,
+      idempleado:this.state.id,
+      tipo:true,
+    }).then(response => {
+      console.log(response.status);
+      this.setState({
+        pressed:true,
+      })
+    }).catch(error => {
+      console.log("Error:"+error)
+      console.log(error.response.data);
+      if(error.response.data.status==409){
+        Alert.alert(
+          "",
+          "Ya marcó su entrada hoy.",
+          [
+            { text: "Ok", onPress: () => console.log("OK Pressed") }
+          ]
+        );
+      }
+    });
   }
   
-  
-
   marcar = () =>{
     Alert.alert(
       "",
@@ -102,10 +184,8 @@ export class BotonMarca1 extends React.Component {
       [
         {
           text: "Sí",
-          onPress: () => 
-          this.setState({
-            pressed:true,
-          }),
+          onPress: () => {  
+            this.enviarMarca();},
           style: "No"
         },
         { text: "No", onPress: () => console.log("OK Pressed") }
@@ -114,6 +194,27 @@ export class BotonMarca1 extends React.Component {
   }
 
   componentDidMount(){
+    console.log("Correo: "+this.state.correo);
+    axios.get('https://proyecto-isw1.herokuapp.com/api/marcaje/'+this.state.correo+'?tipo=true', {
+    }).then(response => {
+      console.log(response);
+      if(response.data.marcado){
+      this.setState({
+        pressed:true,
+      });}
+    }).catch(error => {
+      console.log("Error:"+error)
+      console.log(error.response.data);
+      if(error.response.data.status==409){
+        Alert.alert(
+          "",
+          "Ya marcó su entrada hoy.",
+          [
+            { text: "Ok", onPress: () => console.log("OK Pressed") }
+          ]
+        );
+      }
+    });
   }
 
   render(){
@@ -138,43 +239,28 @@ export class BotonMarca1 extends React.Component {
   }
 }
 
-const styles4 = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button:{
-    alignItems:'center',
-    height: 80,
-    width:280,
-    justifyContent: 'center',
-    borderRadius:5,
-  },
-  green:{
-    backgroundColor:'#969696'
-  },
-  yellow:{
-    backgroundColor:'#FFEF05',
-    fontSize:'30px'
-  }
-});
 
-const Menu = ({navigation}) => {
-const cerrarsesion = () =>{Alert.alert(
-    "",
-    "Desea cerrar sesión?",
-    [
-      {
-        text: "Sí",
-        onPress: () =>  navigation.navigate('Login'),
-      },
-      { text: "No", onPress: () => console.log("OK Pressed") }
-    ]
-    );
-  }
 
+
+const Menu = ({route,navigation}) => {
+
+  const {correo,nombre,id,hora_entrada,hora_salida,apellido} =route.params;
+  var hora_entrada2=hora_entrada.slice(0,5);
+  var hora_salida2=hora_salida.slice(0,5);
+  
+
+	const cerrarsesion = () =>{Alert.alert(	
+    "",	
+    "Desea cerrar sesión?",	
+    [	
+      {	
+        text: "Sí",	
+        onPress: () =>  navigation.navigate('Login'),	
+      },	
+      { text: "No", onPress: () => console.log("OK Pressed") }	
+    ]	
+    );	
+  }
 
   return (
   <View style={styles.container}> 
@@ -189,17 +275,17 @@ const cerrarsesion = () =>{Alert.alert(
       backgroundColor: '#BF0404'
      }]}/>
      </View>
-     <Pressable style={styles.button}   onPress={() => cerrarsesion()} >
-      <Text style={styles.textlog}>CERRAR SESIÓN</Text>
+     <Pressable style={styles.button}   onPress={() => cerrarsesion()} >	
+      <Text style={styles.textlog}>CERRAR SESIÓN</Text>	
     </Pressable>
   <View style={styles.container}>
-  
-    <Image source={require('../assets/logo.png')} style={styles.logo} />
-    <BotonMarca1 state={false}></BotonMarca1>  
-    <BotonMarca state={true}></BotonMarca>
+    <Image source={require('../src/assets/logo.png')} style={styles.logo} />
+    <BotonMarca1 correo={correo} idEmpleado={id}></BotonMarca1>  
+    <BotonMarca correo={correo} idEmpleado={id}></BotonMarca>
     <TouchableOpacity disabled={true} style={styles.horario}>
-      <Text style={[styles.textStyle,{fontSize:20}]}>Horario de Trabajo</Text>
-      <Text style={[styles.textStyle,{fontSize:24}]}>8:00am - 5:00pm</Text>
+      <Text style={[styles.textStyle,{fontSize:20}]}A>Horario de Trabajo</Text>
+      <Text style={[styles.textStyle,{fontSize:22}]}A>{nombre} {apellido}</Text>
+      <Text style={[styles.textStyle,{fontSize:24}]}>{hora_entrada2} - {hora_salida2}</Text>
     </TouchableOpacity>
   </View>
   </View>
@@ -221,6 +307,20 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'flex-start',
   },
+  textlog: {	
+    fontSize: 16,	
+    left:115,	
+    top:-30,	
+    fontWeight: 'bold',	
+    letterSpacing: 0.25,	
+    color: '#BF0404'	
+  },
+  logout: {	
+    alignItems: 'left',	
+    justifyContent: 'left',	
+    backgroundColor: '#BF0404',	
+    left:10	
+  },
   square:{
     height: 20,
     width: 125,
@@ -234,14 +334,6 @@ const styles = StyleSheet.create({
     flex:2,
     alignContent:'center',
     
-  },
-  textlog: {
-    fontSize: 16,
-    left:115,
-    top:-30,
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: '#BF0404'
   },
   texto:{
     color:'#1F3821',
@@ -274,12 +366,6 @@ const styles = StyleSheet.create({
     backgroundColor:'#80E673',
     textAlign:'center',
     borderRadius:10
-  },
-  logout: {
-    alignItems: 'left',
-    justifyContent: 'left',
-    backgroundColor: '#BF0404',
-    left:10
   },
   
   textbutton:{
@@ -324,7 +410,7 @@ const styles = StyleSheet.create({
     marginTop:39
   },
   gray:{
-    backgroundColor:'#252525',
+    backgroundColor:'#757575',
     fontSize:'30px'
   }
 
