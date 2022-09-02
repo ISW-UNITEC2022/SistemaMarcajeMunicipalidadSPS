@@ -10,6 +10,7 @@ import TextBox from './Botones/TextBox';
 import PasswordBox from './Botones/PasswordBox';
 import DropdownBox from './Botones/DropdownBox';
 import { Box, Grid } from '@mui/material';
+import React from 'react';
 
 export default  function FormularioEmpleado() {
 
