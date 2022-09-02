@@ -7,8 +7,8 @@
   display: flex;
   align-items: left;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-size: 16px;
-  padding-top: 10px;
+  font-size: 0.9vw;
+  padding-top: 0.5vw;
 }
 
 .sub:hover {
@@ -22,15 +22,12 @@ a {
 }
 
 .menu_user {
-  background-color: #F2F2F2;
-  text-align: center;
-  min-height: 44vw;
+  min-height: 42.5vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  color: #202020;
   
 }
 
@@ -38,7 +35,7 @@ a {
   display: flex;
   position: absolute;
   transition: 0.3s all;
-  bottom:16vw;
+  margin-top:8vw;
 }
 
 .caja{
@@ -50,12 +47,12 @@ position: absolute;
   display: flex;
   position: absolute;
   transition: 0.3s all;
-  bottom:7vw;
+  margin-top:26vw;
 }
 
 .down{
 color: #FFEF05;
-font-size:30px;
+font-size:2vw;
 display: flex;
 position: absolute;
 top: 0vw;
@@ -63,13 +60,13 @@ right:1vw;
 }
 
 .point{
-font-size: 10px;
+font-size: 0.5vw;
 display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
 position: absolute;
-left: 30px;
+left: 2vw;
 padding-top: 0.5vw;
 }
 

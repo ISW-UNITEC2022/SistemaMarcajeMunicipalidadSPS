@@ -9,7 +9,7 @@ function Modificar() {
   return (
     <div>
 
-		<User input={"Andrea Rodriguez"}></User>
+		<User input={""}></User>
 		<Caja input={"Crear Empleados"} />
 		<BotonH></BotonH>
 						
