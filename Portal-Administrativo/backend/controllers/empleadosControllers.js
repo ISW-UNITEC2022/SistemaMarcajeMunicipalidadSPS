@@ -48,6 +48,52 @@ export const obtenerEmpleados = async (_req, res, next) => {
   }
 }
 
+//Ruta /api/empleados GET
+//Descripcion Devuelve la informacion de todos los empleados
+export const obtenerEmpleadosPorRol = async (_req, res, next) => {
+  try {
+    let empleados = await db
+      .select(
+        'empleados.idempleado',
+        'idsupervisor',
+        'nombre',
+        'apellido',
+        'correo',
+        'departamento',
+        'distrito',
+        'status',
+        'zona',
+        'horaentrada',
+        'horasalida',
+        'nombrerol as rol'
+      )
+      .from('empleados')
+      .innerJoin(
+        'rolxempleado',
+        'rolxempleado.idempleado',
+        '=',
+        'empleados.idempleado'
+      )
+      .innerJoin('roles', 'roles.idrol', '=', 'rolxempleado.idrol')
+      .where('roles.idrol', 2)
+    if (empleados.length < 1) {
+      res.status(404)
+      throw new CustomError('No hay ningun empleado', 404)
+    }
+    empleados = empleados.map((empleado) => {
+      return {
+        ...empleado,
+        horaentrada: toFormat12h(empleado.horaentrada),
+        horasalida: toFormat12h(empleado.horasalida),
+      }
+    })
+    res.json(empleados)
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+}
+
 //Ruta /api/empleados POST
 //Descripcion crea un nuevo empleado
 /*
