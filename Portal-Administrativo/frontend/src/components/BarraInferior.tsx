@@ -22,7 +22,7 @@ function BarraInferior() {
 					textAlign: 'center',
 					justifyContent: 'center',
 					alignItems: 'center',
-					position: 'absolute',
+					position: 'fixed',
 					bottom: '0vw',
 				}}
 			>
