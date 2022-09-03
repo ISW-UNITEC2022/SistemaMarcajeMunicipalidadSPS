@@ -11,6 +11,7 @@
 
 .BackApp {
   background-color: #f2f2f2;
+  height: 97vh;
 }
 
 .SupApp {
@@ -37,12 +38,12 @@
   margin-left: 1.5vw;
 }
 
-.asterisco {
+.asteriscoF {
   font-size: 7vw;
   position: absolute;
   top: 20vw;
   color: #BF0404;
-  margin-left: 67vw;
+  left: 67vw;
 }
 
 .advertencia {

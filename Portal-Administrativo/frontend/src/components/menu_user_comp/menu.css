@@ -22,7 +22,7 @@ a {
 }
 
 .menu_user {
-  min-height: 42.5vw;
+  min-height: 42.5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,19 +35,20 @@ a {
   display: flex;
   position: absolute;
   transition: 0.3s all;
-  margin-top:8vw;
+  margin-top:28vw;
 }
 
 .caja{
 display: flex;
 position: absolute;
+margin-top:20vw;
 }
 
 .caja_R2{
   display: flex;
   position: absolute;
   transition: 0.3s all;
-  margin-top:26vw;
+  margin-top:46vw;
 }
 
 .down{

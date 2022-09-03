@@ -1,5 +1,5 @@
 .vent {
-    min-height: 42.5vw;
+    min-height: 42.5vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,7 +12,7 @@
     position: absolute;
     top: 20vw;
     color: #BF0404;
-    margin-left: 45vw;
+    margin-left: 46vw;
   }
   
   .advertencia {

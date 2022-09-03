@@ -31,7 +31,7 @@ export default function TaskList() {
       <MenuUsuario input={""}></MenuUsuario>
       <BotonHome></BotonHome>
       <div className='menu_user'>
-        <img src={Logo} style={{ height: '12vw', width: 'auto', marginBottom: '18vw' }} />
+        <img src={Logo} style={{ height: '12vw', width: 'auto', marginTop: '0vw' }} />
 
         <div className='caja'>
           <Button onClick={abrir} variant="contained"
