@@ -1,7 +1,5 @@
 import './menu_em.css';
 import './menu.css';
-import FormularioEmpleado from '../FormularioEmpleado/FormularioEmpleado'
-import HomePage from '../HomePage/Pantalla_Bienvenida'
 import React from 'react';
 
 function DropdownM(props){
