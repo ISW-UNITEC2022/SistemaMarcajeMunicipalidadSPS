@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity,Presable,TouchableHighlight,Button,Alert,Image} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity,Pressable,TouchableHighlight,Button,Alert,Image} from 'react-native';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import axios from "axios";
@@ -279,7 +279,7 @@ const Menu = ({route,navigation}) => {
       <Text style={styles.textlog}>CERRAR SESIÓN</Text>	
     </Pressable>
   <View style={styles.container}>
-    <Image source={require('../src/assets/logo.png')} style={styles.logo} />
+    <Image source={require('../assets/logo.png')} style={styles.logo} />
     <BotonMarca1 correo={correo} idEmpleado={id}></BotonMarca1>  
     <BotonMarca correo={correo} idEmpleado={id}></BotonMarca>
     <TouchableOpacity disabled={true} style={styles.horario}>

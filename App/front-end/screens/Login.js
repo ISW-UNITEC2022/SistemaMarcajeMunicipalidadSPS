@@ -74,18 +74,18 @@ axios.post('https://proyecto-isw1.herokuapp.com/api/empleados/auth', {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-    backgroundColor: '#fff',
+    flex: 1,
+    backgroundColor: '#F2F2F2',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   shape_conatiner:{
     height: 20,
     width: 125,
     backgroundColor: '#013613',
     flexDirection: 'row',
-    justifyContent:'flex-start',
+    justifyContent:'center',
     alignItems:'flex-start',
-    
-
   },
   square:{
     height: 20,
