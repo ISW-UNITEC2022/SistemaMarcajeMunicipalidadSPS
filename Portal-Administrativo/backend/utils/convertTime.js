@@ -39,7 +39,7 @@ export const getToday = () => {
   let fechaInicio = new Date(fecha)
   fechaInicio.setHours(0, 0, 0, 0)
   let fechaFinal = new Date(fecha)
-  fechaFinal.setHours(24, 59, 0, 0)
+  fechaFinal.setHours(23, 59, 0, 0)
   return [fecha, fechaInicio, fechaFinal]
 }
 

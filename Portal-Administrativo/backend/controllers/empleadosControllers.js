@@ -43,7 +43,6 @@ export const obtenerEmpleados = async (_req, res, next) => {
     })
     res.json(empleados)
   } catch (error) {
-    console.log(error)
     next(error)
   }
 }
@@ -89,7 +88,6 @@ export const obtenerEmpleadosPorRol = async (_req, res, next) => {
     })
     res.json(empleados)
   } catch (error) {
-    console.log(error)
     next(error)
   }
 }
@@ -282,8 +280,6 @@ export const obtenerEmpleadoPorId = async (req, res, next) => {
 /*{ 
   idempleado: string,
   idsupervisor: string | null,
-  nombre: string,
-  apellido: string,
   correo: string,
   status: string,
   distrito: int | null,
@@ -298,8 +294,6 @@ export const actualizarEmpleado = async (req, res, next) => {
     const {
       idempleado,
       idsupervisor,
-      nombre,
-      apellido,
       correo,
       distrito,
       zona,
@@ -308,14 +302,11 @@ export const actualizarEmpleado = async (req, res, next) => {
       horasalida,
       status,
     } = req.body
-    console.log(req.body)
     let [empleadoActualizado] = await db('empleados')
       .where('idempleado', idempleado)
       .update(
         {
           idsupervisor,
-          nombre,
-          apellido,
           correo,
           distrito,
           zona,

@@ -31,7 +31,6 @@ export const marcarEmpleado = async (req, res, next) => {
         fechaFinal.toLocaleString('en-US', { timeZone: 'America/Tegucigalpa' }),
       ])
     if (marcas.length > 0) {
-      console.log(marcas)
       marcas = marcas.map((marca) => marca.tipo)
       if (marcas.includes(tipo)) {
         throw new CustomError(`Ya ha marcado su ${tipo} hoy`, 409)
@@ -80,9 +79,7 @@ export const validarMarca = async (req, res, next) => {
     const { correo } = req.params
     let { tipo } = req.query || true
     tipo = tipo === 'true' ? 'entrada' : 'salida'
-    console.log(tipo)
     let [_, fechaInicio, fechaFinal] = getToday()
-    console.log(toLocale(fechaInicio), toLocale(fechaFinal))
     let transaction = await db.transaction()
     let marcas = await db('empleados')
       .transacting(transaction)
@@ -90,7 +87,6 @@ export const validarMarca = async (req, res, next) => {
       .innerJoin('marcaje', 'empleados.idempleado', 'marcaje.idempleado')
       .where({ correo: correo, tipo: tipo })
       .andWhereBetween('fecha', [toLocale(fechaInicio), toLocale(fechaFinal)])
-
     let marca = marcas.find((m) => m.tipo === tipo)
     transaction.commit()
     res.json({ marcado: !marca ? false : true })

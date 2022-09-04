@@ -79,3 +79,26 @@ export const crearSupervisor = async (req, res, next) => {
     next(error)
   }
 }
+
+//Ruta /api/supervisores/:idauth0
+//Descripcion Devuelve el id del empleado asignado al idauth0
+export const obtenerIdEmpleado = async (req, res, next) => {
+  try {
+    const { idauth0 } = req.params
+    let transaction = await db.transaction()
+    let [idempleado] = await db()
+      .transacting(transaction)
+      .select('idempleado')
+      .from('supervisor')
+      .where({ idsupervisor: idauth0 })
+    if (!idempleado) {
+      throw new CustomError(
+        `No se encontro ningun supervisor con id ${idauth0}`
+      )
+    }
+    transaction.commit()
+    res.json(idempleado)
+  } catch (error) {
+    next(error)
+  }
+}
