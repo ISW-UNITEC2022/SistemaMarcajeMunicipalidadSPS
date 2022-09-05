@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './Estilos/FormularioEmpleado.css'
-import TextBox from './Botones/TextBox.jsx';
+import TextBox from '../TextBox.jsx';
 import PasswordBox from './Botones/PasswordBox.jsx';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';

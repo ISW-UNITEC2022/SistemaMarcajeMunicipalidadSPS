@@ -27,7 +27,6 @@ const FormPropsTextFields = ({ _width, _onChange, _id, _value, _type, _label }) 
 				label={_label}
 
 				sx={{
-					marginRight: '50px',
 					'& label.Mui-focused': {
 						color: '#02732A',
 						top: '6px'
