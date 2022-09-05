@@ -28,7 +28,6 @@ a {
   align-items: center;
   justify-content: center;
   color: #202020;
-  
 }
 
 .caja_R{
@@ -48,7 +47,7 @@ margin-top:20vw;
   display: flex;
   position: absolute;
   transition: 0.3s all;
-  margin-top:46vw;
+  margin-top: 440px;
 }
 
 .down{

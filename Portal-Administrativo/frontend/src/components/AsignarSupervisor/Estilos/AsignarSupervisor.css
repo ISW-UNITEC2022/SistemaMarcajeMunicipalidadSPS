@@ -1,0 +1,107 @@
+.Box {
+	width: 680px;
+	border: 2px solid #02732A;
+	border-radius: 10px;
+
+	margin: 40px;
+
+	display: grid;
+	grid-template-areas:
+		"a a"
+		"b b"
+		"c c"
+		"d e"
+		"f f";
+}
+
+.Box1 {
+	grid-area: a;
+	margin-left: 40px;
+	margin-bottom: 30px;
+}
+
+.Box2 {
+	grid-area: b;
+
+	display: grid;
+	justify-content: center;
+	align-content: center;
+
+	margin-bottom: 30px;
+}
+
+.Box3 {
+	grid-area: c;
+
+	display: grid;
+	justify-content: center;
+	align-content: center;
+
+	margin-left: 40px;
+	margin-right: 40px;
+	margin-bottom: 30px;
+}
+
+.Box4 {
+	grid-area: d;
+
+	margin-left: 40px;
+	margin-bottom: 30px;
+}
+
+.Box5 {
+	grid-area: e;
+
+	margin-left: 40px;
+	margin-bottom: 30px;
+}
+
+.Box6 {
+	grid-area: f;
+
+	display: grid;
+	justify-content: center;
+	align-content: center;
+
+	margin-bottom: 30px;
+}
+
+.asterisco {
+	font-size: 20px;
+	color: #BF0404;
+	font-weight: bold;
+}
+
+body {
+	background-color: #f2f2f2;
+}
+
+button {
+	background-color: #02732A;
+	color: #f2f2f2;
+
+	border-radius: 5px;
+	border-color: #02732A;
+	border-width: 1px;
+
+	font-size: 18px;
+
+	block-size: 50px;
+	height: 52px;
+}
+
+button:hover {
+	background-color: #80E673;
+	border-color: #80E673;
+	color: #1F3821;
+}
+
+select {
+	background-color: #f2f2f2;
+	border: 1.5px solid #02732A;
+	border-radius: 5px;
+	width: 520px;
+	height: 45px;
+
+	font-size: 15px;
+}

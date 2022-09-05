@@ -1,13 +1,10 @@
 import * as React from 'react';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
+import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { createTheme, ThemeProvider } from "@mui/material";
 
-const FormPropsTextFields = ({ _onChange, _id, _value, _label }) => {
-
+const FormPropsTextFields = ({ _width, _onChange, _id, _value, _type, _label }) => {
+	
 	const theme = createTheme({
 		components: {
 			MuiFormLabel: {
@@ -19,10 +16,6 @@ const FormPropsTextFields = ({ _onChange, _id, _value, _label }) => {
 
 	})
 
-	const [showPassword, setShowPassword] = React.useState(false);
-	const handleClickShowPassword = () => setShowPassword(!showPassword);
-	const handleMouseDownPassword = () => setShowPassword(!showPassword);
-
 	return (
 		<ThemeProvider theme={theme}>
 			<TextField
@@ -30,7 +23,7 @@ const FormPropsTextFields = ({ _onChange, _id, _value, _label }) => {
 				onChange={_onChange}
 				id={_id}
 				value={_value}
-				type={showPassword ? "text" : "password"}
+				type={_type}
 				label={_label}
 
 				sx={{
@@ -44,8 +37,8 @@ const FormPropsTextFields = ({ _onChange, _id, _value, _label }) => {
 					'& .MuiOutlinedInput-root': {
 						'& fieldset': {
 							borderColor: '#02732A',
-							width: '220px',
 							height: '55px',
+							width: _width,
 						},
 						'&:hover fieldset': {
 							borderColor: '#02732A',
@@ -54,20 +47,6 @@ const FormPropsTextFields = ({ _onChange, _id, _value, _label }) => {
 							borderColor: '#02732A',
 						},
 					},
-				}}
-
-				InputProps={{ 
-					endAdornment: (
-						<InputAdornment position="end">
-							<IconButton
-								aria-label="toggle password visibility"
-								onClick={handleClickShowPassword}
-								onMouseDown={handleMouseDownPassword}
-							>
-								{showPassword ? <Visibility /> : <VisibilityOff />}
-							</IconButton>
-						</InputAdornment>
-					)
 				}}
 			/>
 		</ThemeProvider>
