@@ -238,7 +238,7 @@ export default function FormularioBasico() {
 							<MenuItem sx={{ width: 120 }} value="" className="MenuItem">
 								<em>None</em>
 							</MenuItem>
-							<MenuItem value={"Direccion C3i"}>Direccion C3i</MenuItem>
+							<MenuItem value={"C3i"}>Direccion C3i</MenuItem>
 							<MenuItem value={"CCC"}>CCC</MenuItem>
 							<MenuItem value={"DIEM"}>DIEM</MenuItem>
 							<MenuItem value={"MT"}>MT</MenuItem>
