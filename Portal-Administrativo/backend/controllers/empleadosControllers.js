@@ -2,6 +2,7 @@ import { db } from '../db/db.js'
 import { CustomError } from '../utils/CustomError.js'
 import bcrypt from 'bcrypt'
 import { toFormat12h } from '../utils/convertTime.js'
+import { hashPassword, validarPassword } from '../utils/crypt.js'
 
 //Ruta /api/empleados GET
 //Descripcion Devuelve la informacion de todos los empleados
@@ -125,8 +126,7 @@ export const crearEmpleado = async (req, res, next) => {
       horaentrada,
       horasalida,
     } = req.body
-    let salt = bcrypt.genSaltSync()
-    let hashpassword = bcrypt.hashSync(password, salt)
+    let hashpassword = hashPassword(password)
     let [user] = await db('empleados').insert(
       {
         idempleado,
@@ -199,7 +199,7 @@ export const authEmpleado = async (req, res, next) => {
     if (!user) {
       throw new CustomError('Correo o contraseña incorrectos', 401)
     }
-    let success = await bcrypt.compare(password, user.hashpassword)
+    let success = validarPassword(password, user.hashpassword)
     let userInfo
     if (success) {
       userInfo = await db
@@ -284,6 +284,7 @@ export const obtenerEmpleadoPorId = async (req, res, next) => {
   status: string,
   distrito: int | null,
   zona: string | null,
+  password: string | null
   departamento: string,
   horaentrada: string,
   horasalida: string,
@@ -297,38 +298,53 @@ export const actualizarEmpleado = async (req, res, next) => {
       correo,
       distrito,
       zona,
+      password,
       departamento,
       horaentrada,
       horasalida,
       status,
     } = req.body
+    let updateBody = {}
+    if (!password) {
+      updateBody = {
+        idsupervisor,
+        correo,
+        distrito,
+        zona,
+        departamento,
+        horaentrada,
+        horasalida,
+        status,
+      }
+    } else {
+      let hashpassword = hashPassword(password)
+      updateBody = {
+        idsupervisor,
+        correo,
+        distrito,
+        zona,
+        hashpassword,
+        departamento,
+        horaentrada,
+        horasalida,
+        status,
+      }
+    }
     let [empleadoActualizado] = await db('empleados')
       .where('idempleado', idempleado)
-      .update(
-        {
-          idsupervisor,
-          correo,
-          distrito,
-          zona,
-          departamento,
-          horaentrada,
-          horasalida,
-          status,
-        },
-        [
-          'idempleado',
-          'idsupervisor',
-          'nombre',
-          'apellido',
-          'correo',
-          'distrito',
-          'zona',
-          'departamento',
-          'horaentrada',
-          'horasalida',
-          'status',
-        ]
-      )
+      .update(updateBody, [
+        'idempleado',
+        'idsupervisor',
+        'nombre',
+        'apellido',
+        'correo',
+        'distrito',
+        'zona',
+        'departamento',
+        'horaentrada',
+        'horasalida',
+        'status',
+      ])
     res.json(empleadoActualizado)
   } catch (error) {
     if (error.constraint === 'correo_unico')
