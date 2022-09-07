@@ -48,7 +48,7 @@ export default function FormularioBasico() {
     window.location.reload();
   }
   const { user, isAuthenticated } = useAuth0();
-  
+
   function getAuth0Id(){
     if(isAuthenticated)
       SetidAuth0(user.sub);
