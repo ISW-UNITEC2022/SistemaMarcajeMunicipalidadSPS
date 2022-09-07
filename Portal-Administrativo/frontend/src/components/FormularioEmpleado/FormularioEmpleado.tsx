@@ -6,11 +6,14 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import axios from "axios";
+import Axios from "axios";
 import { borderColor, fontSize } from "@mui/system";
+import { useAuth0 } from '@auth0/auth0-react'
+
 
 export default function FormularioBasico() {
   const url = "https://proyecto-isw1.herokuapp.com/api/empleados";
+  const [idAuth0, SetidAuth0] = React.useState("");
   const [data, setData] = useState({
     idempleado: "",
     idsupervisor: null,
@@ -41,28 +44,23 @@ export default function FormularioBasico() {
     console.log(dep);
   };
 
-  /*function submit(e) {
-		e.preventDefault();
-		Axios.post(url, {
-			idempleado: data.idempleado,
-			idsupervisor: null,
-			nombre: data.nombre,
-			apellido: data.apellido,
-			correo: data.correo,
-			password: data.password,
-			distrito: dis,
-			zona: data.zona,
-			departamento: dep,
-			horaentrada: data.horaentrada,
-			horasalida: data.horasalida,
-		}).then((res) => {
-			console.log(res.data)
-		})
-	}*/
+  function refreshPage() {
+    window.location.reload();
+  }
+  const { user, isAuthenticated } = useAuth0();
+  
+  function getAuth0Id(){
+    if(isAuthenticated)
+      SetidAuth0(user.sub);
+    else
+    SetidAuth0("");;
+  }
 
   function submit(e) {
     e.preventDefault();
-    const userData = {
+    getAuth0Id();
+    console.log("El id del supervisor es "+idAuth0);
+ Axios.post(url, {
       idempleado: data.idempleado,
       idsupervisor: null,
       nombre: data.nombre,
@@ -74,33 +72,33 @@ export default function FormularioBasico() {
       departamento: dep,
       horaentrada: data.horaentrada,
       horasalida: data.horasalida,
-    };
-    axios
-      .post(url, userData)
-      .then((response) => {
-        console.log(response.status);
-        console.log(response.data.token);
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          console.log("server responded");
-        } else if (error.request) {
-          console.log("network error");
-        } else {
-          console.log(error);
-        }
-      });
+    }).then((res) => {
+      console.log(res.data);
+    });
+
+    setData({
+      idempleado: "",
+      idsupervisor: null,
+      nombre: "",
+      apellido: "",
+      correo: "",
+      password: "",
+      distrito: 0,
+      zona: "",
+      departamento: "",
+      horaentrada: "",
+      horasalida: "",
+    });
+    setDis("");
+    setDep("");
   }
 
   function handle(e) {
-    const value = e.target.value;
-    setData({
-      ...data,
-      [e.target.name]: value
-    });
-	console.log(value);
-  };
+    const newdata = { ...data };
+    newdata[e.target.id] = e.target.value;
+    setData(newdata);
+    console.log(newdata);
+  }
 
   return (
     <div>
