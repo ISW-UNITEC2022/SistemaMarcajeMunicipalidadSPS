@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import Login from './auth0/Login';
 import Prueba from './components/menu_user_comp/menu_index'
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 import BarraS from './components/BarraSuperior';
 import BarraI from './components/BarraInferior';
@@ -13,7 +14,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BarraS />
-    <Prueba />
+    <App />
     <BarraI />
   </React.StrictMode>
 );

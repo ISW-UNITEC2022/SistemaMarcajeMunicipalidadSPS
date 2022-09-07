@@ -10,6 +10,7 @@ import CajaTitulo from './components/CajaTitulo';
 import Grid from '@mui/material/Grid';
 import HomePage from './components/HomePage/HomePage';
 import TaskList from './components/menu_user_comp/menu_index';
+import Modificar from './components/modificar_empl/modificar.index';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
@@ -19,17 +20,12 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <BrowserRouter>
-      <Routes>
-      <Route path="/" element={<HomePage />}>
-      **<Route index element={<HomePage />}></Route>*
-      <Route path="menu_principal" element={<TaskList />}/>
-     {/*<Route path="crear-empleado" element={<Componente Crear Empleado />}></Route>  --->En esta ruta poner la pantalla de crear empleado*/}
-      </Route>
-      </Routes>
+    <BrowserRouter>
+        <Routes>
+          <Route path="/menu_principal" element={<TaskList />} />
+          <Route path="/modificar_empleado" element={<Modificar />} />
+        </Routes>
       </BrowserRouter>
-    </div>
   );
 }
 
