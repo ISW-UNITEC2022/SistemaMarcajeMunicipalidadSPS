@@ -1,36 +1,8 @@
-<<<<<<< HEAD
-import React from 'react';
-=======
 import React, { useState, useEffect } from "react";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
->>>>>>> desarrollo-modificar-empleado-72
 import './modificar.css';
 import Caja from '../CajaTitulo';
-import BotonH from '../BotonHome';
 import User from '../MenuUsuario';
-<<<<<<< HEAD
-
-function Modificar() {
-
-  return (
-    <div>
-
-		<User input={""}></User>
-		<Caja input={"Crear Empleados"} />
-		<BotonH></BotonH>
-						
-        <div className="vent">
-        <div className='asterisco'>*</div>
-						<p className='advertencia'>
-							Favor rellenar todas las casillas. 
-							Cada campo es obligatorio y fundamental 
-							para la información de los colaboradores.
-							Favor utilizar un correo electrónico ya 
-							existente por empleado</p>
-        </div>
-    </div>
-  );
-=======
 import TextBox from '../TextBox';
 import PasswordBox from '../PasswordBox';
 import InputLabel from "@mui/material/InputLabel";
@@ -38,6 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import HomeIcon from '@mui/icons-material/Home';
 import axios from 'axios';
+import BotonHome from "../BotonHome";
 
 function Modificar() {
 	const url = "https://proyecto-isw1.herokuapp.com/api/empleados/rol";
@@ -140,7 +113,7 @@ function Modificar() {
 		<div>
 			<User input={"Andrea Rodriguez"}></User>
 			<Caja input={"Modificar Empleados"} />
-			<BotonH><HomeIcon /></BotonH>
+			<BotonHome><HomeIcon /></BotonHome>
 			<div>
 
 				<form onSubmit={(e) => submit(e)}>
@@ -418,7 +391,6 @@ function Modificar() {
 			</div>
 		</div>
 	);
->>>>>>> desarrollo-modificar-empleado-72
 }
 
 export default Modificar;

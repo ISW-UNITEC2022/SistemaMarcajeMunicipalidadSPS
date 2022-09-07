@@ -56,7 +56,6 @@ const SplitButton = ({ input }) => {
             backgroundColor: "#078c03",
             width: '33.3vw',
             color: '#f2f2f2',
-            fontSize: '1vw',
             fontWeight: 'bold',
             fontFamily: 'sans-serif',
             fontStyle: 'normal',
@@ -81,15 +80,14 @@ const SplitButton = ({ input }) => {
       >
         {({ TransitionProps, placement }) => (
           <Grow
-
-          sx = {{
-            backgroundColor: '#078c03',
-            width: '33.3vw',
-            borderTopLeftRadius: 0,
-            borderTopRightRadius: 0,
-            borderBottomLeftRadius: 10,
-            borderBottomRightRadius: 10,
-          }}
+            sx={{
+              backgroundColor: '#078c03',
+              width: '33.3vw',
+              borderTopLeftRadius: 0,
+              borderTopRightRadius: 0,
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+            }}
             {...TransitionProps}
             style={{
               transformOrigin:
@@ -112,26 +110,6 @@ const SplitButton = ({ input }) => {
                 <BotonV input={"Cerrar Sesión"} width={ '33.3vw'} type={"logout"}></BotonV>
               </div>
 
-
-                      sx = {{
-                        color: '#f2f2f2',
-                        fontSize: '1vw',
-                        fontWeight: 'bold',
-                        fontFamily: 'sans-serif',
-                        fontStyle: 'normal',
-                        textTransform: 'none',
-
-                        '&:hover': {
-                          backgroundColor: '#80E673',
-                          color: '#1F3821',
-                        },
-                      }}
-                    >
-                      {option}
-                    </MenuItem>
-                  ))}
-                </MenuList>
-              </ClickAwayListener>
             </Paper>
           </Grow>
         )}

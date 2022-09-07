@@ -1,12 +1,8 @@
 import React from 'react';
 import './App.css';
 import TaskList from './components/menu_user_comp/menu_index';
-<<<<<<< HEAD
 import ModificarE from './components/modificar_empl/modificar.index';
 import FormularioEmpleado from './components/FormularioEmpleado/FormularioEmpleado';
-=======
-import Modificar from './components/modificar_empl/modificar.index';
->>>>>>> desarrollo-modificar-empleado-72
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from './components/HomePage/HomePage';
 import AsignarSupervisor from './components/AsignarSupervisor/AsignarSupervisor';
