@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import reportWebVitals from './reportWebVitals';
+import Login from './auth0/Login';
+import Prueba from './components/menu_user_comp/menu_index'
 import App from './App';
-import BarraSuperior from './components/BarraSuperior';
-import BarraInferior from './components/BarraInferior';
-import { Auth0Provider } from '@auth0/auth0-react';
-
-
-
+import reportWebVitals from './reportWebVitals';
+import BarraS from './components/BarraSuperior';
+import BarraI from './components/BarraInferior';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -22,20 +20,11 @@ const clientId = process.env.REACT_APP_AUTH_CLIENT_ID!;
 
 root.render(
 
-  <Auth0Provider
-    domain={domain}
-    clientId={clientId}
-    redirectUri={window.location.origin}
-  >
-
-      <React.StrictMode>
-        <BarraSuperior></BarraSuperior>
-        <App />
-        <BarraInferior></BarraInferior>
-      </React.StrictMode>
-    
-  </Auth0Provider>
-  
+  <React.StrictMode>
+    <BarraS />
+    <App />
+    <BarraI />
+  </React.StrictMode>
 );
 
 

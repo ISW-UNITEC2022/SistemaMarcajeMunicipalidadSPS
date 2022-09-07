@@ -3,13 +3,15 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from "@mui/material";
 
-const FormPropsTextFields = ({ _width, _onChange, _id, _value, _type, _label }) => {
-	
+
+const FormPropsTextFields = ({ _width, _onChange, _id, _value, _type, _label, _habilitar, _asterisk }) => {
+
+
 	const theme = createTheme({
 		components: {
 			MuiFormLabel: {
 				styleOverrides: {
-					asterisk: { color: "red" },
+					asterisk: { color: _asterisk },
 				},
 			},
 		},
@@ -26,6 +28,7 @@ const FormPropsTextFields = ({ _width, _onChange, _id, _value, _type, _label }) 
 				type={_type}
 				label={_label}
 
+				disabled={_habilitar}
 				sx={{
 					'& label.Mui-focused': {
 						color: '#02732A',
