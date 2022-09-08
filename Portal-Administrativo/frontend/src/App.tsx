@@ -21,6 +21,7 @@ function App() {
     <BrowserRouter>
     <div>{isAuthenticated? <MenuUsuario input={""}></MenuUsuario>:''}</div>
     <div>{isAuthenticated? <BotonHome></BotonHome>:''}</div>
+    
       <Routes>
         <Route path="/menu_principal" element={<TaskList />} />
         <Route path="/crear_empleado" element={<FormularioEmpleado />} />
