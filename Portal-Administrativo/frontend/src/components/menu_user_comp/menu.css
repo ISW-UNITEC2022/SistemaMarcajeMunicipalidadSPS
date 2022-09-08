@@ -1,50 +1,9 @@
-<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&display=swap');
 
 .sub {
   height: auto;
   width: auto;
-=======
-  
-  .sub{
-    height: auto;
-    width: auto;
-    display: flex;
-    align-items: left;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-size: 16px;
-    padding-top: 0.5vw;
-  }
-  
-  .sub:hover{
-    color:#AB5302;
-    text-decoration: underline;
-  }
-  
-  a{
-    color:#3B2C01;
-    text-decoration: none;
-  }
-
-  .menu_user{
-    min-height: 42.5vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #202020;
-}
-
-.caja_R{
-    display: flex;
-    position: absolute;
-    transition: 0.3s all;
-    bottom:20vw;
-}
-
-.caja{
->>>>>>> desarrollo-modificar-empleado-72
   display: flex;
   align-items: left;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -52,7 +11,6 @@
   padding-top: 0.5vw;
 }
 
-<<<<<<< HEAD
 .sub:hover {
   color: #AB5302;
   text-decoration: underline;
@@ -61,57 +19,35 @@
 a {
   color: #3B2C01;
   text-decoration: none;
-=======
-.caja_R2{
-    display: flex;
-    position: absolute;
-    transition: 0.3s all;
-    bottom:12vw;
-}
-
-.down{
-  color: #FFEF05;
-  font-size:30px;
-  display: flex;
-  position: absolute;
-  top: 0vw;
-  right:1vw;
->>>>>>> desarrollo-modificar-empleado-72
 }
 
 .menu_user {
-  min-height: 42.5vh;
+  min-height: 42.5vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-<<<<<<< HEAD
   color: #202020;
-=======
-  position: absolute;
-  left: 30px;
-  padding-top: 7vw;
->>>>>>> desarrollo-modificar-empleado-72
+  
 }
 
 .caja_R{
   display: flex;
   position: absolute;
   transition: 0.3s all;
-  margin-top:28vw;
+  margin-top:8vw;
 }
 
 .caja{
 display: flex;
 position: absolute;
-margin-top:20vw;
 }
 
 .caja_R2{
   display: flex;
   position: absolute;
   transition: 0.3s all;
-  margin-top: 440px;
+  margin-top:26vw;
 }
 
 .down{

@@ -8,7 +8,6 @@ import PasswordBox from '../PasswordBox';
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import HomeIcon from '@mui/icons-material/Home';
 import axios from 'axios';
 import BotonHome from "../BotonHome";
 
@@ -113,7 +112,7 @@ function Modificar() {
 		<div>
 			<User input={"Andrea Rodriguez"}></User>
 			<Caja input={"Modificar Empleados"} />
-			<BotonHome><HomeIcon /></BotonHome>
+			<BotonHome></BotonHome>
 			<div>
 
 				<form onSubmit={(e) => submit(e)}>

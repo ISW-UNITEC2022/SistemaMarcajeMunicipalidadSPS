@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Estilos/FormularioEmpleado.css";
-import TextBox from "../TextBox.jsx";
-import PasswordBox from "./Botones/PasswordBox.jsx";
+import TextBox from "../TextBox";
+import PasswordBox from "./Botones/PasswordBox";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -116,8 +116,7 @@ export default function FormularioBasico() {
             _id={"idempleado"}
             _value={data.idempleado}
             _type={"text"}
-            _label={"No° Identidad"}
-          ></TextBox>
+            _label={"No° Identidad"} _habilitar={undefined} _asterisk={undefined}          ></TextBox>
         </div>
 
         <div className="fila">
@@ -127,8 +126,7 @@ export default function FormularioBasico() {
             _id={"nombre"}
             _value={data.nombre}
             _type={"text"}
-            _label={"Nombres"}
-          ></TextBox>
+            _label={"Nombres"} _habilitar={undefined} _asterisk={undefined}          ></TextBox>
 
           <TextBox
             _width={220}
@@ -136,8 +134,7 @@ export default function FormularioBasico() {
             _id={"apellido"}
             _value={data.apellido}
             _type={"text"}
-            _label={"Apellidos"}
-          ></TextBox>
+            _label={"Apellidos"} _habilitar={undefined} _asterisk={undefined}          ></TextBox>
         </div>
 
         <div className="fila">
@@ -147,8 +144,7 @@ export default function FormularioBasico() {
             _id={"correo"}
             _value={data.correo}
             _type={"text"}
-            _label={"Correo Electrónico"}
-          ></TextBox>
+            _label={"Correo Electrónico"} _habilitar={undefined} _asterisk={undefined}          ></TextBox>
 
           <PasswordBox
             _onChange={(e) => handle(e)}
@@ -293,8 +289,7 @@ export default function FormularioBasico() {
             _id={"zona"}
             _value={data.zona}
             _type={"text"}
-            _label={"Zona"}
-          ></TextBox>
+            _label={"Zona"} _habilitar={undefined} _asterisk={undefined}          ></TextBox>
         </div>
         <div className="fila">
           <p className="horaText">

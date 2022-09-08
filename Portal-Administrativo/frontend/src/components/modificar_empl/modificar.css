@@ -1,34 +1,32 @@
-
 .vent {
-    min-height: 42.5vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #202020;
-  }
-  
-  .asterisco {
-    font-size: 7vw;
-    position: absolute;
-    top: 20vw;
-    color: #BF0404;
-    margin-left: 46vw;
-  }
-  
-  .advertencia {
-    color: #202020;
-    position: absolute;
-    top: 22vw;
-    margin-left: 70vw;
-    width: 21vw;
-  }
+  min-height: 42.5vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #202020;
+}
 
-  .SupApp {
-    display: flex;
-    height: 100%;
-  }
+.asterisco {
+  font-size: 7vw;
+  position: absolute;
+  top: 20vw;
+  color: #BF0404;
+  margin-left: 45vw;
+}
 
+.advertencia {
+  color: #202020;
+  position: absolute;
+  top: 22vw;
+  margin-left: 70vw;
+  width: 21vw;
+}
+
+.SupApp {
+  display: flex;
+  height: 100%;
+}
 .fila {
   display: flex;
   margin-left: 70vh;

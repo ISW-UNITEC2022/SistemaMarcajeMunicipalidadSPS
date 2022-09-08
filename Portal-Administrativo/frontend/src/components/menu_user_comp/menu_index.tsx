@@ -3,7 +3,7 @@ import './menu.css';
 import Button from '@mui/material/Button';
 import Menu_emp from './menu_em';
 import Menu_re from './menu_re';
-import Logo from "./logo.png";
+import Logo from "../logo.png";
 import BotonHome from '../BotonHome'
 import MenuUsuario from '../MenuUsuario';
 import React from 'react';
@@ -31,22 +31,22 @@ export default function TaskList() {
       <MenuUsuario input={""}></MenuUsuario>
       <BotonHome></BotonHome>
       <div className='menu_user'>
-        <img src={Logo} style={{ height: '12vw', width: 'auto', marginTop: '0vw' }} />
+      <img src={Logo} style={{ height: '12vw', width: 'auto', marginBottom: '18vw' }} />
 
         <div className='caja'>
           <Button onClick={abrir} variant="contained"
             style={{
-              width:'19.5vw',
-              height: '3vw',
-              fontSize: '1.5vw',
-              fontWeight: 'bold',
-              fontFamily: 'sans-serif',
-              fontStyle: 'normal',
-              textTransform: 'none',
-
-              backgroundColor: '#F2B705',
-              color: '#f2f2f2',
-              boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+                width:'19.5vw',
+                height: '3vw',
+                fontSize: '1.5vw',
+                fontWeight: 'bold',
+                fontFamily: 'sans-serif',
+                fontStyle: 'normal',
+                textTransform: 'none',
+  
+                backgroundColor: '#F2B705',
+                color: '#f2f2f2',
+                boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
             }}
           >Empleados <div className='down'><i className="fa-solid fa-sort-down"></i></div>
           </Button>

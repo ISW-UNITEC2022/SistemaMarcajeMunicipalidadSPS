@@ -88,8 +88,7 @@ function FormularioSupervisor() {
 								_id={"idauth0"}
 								_value={data.idauth0}
 								_type={"text"}
-								_label={"ID de Auth0"}
-							></Textbox>
+								_label={"ID de Auth0"} _habilitar={undefined} _asterisk={undefined}							></Textbox>
 						</div>
 
 						<div className="Box5">
