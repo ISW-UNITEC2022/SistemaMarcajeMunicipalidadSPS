@@ -27,21 +27,22 @@ const FormPropsTextFields = ({ _width, _onChange, _id, _value, _type, _label, _h
 				value={_value}
 				type={_type}
 				label={_label}
-
 				disabled={_habilitar}
+
 				sx={{
+					"& .MuiInputBase-root": {
+						width: _width,
+						marginRight: "12px",
+						"& input": {
+							textAlign: "left"
+						}
+					},
 					'& label.Mui-focused': {
 						color: '#02732A',
-						top: '6px'
-					},
-					'& .MuiInput-underline:after': {
-						borderBottomColor: '#02732A',
 					},
 					'& .MuiOutlinedInput-root': {
 						'& fieldset': {
 							borderColor: '#02732A',
-							height: '55px',
-							width: _width,
 						},
 						'&:hover fieldset': {
 							borderColor: '#02732A',

@@ -45,14 +45,20 @@
 .Box4 {
 	grid-area: d;
 
-	margin-left: 40px;
+	display: grid;
+	justify-content: center;
+	align-content: center;
+
 	margin-bottom: 30px;
 }
 
 .Box5 {
 	grid-area: e;
 
-	margin-left: 40px;
+	display: grid;
+	justify-content: center;
+	align-content: center;
+
 	margin-bottom: 30px;
 }
 
@@ -86,8 +92,7 @@ button {
 
 	font-size: 18px;
 
-	block-size: 50px;
-	height: 52px;
+	height: 55px;
 }
 
 button:hover {

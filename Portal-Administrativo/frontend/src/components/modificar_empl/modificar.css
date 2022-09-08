@@ -1,39 +1,4 @@
-.vent {
-  min-height: 42.5vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #202020;
-}
-
-.asterisco {
-  font-size: 7vw;
-  position: absolute;
-  top: 20vw;
-  color: #BF0404;
-  margin-left: 45vw;
-}
-
-.advertencia {
-  color: #202020;
-  position: absolute;
-  top: 22vw;
-  margin-left: 70vw;
-  width: 21vw;
-}
-
-.SupApp {
-  display: flex;
-  height: 100%;
-}
 .fila {
-  display: flex;
-  margin-left: 70vh;
-  margin-bottom: 10px;
-}
-
-.filaPrueba {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,15 +22,16 @@ input:hover {
 input {
   width: 230px;
   height: 48px;
+
   text-align: center;
   font-size: 20px;
   font-family: sans-serif;
   font-weight: 100;
   color: #757575;
+  
   border-radius: 5px;
   border-color: #02732A;
   border-width: 1px;
-  margin-right: 12px;
 }
 
 button{
@@ -90,29 +56,6 @@ button:hover{
   margin-right: 128px;
   color: #757575;
   font-size: 16.5px;
-}
-
-
-.instruccion {
-  color: #202020;
-  margin-top: 25px;
-}
-
-.vent {
-  min-height: 42.5vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #202020;
-}
-
-.asterisk {
-  font-size: 7vw;
-  position: absolute;
-  top: 20vw;
-  color: #BF0404;
-  margin-left: 45vw;
 }
 
 select {

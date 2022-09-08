@@ -103,48 +103,48 @@ export default function FormularioBasico() {
   return (
     <div>
       <form onSubmit={(e) => submit(e)}>
-        <div className="fila">
+        <div className="_fila">
           <p className="instruccion">
             Ingrese los datos correspondientes a las siguientes casillas.
           </p>
         </div>
 
-        <div className="fila">
+        <div className="_fila">
           <TextBox
-            _width={470}
+            _width={488}
             _onChange={(e) => handle(e)}
             _id={"idempleado"}
             _value={data.idempleado}
             _type={"text"}
-            _label={"No° Identidad"} _habilitar={undefined} _asterisk={undefined}          ></TextBox>
+            _label={"No° Identidad"} _habilitar={undefined} _asterisk={"red"}          ></TextBox>
         </div>
 
-        <div className="fila">
+        <div className="_fila">
           <TextBox
-            _width={220}
+            _width={238}
             _onChange={(e) => handle(e)}
             _id={"nombre"}
             _value={data.nombre}
             _type={"text"}
-            _label={"Nombres"} _habilitar={undefined} _asterisk={undefined}          ></TextBox>
+            _label={"Nombres"} _habilitar={undefined} _asterisk={"red"}        ></TextBox>
 
           <TextBox
-            _width={220}
+            _width={238}
             _onChange={(e) => handle(e)}
             _id={"apellido"}
             _value={data.apellido}
             _type={"text"}
-            _label={"Apellidos"} _habilitar={undefined} _asterisk={undefined}          ></TextBox>
+            _label={"Apellidos"} _habilitar={undefined} _asterisk={"red"}         ></TextBox>
         </div>
 
-        <div className="fila">
+        <div className="_fila">
           <TextBox
-            _width={220}
+            _width={238}
             _onChange={(e) => handle(e)}
             _id={"correo"}
             _value={data.correo}
             _type={"text"}
-            _label={"Correo Electrónico"} _habilitar={undefined} _asterisk={undefined}          ></TextBox>
+            _label={"Correo Electrónico"} _habilitar={undefined} _asterisk={"red"}          ></TextBox>
 
           <PasswordBox
             _onChange={(e) => handle(e)}
@@ -154,7 +154,7 @@ export default function FormularioBasico() {
           ></PasswordBox>
         </div>
 
-        <div className="fila">
+        <div className="_fila">
           <FormControl sx={{ minWidth: 250 }}>
             <InputLabel
               sx={{
@@ -184,7 +184,7 @@ export default function FormularioBasico() {
               sx={{
                 marginRight: "12px",
                 marginBottom: "5px",
-                height: 52,
+                height: 55,
                 size: "large",
                 ".MuiSelect-icon": {
                   color: "#02732A",
@@ -253,7 +253,7 @@ export default function FormularioBasico() {
               label="Departamento"
               variant="outlined"
               sx={{
-                height: 52,
+                height: 55,
                 marginBottom: "5px",
                 size: "large",
                 ".MuiSelect-icon": {
@@ -282,24 +282,24 @@ export default function FormularioBasico() {
           </FormControl>
         </div>
 
-        <div className="fila">
+        <div className="_fila">
           <TextBox
-            _width={470}
+            _width={488}
             _onChange={(e) => handle(e)}
             _id={"zona"}
             _value={data.zona}
             _type={"text"}
-            _label={"Zona"} _habilitar={undefined} _asterisk={undefined}          ></TextBox>
+            _label={"Zona"} _habilitar={undefined} _asterisk={"red"}          ></TextBox>
         </div>
-        <div className="fila">
+        <div className="_fila">
           <p className="horaText">
-            Hora Entrada <span className="asterisco">*</span>
+            Hora Entrada <span className="_asterisco">*</span>
           </p>
           <p className="horaText">
-            Hora Salida <span className="asterisco">*</span>
+            Hora Salida <span className="_asterisco">*</span>
           </p>
         </div>
-        <div className="fila">
+        <div className="_fila">
           <input
             onChange={(e) => handle(e)}
             id="horaentrada"
@@ -321,13 +321,13 @@ export default function FormularioBasico() {
           />
         </div>
 
-        <div className="fila">
+        <div className="_fila">
           <button
             type="submit"
             className="btn btn-primary"
             style={{
               blockSize: "50px",
-              width: "484px",
+              width: "488px",
               marginTop: "6px",
             }}
           >

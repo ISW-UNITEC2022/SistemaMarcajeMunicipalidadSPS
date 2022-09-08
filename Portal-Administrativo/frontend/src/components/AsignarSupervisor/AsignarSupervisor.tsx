@@ -76,7 +76,7 @@ function FormularioSupervisor() {
 						</div>
 
 						<div className="Box3">
-							<p><span className="asterisco">*</span> Para que el superivisor pueda tener acceso al portal,
+							<p><span className="_asterisco">*</span> Para que el superivisor pueda tener acceso al portal,
 								se debe registrar en la plataforma auth0, para luego, ingresar el codigo
 								de identificación de auth0 del usuario creado.</p>
 						</div>
@@ -88,12 +88,14 @@ function FormularioSupervisor() {
 								_id={"idauth0"}
 								_value={data.idauth0}
 								_type={"text"}
-								_label={"ID de Auth0"} _habilitar={undefined} _asterisk={undefined}							></Textbox>
+								_label={"ID de Auth0"} 
+								_habilitar={undefined} 
+								_asterisk={"red"}							></Textbox>
 						</div>
 
 						<div className="Box5">
 							<button
-								style={{ width: '285px' }}
+								style={{ width: '250px' }}
 								type="submit"
 								className="btn btn-primary"
 							>

@@ -30,7 +30,7 @@ function Modificar() {
 			.catch((error) => console.error(`Error: ${error}`));
 	};
 
-	
+
 
 	const [data, setData] = useState({
 		idempleado: "",
@@ -112,7 +112,7 @@ function Modificar() {
 		<div>
 			<div>
 				<form onSubmit={(e) => submit(e)}>
-					<div className="filaPrueba">
+					<div className="fila">
 						<select
 							name="empleadoss"
 							id="empleadoss"
@@ -141,7 +141,7 @@ function Modificar() {
 
 					<div className="fila">
 						<TextBox
-							_width={470}
+							_width={488}
 							_onChange={(e) => handle(e)}
 							_id={"idempleado"}
 							_value={data.idempleado}
@@ -154,7 +154,7 @@ function Modificar() {
 
 					<div className="fila">
 						<TextBox
-							_width={220}
+							_width={238}
 							_onChange={(e) => handle(e)}
 							_id={"nombre"}
 							_value={data.nombre}
@@ -164,10 +164,8 @@ function Modificar() {
 							_asterisk={"#969696"}
 						></TextBox>
 
-						<p style={{ marginLeft: '50px' }}></p>
-
 						<TextBox
-							_width={220}
+							_width={238}
 							_onChange={(e) => handle(e)}
 							_id={"apellido"}
 							_value={data.apellido}
@@ -180,7 +178,7 @@ function Modificar() {
 
 					<div className="fila">
 						<TextBox
-							_width={220}
+							_width={238}
 							_onChange={(e) => handle(e)}
 							_id={"correo"}
 							_value={data.correo}
@@ -189,8 +187,6 @@ function Modificar() {
 							_habilitar={false}
 							_asterisk={"red"}
 						></TextBox>
-
-						<p style={{ marginLeft: '50px' }}></p>
 
 						<PasswordBox
 							_onChange={(e) => handle(e)}
@@ -201,7 +197,7 @@ function Modificar() {
 					</div>
 
 					<div className="fila">
-						<FormControl sx={{ minWidth: 250 }}>
+						<FormControl sx={{ minWidth: 250, marginLeft: "-12px" }}>
 							<InputLabel
 								sx={{
 									"&.MuiInputLabel-formControl": {
@@ -230,7 +226,7 @@ function Modificar() {
 								sx={{
 									marginRight: "12px",
 									marginBottom: "5px",
-									height: 52,
+									height: 55,
 									size: "large",
 									".MuiSelect-icon": {
 										color: "#02732A",
@@ -299,7 +295,7 @@ function Modificar() {
 								label="Departamento"
 								variant="outlined"
 								sx={{
-									height: 52,
+									height: 55,
 									marginBottom: "5px",
 									size: "large",
 									".MuiSelect-icon": {
@@ -330,7 +326,7 @@ function Modificar() {
 
 					<div className="fila">
 						<TextBox
-							_width={470}
+							_width={488}
 							_onChange={(e) => handle(e)}
 							_id={"zona"}
 							_value={data.zona}
@@ -342,10 +338,10 @@ function Modificar() {
 					</div>
 					<div className="fila">
 						<p className="horaText">
-							Hora Entrada <span className="asterisco">*</span>
+							Hora Entrada <span className="_asterisco">*</span>
 						</p>
 						<p className="horaText">
-							Hora Salida <span className="asterisco">*</span>
+							Hora Salida <span className="_asterisco">*</span>
 						</p>
 					</div>
 					<div className="fila">
@@ -374,9 +370,9 @@ function Modificar() {
 						<button
 							className="btn btn-primary"
 							style={{
-								blockSize: "50px",
-								width: "484px",
+								width: "488px",
 								marginTop: "6px",
+								marginLeft: "-12px"
 							}}
 						>
 							Modificar Empleado

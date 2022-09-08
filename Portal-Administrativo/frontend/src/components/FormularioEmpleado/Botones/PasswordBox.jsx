@@ -34,18 +34,19 @@ const FormPropsTextFields = ({ _onChange, _id, _value, _label }) => {
 				label={_label}
 
 				sx={{
+					"& .MuiInputBase-root": {
+						width: "238px",
+						marginRight: "12px",
+						"& input": {
+							textAlign: "left"
+						}
+					},
 					'& label.Mui-focused': {
 						color: '#02732A',
-						top: '6px'
-					},
-					'& .MuiInput-underline:after': {
-						borderBottomColor: '#02732A',
 					},
 					'& .MuiOutlinedInput-root': {
 						'& fieldset': {
 							borderColor: '#02732A',
-							width: '220px',
-							height: '55px',
 						},
 						'&:hover fieldset': {
 							borderColor: '#02732A',
