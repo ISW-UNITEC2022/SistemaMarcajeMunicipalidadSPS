@@ -4,8 +4,6 @@ import Button from '@mui/material/Button';
 import Menu_emp from './menu_em';
 import Menu_re from './menu_re';
 import Logo from "../logo.png";
-import BotonHome from '../BotonHome'
-import MenuUsuario from '../MenuUsuario';
 import React from 'react';
 
 export default function TaskList() {
@@ -28,8 +26,6 @@ export default function TaskList() {
 
   return (
     <div>
-      <MenuUsuario input={""}></MenuUsuario>
-      <BotonHome></BotonHome>
       <div className='menu_user'>
       <img src={Logo} style={{ height: '12vw', width: 'auto', marginBottom: '18vw' }} />
 
