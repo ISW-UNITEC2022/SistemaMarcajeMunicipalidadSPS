@@ -110,11 +110,7 @@ function Modificar() {
 
 	return (
 		<div>
-			<User input={"Andrea Rodriguez"}></User>
-			<Caja input={"Modificar Empleados"} />
-			<BotonHome></BotonHome>
 			<div>
-
 				<form onSubmit={(e) => submit(e)}>
 					<div className="filaPrueba">
 						<select

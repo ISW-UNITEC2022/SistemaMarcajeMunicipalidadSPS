@@ -22,7 +22,7 @@ return(
             <a href="/modificar_empleado" ><div className='sub'><div className='point'><i className="fa-solid fa-circle"></i></div>Modificar empleado</div></a> 
             <a href="" ><div className='sub'><div className='point'><i className="fa-solid fa-circle"></i></div>Informacion de empleados</div></a> 
             <a href="" ><div className='sub'><div className='point'><i className="fa-solid fa-circle"></i></div>Estado empleados</div></a> 
-            <a href="" ><div className='sub'>{esAdmin("") ? <div className='point'><i className="fa-solid fa-circle"></i></div>:''}{esAdmin("Administrador") ? 'Asignar Supervisor':''}</div></a> 
+            <a href="/asignar_supervisor" ><div className='sub'>{esAdmin("") ? <div className='point'><i className="fa-solid fa-circle"></i></div>:''}{esAdmin("Administrador") ? 'Asignar Supervisor':''}</div></a> 
         </div>
     </div>
 )
