@@ -249,7 +249,7 @@ export const obtenerEmpleadoPorId = async (req, res, next) => {
         'status',
         'horaentrada',
         'horasalida',
-        'idrol',
+        'roles.nombrerol as rol',
         'zona'
       )
       .from('empleados')
@@ -258,6 +258,7 @@ export const obtenerEmpleadoPorId = async (req, res, next) => {
         'empleados.idempleado',
         'rolxempleado.idempleado'
       )
+      .innerJoin('roles', 'rolxempleado.idrol', 'roles.idrol')
       .where('empleados.idempleado', id)
     if (!empleado) {
       res.status(404)
@@ -302,7 +303,6 @@ export const actualizarEmpleado = async (req, res, next) => {
       departamento,
       horaentrada,
       horasalida,
-      status,
     } = req.body
     let updateBody = {}
     if (!password) {
@@ -314,7 +314,6 @@ export const actualizarEmpleado = async (req, res, next) => {
         departamento,
         horaentrada,
         horasalida,
-        status,
       }
     } else {
       let hashpassword = hashPassword(password)
@@ -327,7 +326,6 @@ export const actualizarEmpleado = async (req, res, next) => {
         departamento,
         horaentrada,
         horasalida,
-        status,
       }
     }
     let [empleadoActualizado] = await db('empleados')
