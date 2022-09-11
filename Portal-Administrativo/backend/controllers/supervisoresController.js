@@ -83,13 +83,12 @@ export const crearSupervisor = async (req, res, next) => {
 //Ruta /api/supervisores/:idauth0
 //Descripcion Devuelve el id del empleado asignado al idauth0
 export const obtenerIdEmpleado = async (req, res, next) => {
+  let transaction = await db.transaction()
   try {
     const { idauth0 } = req.params
-    let transaction = await db.transaction()
-    let [idempleado] = await db()
+    let [idempleado] = await db('empleados')
       .transacting(transaction)
       .select('idempleado')
-      .from('supervisor')
       .where({ idsupervisor: idauth0 })
     if (!idempleado) {
       throw new CustomError(
@@ -99,6 +98,48 @@ export const obtenerIdEmpleado = async (req, res, next) => {
     transaction.commit()
     res.json(idempleado)
   } catch (error) {
+    transaction.rollback()
+    next(error)
+  }
+}
+
+//Ruta /api/supervisores/:idsupervisor/empleados
+//Descripcion Devuelve los empleados asignados a un supervisor segun el idauth0
+export const obtenerEmpleadosPorSupervisor = async (req, res, next) => {
+  let transaction = await db.transaction()
+  try {
+    const { idsupervisor } = req.params
+    let empleados = await db('empleados')
+      .transacting(transaction)
+      .select(
+        'empleados.idempleado',
+        'idsupervisor',
+        'nombre',
+        'apellido',
+        'correo',
+        'departamento',
+        'distrito',
+        'status',
+        'horaentrada',
+        'horasalida',
+        'zona',
+        'roles.nombrerol as rol'
+      )
+      .innerJoin(
+        'rolxempleado',
+        'empleados.idempleado',
+        'rolxempleado.idempleado'
+      )
+      .innerJoin('roles', 'rolxempleado.idrol', 'roles.idrol')
+      .where({ idsupervisor: idsupervisor })
+    transaction.commit()
+    res.json(empleados)
+  } catch (error) {
+    transaction.rollback()
+    console.log(
+      '🚀 ~ file: supervisoresController.js ~ line 139 ~ obtenerEmpleadosPorSupervisor ~ error',
+      error
+    )
     next(error)
   }
 }
