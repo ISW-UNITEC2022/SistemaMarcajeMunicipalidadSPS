@@ -13,7 +13,6 @@ import { useAuth0 } from '@auth0/auth0-react'
 
 export default function FormularioBasico() {
   const url = "https://proyecto-isw1.herokuapp.com/api/empleados";
-  const [idAuth0, SetidAuth0] = React.useState("");
   const [data, setData] = useState({
     idempleado: "",
     idsupervisor: null,
@@ -49,18 +48,18 @@ export default function FormularioBasico() {
   }
   const { user, isAuthenticated } = useAuth0();
 
-  function getAuth0Id(){
-    if(isAuthenticated)
-      SetidAuth0(user.sub);
+  const usuario_id = () => {
+    if (isAuthenticated)
+      return user.sub;
     else
-    SetidAuth0("");;
-  }
+      return 'Error de Autenticacion';
+  };
 
   function submit(e) {
     e.preventDefault();
-    getAuth0Id();
-    console.log("El id del supervisor es "+idAuth0);
- Axios.post(url, {
+
+    console.log("El id del supervisor es " + usuario_id());
+    Axios.post(url, {
       idempleado: data.idempleado,
       idsupervisor: null,
       nombre: data.nombre,

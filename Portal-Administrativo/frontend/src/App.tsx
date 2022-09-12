@@ -26,7 +26,7 @@ function App() {
         <Route path="/menu_principal" element={<TaskList />} />
         <Route path="/crear_empleado" element={<FormularioEmpleado />} />
         <Route path="/modificar_empleado" element={<Modificar />} />
-        <Route path="/asignar_supervisor" element={<AsignarSupervisor />}></Route>
+        <Route path="/asignar_supervisor" element={<AsignarSupervisor />} />
         <Route path="/" element={<HomePage />} />
       </Routes>
     </BrowserRouter>
