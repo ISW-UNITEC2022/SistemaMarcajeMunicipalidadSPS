@@ -110,6 +110,7 @@ function Modificar() {
 
 	return (
 		<div>
+			
 			<div>
 				<form onSubmit={(e) => submit(e)}>
 					<div className="fila">

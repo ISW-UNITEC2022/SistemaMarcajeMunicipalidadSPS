@@ -3,6 +3,8 @@ import axios, { Axios } from "axios";
 import React, { useEffect, useState } from "react";
 import Textbox from '../TextBox';
 import '../AsignarSupervisor/Estilos/AsignarSupervisor.css';
+import MenuUsuario from '../MenuUsuario';
+import BotonHome from '../BotonHome'
 
 function FormularioSupervisor() {
 	const url = "https://proyecto-isw1.herokuapp.com/api/empleados/rol";
@@ -54,64 +56,66 @@ function FormularioSupervisor() {
 
 	return (
 		<>
-			<form onSubmit={submit}>
-				<body>
-					<div className="Box">
-						<div className="Box1">
-							<p>Seleccione al empleado al cual desea asignar el rol de supervisor.</p>
-						</div>
-						<div className="Box2">
-							<select
-								name="empleadoss"
-								id="empleadoss"
-								onChange={handle}
-								value={supervisor}
-							>
-								{empleados.map((emp) => (
-									<option value={emp.idempleado} key={emp.idempleado}>
-										NOMBRE: {emp.nombre} {emp.apellido} | CORREO: {emp.correo}
-									</option>
-								))}
-							</select>
-						</div>
+			<div>
+				<form onSubmit={submit}>
+					<body>
+						<div className="Box">
+							<div className="Box1">
+								<p>Seleccione al empleado al cual desea asignar el rol de supervisor.</p>
+							</div>
+							<div className="Box2">
+								<select
+									name="empleadoss"
+									id="empleadoss"
+									onChange={handle}
+									value={supervisor}
+								>
+									{empleados.map((emp) => (
+										<option value={emp.idempleado} key={emp.idempleado}>
+											NOMBRE: {emp.nombre} {emp.apellido} | CORREO: {emp.correo}
+										</option>
+									))}
+								</select>
+							</div>
 
-						<div className="Box3">
-							<p><span className="_asterisco">*</span> Para que el superivisor pueda tener acceso al portal,
-								se debe registrar en la plataforma auth0, para luego, ingresar el codigo
-								de identificación de auth0 del usuario creado.</p>
-						</div>
+							<div className="Box3">
+								<p><span className="_asterisco">*</span> Para que el superivisor pueda tener acceso al portal,
+									se debe registrar en la plataforma auth0, para luego, ingresar el codigo
+									de identificación de auth0 del usuario creado.</p>
+							</div>
 
-						<div className="Box4">
-							<Textbox
-								_width={250}
-								_onChange={(e) => handleChange(e)}
-								_id={"idauth0"}
-								_value={data.idauth0}
-								_type={"text"}
-								_label={"ID de Auth0"} 
-								_habilitar={undefined} 
-								_asterisk={"red"}							></Textbox>
-						</div>
+							<div className="Box4">
+								<Textbox
+									_width={250}
+									_onChange={(e) => handleChange(e)}
+									_id={"idauth0"}
+									_value={data.idauth0}
+									_type={"text"}
+									_label={"ID de Auth0"}
+									_habilitar={undefined}
+									_asterisk={"red"}							></Textbox>
+							</div>
 
-						<div className="Box5">
-							<button
-								style={{ width: '250px' }}
-								type="submit"
-								className="btn btn-primary"
-							>
-								Registrar en Auth0
-							</button>
-						</div>
+							<div className="Box5">
+								<button
+									style={{ width: '250px' }}
+									type="submit"
+									className="btn btn-primary"
+								>
+									Registrar en Auth0
+								</button>
+							</div>
 
-						<div className="Box6">
-							<button style={{ width: '285px' }}>
-								Asignar Supervisor
-							</button>
+							<div className="Box6">
+								<button style={{ width: '285px' }}>
+									Asignar Supervisor
+								</button>
+							</div>
 						</div>
-					</div>
-				</body>
+					</body>
 
-			</form>
+				</form>
+			</div>
 			{/*<ul>
         {empleados.map((emp) => (
           <li key={emp.correo}>

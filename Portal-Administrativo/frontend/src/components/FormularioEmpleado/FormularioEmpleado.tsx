@@ -9,6 +9,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Axios from "axios";
 import { borderColor, fontSize } from "@mui/system";
 import { useAuth0 } from '@auth0/auth0-react'
+import MenuUsuario from '../MenuUsuario';
+import BotonHome from '../BotonHome'
 
 
 export default function FormularioBasico() {
