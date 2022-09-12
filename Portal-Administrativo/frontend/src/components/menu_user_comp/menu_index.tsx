@@ -5,10 +5,14 @@ import Menu_emp from './menu_em';
 import Menu_re from './menu_re';
 import Logo from "../logo.png";
 import React from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
+import MenuUsuario from '../MenuUsuario';
+import BotonHome from '../BotonHome';
 
 export default function TaskList() {
 
   const [open, setOpen] = useState(false);
+  const { isAuthenticated, user } = useAuth0();
 
   const abrir = () => {
     setOpen(!open);
@@ -26,6 +30,8 @@ export default function TaskList() {
 
   return (
     <div>
+      <div>{isAuthenticated? <MenuUsuario input={user}></MenuUsuario>:''}</div>
+    <div>{isAuthenticated? <BotonHome></BotonHome>:''}</div>
       <div className='menu_user'>
       <img src={Logo} style={{ height: '12vw', width: 'auto', marginBottom: '18vw' }} />
 

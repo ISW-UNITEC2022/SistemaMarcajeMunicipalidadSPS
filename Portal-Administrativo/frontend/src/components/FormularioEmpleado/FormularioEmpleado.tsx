@@ -8,8 +8,9 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Axios from "axios";
 import { borderColor, fontSize } from "@mui/system";
-import { useAuth0 } from '@auth0/auth0-react'
-
+import { useAuth0 } from "@auth0/auth0-react";
+import MenuUsuario from "../MenuUsuario";
+import BotonHome from "../BotonHome";
 
 export default function FormularioBasico() {
   const url = "https://proyecto-isw1.herokuapp.com/api/empleados";
@@ -47,20 +48,18 @@ export default function FormularioBasico() {
   function refreshPage() {
     window.location.reload();
   }
-  const { user, isAuthenticated } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
 
-  function getAuth0Id(){
-    if(isAuthenticated)
-      SetidAuth0(user.sub);
-    else
-    SetidAuth0("");;
+  function getAuth0Id() {
+    if (isAuthenticated) SetidAuth0(user.sub);
+    else SetidAuth0("");
   }
 
   function submit(e) {
     e.preventDefault();
     getAuth0Id();
-    console.log("El id del supervisor es "+idAuth0);
- Axios.post(url, {
+    console.log("El id del supervisor es " + idAuth0);
+    Axios.post(url, {
       idempleado: data.idempleado,
       idsupervisor: null,
       nombre: data.nombre,
@@ -102,6 +101,10 @@ export default function FormularioBasico() {
 
   return (
     <div>
+      <div>
+        {isAuthenticated ? <MenuUsuario input={user}></MenuUsuario> : ""}
+      </div>
+      <div>{isAuthenticated ? <BotonHome></BotonHome> : ""}</div>
       <form onSubmit={(e) => submit(e)}>
         <div className="_fila">
           <p className="instruccion">
@@ -116,7 +119,10 @@ export default function FormularioBasico() {
             _id={"idempleado"}
             _value={data.idempleado}
             _type={"text"}
-            _label={"No° Identidad"} _habilitar={undefined} _asterisk={"red"}          ></TextBox>
+            _label={"No° Identidad"}
+            _habilitar={undefined}
+            _asterisk={"red"}
+          ></TextBox>
         </div>
 
         <div className="_fila">
@@ -126,7 +132,10 @@ export default function FormularioBasico() {
             _id={"nombre"}
             _value={data.nombre}
             _type={"text"}
-            _label={"Nombres"} _habilitar={undefined} _asterisk={"red"}        ></TextBox>
+            _label={"Nombres"}
+            _habilitar={undefined}
+            _asterisk={"red"}
+          ></TextBox>
 
           <TextBox
             _width={238}
@@ -134,7 +143,10 @@ export default function FormularioBasico() {
             _id={"apellido"}
             _value={data.apellido}
             _type={"text"}
-            _label={"Apellidos"} _habilitar={undefined} _asterisk={"red"}         ></TextBox>
+            _label={"Apellidos"}
+            _habilitar={undefined}
+            _asterisk={"red"}
+          ></TextBox>
         </div>
 
         <div className="_fila">
@@ -144,7 +156,10 @@ export default function FormularioBasico() {
             _id={"correo"}
             _value={data.correo}
             _type={"text"}
-            _label={"Correo Electrónico"} _habilitar={undefined} _asterisk={"red"}          ></TextBox>
+            _label={"Correo Electrónico"}
+            _habilitar={undefined}
+            _asterisk={"red"}
+          ></TextBox>
 
           <PasswordBox
             _onChange={(e) => handle(e)}
@@ -289,7 +304,10 @@ export default function FormularioBasico() {
             _id={"zona"}
             _value={data.zona}
             _type={"text"}
-            _label={"Zona"} _habilitar={undefined} _asterisk={"red"}          ></TextBox>
+            _label={"Zona"}
+            _habilitar={undefined}
+            _asterisk={"red"}
+          ></TextBox>
         </div>
         <div className="_fila">
           <p className="horaText">
