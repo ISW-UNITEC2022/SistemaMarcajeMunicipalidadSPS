@@ -31,6 +31,7 @@ function FormularioSupervisor() {
 			.catch((error) => console.error(`Error: ${error}`));
 	};
 
+
 	function submit(e) {
 		console.log(supervisor);
 		e.preventDefault();
