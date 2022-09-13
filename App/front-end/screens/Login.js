@@ -29,8 +29,8 @@ axios.post('https://proyecto-isw1.herokuapp.com/api/empleados/auth', {
 }
 
   return (
-    <View style={styles.container}>
-       <View style={styles.shape_conatiner}>
+    <View style={styles.container}> 
+    <View style={styles.shape_conatiner}>
      <View style={[styles.square,{
       backgroundColor: '#02732A'
      }]}/>
@@ -40,21 +40,10 @@ axios.post('https://proyecto-isw1.herokuapp.com/api/empleados/auth', {
      <View style={[styles.square,{
       backgroundColor: '#BF0404'
      }]}/>
-  
      </View>
 
-     <Image
-          style={{
-            resizeMode: 'contain',
-            height: 150,
-            width: 121,
-            left: 228,  
-            top: 32,
-          }}
-        source = {require('../assets/logo.png')}
-      />
-      <View style={styles.botton}></View>
-     
+     <Image source={require('../assets/logo.png')} style={styles.logo} />
+
       <View style={styles.content}>
             <Text style={styles.texto}> Iniciar Sesión </Text>
             
@@ -74,21 +63,30 @@ axios.post('https://proyecto-isw1.herokuapp.com/api/empleados/auth', {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-    backgroundColor: '#fff',
+    flex: 1,
+    backgroundColor: '#F2F2F2',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   shape_conatiner:{
     height: 20,
     width: 125,
     backgroundColor: '#013613',
     flexDirection: 'row',
-    justifyContent:'flex-start',
+    justifyContent:'center',
     alignItems:'flex-start',
   },
   square:{
     height: 20,
     width: 125,
   },
+  logo:{
+  resizeMode: 'contain',
+  height: 150,
+  width: 121,
+  left: 120,  
+  top: 32,
+},
   botton:{
     height: 50,
     top: 610,
@@ -100,33 +98,30 @@ const styles = StyleSheet.create({
     alignContent:'center',
     justifyContent:'flex-start',
     alignItems:'flex-start',
-    
   },
   texto:{
     color:'#1F3821',
     fontSize: 33,
     height: 49,
     width: 240,
-    top:18,
+    top:110,
     fontWeight:'bold',
     textAlign:'center',
-    left:60,
+    left:10,
   },
 
   buttonContainer:{
-    top:50,
+    top:150,
     backgroundColor:'#02732A',
     width:270,
     height:47,
-    left:46,
     marginTop:33,
     borderRadius:10,
     textAlign:'center',
   },
 
   input: {
-    left:50,
-    top:50,
+    top:140,
     fontSize:18,
     width:270,
     height:45,

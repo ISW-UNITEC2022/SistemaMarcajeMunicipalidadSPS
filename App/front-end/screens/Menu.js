@@ -51,7 +51,7 @@ export class BotonMarca extends React.Component {
       if(error.response.data.status==409){
         Alert.alert(
           "",
-          "Ya marcó su entrada hoy.",
+          "Ya marcó su salida hoy.",
           [
             { text: "Ok", onPress: () => console.log("OK Pressed") }
           ]
@@ -63,7 +63,7 @@ export class BotonMarca extends React.Component {
   marcar = () =>{
     Alert.alert(
       "",
-      "Desea su marcar su entrada dentro del sistema?",
+      "Desea su marcar su salida dentro del sistema?",
       [
         {
           text: "Sí",
@@ -80,7 +80,7 @@ export class BotonMarca extends React.Component {
     console.log("Correo: "+this.state.correo);
     axios.get('https://proyecto-isw1.herokuapp.com/api/marcaje/'+this.state.correo+'?tipo=false', {
     }).then(response => {
-      console.log(response);
+     
       if(response.data.marcado){
       this.setState({
         pressed:true,
@@ -91,7 +91,7 @@ export class BotonMarca extends React.Component {
       if(error.response.data.status==409){
         Alert.alert(
           "",
-          "Ya marcó su entrada hoy.",
+          "Ya marcó su salida hoy.",
           [
             { text: "Ok", onPress: () => console.log("OK Pressed") }
           ]
@@ -197,7 +197,7 @@ export class BotonMarca1 extends React.Component {
     console.log("Correo: "+this.state.correo);
     axios.get('https://proyecto-isw1.herokuapp.com/api/marcaje/'+this.state.correo+'?tipo=true', {
     }).then(response => {
-      console.log(response);
+
       if(response.data.marcado){
       this.setState({
         pressed:true,
@@ -261,6 +261,11 @@ const Menu = ({route,navigation}) => {
     ]	
     );	
   }
+  const historial = () =>{
+
+    navigation.navigate("Historial")
+
+   }
 
   return (
   <View style={styles.container}> 
@@ -275,9 +280,14 @@ const Menu = ({route,navigation}) => {
       backgroundColor: '#BF0404'
      }]}/>
      </View>
-     <Pressable style={styles.button}   onPress={() => cerrarsesion()} >	
-      <Text style={styles.textlog}>CERRAR SESIÓN</Text>	
-    </Pressable>
+     <View style={styles.containerbut}>
+    <TouchableOpacity style={styles.imgbutton}    onPress={() => cerrarsesion()} >	
+    <Image source={require('../assets/cerrar.png')}  style={styles.cerrar} />
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.imgbutton}    onPress={() => historial()} >	
+    <Image source={require('../assets/historial.png')}  style={styles.historial} />
+    </TouchableOpacity>
+    </View>
   <View style={styles.container}>
     <Image source={require('../assets/logo.png')} style={styles.logo} />
     <BotonMarca1 correo={correo} idEmpleado={id}></BotonMarca1>  
@@ -298,6 +308,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2F2F2',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  containerbut: {
+    flexDirection: 'row',
+    justifyContent:'center',
+    alignItems:'flex-start',
   },
   shape_conatiner:{
     height: 20,
@@ -334,6 +349,22 @@ const styles = StyleSheet.create({
     flex:2,
     alignContent:'center',
     
+  },
+  cerrar:{
+    height:40,
+    width:40,
+    resizeMode:"contain",
+    color:"#F2B705",
+    left:-130,	
+    top:-30,	
+  },
+  historial:{
+    height:40,
+    width:40,
+    resizeMode:"contain",
+    color:"#F2B705",
+    left:130,	
+    top:-30,	
   },
   texto:{
     color:'#1F3821',
@@ -374,6 +405,12 @@ const styles = StyleSheet.create({
     color:'#F2F2F2',
     textAlign:'center',
     fontWeight:'bold'
+  },
+  imgbutton:{
+    alignItems:'center',
+    justifyContent: 'center',
+    borderRadius:5,
+    marginTop:39,
   },
   button:{
     alignItems:'center',
