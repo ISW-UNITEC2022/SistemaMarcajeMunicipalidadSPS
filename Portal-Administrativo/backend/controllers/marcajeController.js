@@ -80,6 +80,7 @@ export const validarMarca = async (req, res, next) => {
     let { tipo } = req.query || true
     tipo = tipo === 'true' ? 'entrada' : 'salida'
     let [_, fechaInicio, fechaFinal] = getToday()
+    console.log(toLocale(fechaInicio), toLocale(fechaFinal))
     let transaction = await db.transaction()
     let marcas = await db('empleados')
       .transacting(transaction)
