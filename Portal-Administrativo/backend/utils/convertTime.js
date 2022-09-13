@@ -44,7 +44,7 @@ export const getToday = () => {
 }
 
 export const toLocale = (date) => {
-  return date.toLocaleString('en-US', {
+  return date.toLocaleString('es-HN', {
     timeZone: 'America/Tegucigalpa',
   })
 }
