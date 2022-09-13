@@ -74,17 +74,15 @@ axios.post('https://proyecto-isw1.herokuapp.com/api/empleados/auth', {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#F2F2F2',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex:1,
+    backgroundColor: '#fff',
   },
   shape_conatiner:{
     height: 20,
     width: 125,
     backgroundColor: '#013613',
     flexDirection: 'row',
-    justifyContent:'center',
+    justifyContent:'flex-start',
     alignItems:'flex-start',
   },
   square:{
@@ -100,16 +98,19 @@ const styles = StyleSheet.create({
   content:{
     flex:2,
     alignContent:'center',
+    justifyContent:'flex-start',
+    alignItems:'flex-start',
     
   },
   texto:{
     color:'#1F3821',
-    fontSize: 36,
-    left:61,
+    fontSize: 33,
     height: 49,
     width: 240,
     top:18,
-    fontWeight:'bold'
+    fontWeight:'bold',
+    textAlign:'center',
+    left:60,
   },
 
   buttonContainer:{
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    left:45,
+    left:50,
     top:50,
     fontSize:18,
     width:270,
@@ -145,5 +146,4 @@ const styles = StyleSheet.create({
   
 
 });
-
 export default Login;
