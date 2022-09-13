@@ -37,9 +37,13 @@ export const toFormat12h = (horaEn24h) => {
 export const getToday = () => {
   let fecha = new Date()
   let fechaInicio = new Date()
-  fechaInicio.setHours(0, 0, 0, 0)
+  fechaInicio.setHours(0)
+  fechaInicio.setMinutes(0)
+  fechaInicio.setSeconds(0)
   let fechaFinal = new Date()
-  fechaFinal.setHours(23, 59, 0, 0)
+  fechaFinal.setHours(23)
+  fechaFinal.setMinutes(59)
+  fechaFinal.setSeconds(0)
   return [fecha, fechaInicio, fechaFinal]
 }
 
