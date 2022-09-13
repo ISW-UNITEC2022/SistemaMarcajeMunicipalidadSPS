@@ -48,3 +48,7 @@ export const toLocale = (date) => {
     timeZone: 'America/Tegucigalpa',
   })
 }
+
+export const removeTime = (date) => {
+  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+}

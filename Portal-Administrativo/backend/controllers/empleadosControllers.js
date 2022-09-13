@@ -1,7 +1,11 @@
 import { db } from '../db/db.js'
 import { CustomError } from '../utils/CustomError.js'
 import bcrypt from 'bcrypt'
-import { toFormat12h } from '../utils/convertTime.js'
+import {
+  dateToTimeString,
+  removeTime,
+  toFormat12h,
+} from '../utils/convertTime.js'
 import { hashPassword, validarPassword } from '../utils/crypt.js'
 
 //Ruta /api/empleados GET
@@ -407,6 +411,42 @@ export const actualizarStatus = async (req, res, next) => {
     if (error.constraint === 'empleados_status_check') {
       next(new CustomError('Status de empleado no valido', 400))
     }
+    next(error)
+  }
+}
+
+//Ruta api/empleados/historial/:idempleado
+//Descripcion devuelve un array con el historial de marcas de un empleado
+export const obtenerHistorialDeMarca = async (req, res, next) => {
+  let transaction = await db.transaction()
+  try {
+    let { idempleado } = req.params
+    let historial = await db('marcaje')
+      .transacting(transaction)
+      .select('fecha', 'tipo')
+      .where({ idempleado })
+    let group = {}
+    historial.forEach((element) => {
+      const fecha = removeTime(element.fecha)
+      group[fecha] = group[fecha] ?? { fecha }
+      if (element.tipo === 'entrada') {
+        group[fecha]['horaentrada'] = toFormat12h(
+          dateToTimeString(element.fecha)
+        )
+      } else {
+        group[fecha]['horasalida'] = toFormat12h(
+          dateToTimeString(element.fecha)
+        )
+      }
+    })
+    historial = []
+    for (let marcas in group) {
+      historial.push(group[marcas])
+    }
+    transaction.commit()
+    res.json(historial)
+  } catch (error) {
+    transaction.rollback()
     next(error)
   }
 }
