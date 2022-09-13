@@ -6,6 +6,7 @@ import {
   crearEmpleado,
   actualizarEmpleado,
   obtenerEmpleadosPorRol,
+  actualizarStatus,
 } from '../controllers/empleadosControllers.js'
 
 const router = Router()
@@ -18,5 +19,6 @@ router
 router.route('/rol').get(obtenerEmpleadosPorRol)
 router.route('/auth').post(authEmpleado)
 router.route('/:id').get(obtenerEmpleadoPorId)
+router.route('/status').put(actualizarStatus)
 
 export default router

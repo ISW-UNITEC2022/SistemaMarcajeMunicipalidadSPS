@@ -357,3 +357,56 @@ export const actualizarEmpleado = async (req, res, next) => {
     next(error)
   }
 }
+
+//Ruta api/empleados/status
+//Descripcion Actualiza el estado de un empleado
+//Body
+/*{ 
+  idempleado: string,
+  status: string, alta o baja
+}
+*/
+export const actualizarStatus = async (req, res, next) => {
+  let transaction = await db.transaction()
+  try {
+    let { idempleado, status } = req.body
+    let [empleado] = await db('empleados')
+      .select('status')
+      .where({ idempleado })
+    if (!empleado) {
+      throw new CustomError('No se ha encontrado el empleado', 404)
+    }
+    if (empleado.status === status) {
+      throw new CustomError(`El empleado ya tiene status de ${status}`, 400)
+    }
+    let [empleadoActualizado] = await db('empleados')
+      .transacting(transaction)
+      .update(
+        {
+          status,
+        },
+        [
+          'idempleado',
+          'idsupervisor',
+          'nombre',
+          'apellido',
+          'correo',
+          'distrito',
+          'zona',
+          'departamento',
+          'horaentrada',
+          'horasalida',
+          'status',
+        ]
+      )
+      .where('idempleado', idempleado)
+    transaction.commit()
+    res.json(empleadoActualizado)
+  } catch (error) {
+    transaction.rollback()
+    if (error.constraint === 'empleados_status_check') {
+      next(new CustomError('Status de empleado no valido', 400))
+    }
+    next(error)
+  }
+}
