@@ -24,12 +24,7 @@ export const marcarEmpleado = async (req, res, next) => {
       .transacting(transaction)
       .select('tipo')
       .where({ idempleado: idempleado })
-      .andWhereBetween('fecha', [
-        fechaInicio.toLocaleString('en-US', {
-          timeZone: 'America/Tegucigalpa',
-        }),
-        fechaFinal.toLocaleString('en-US', { timeZone: 'America/Tegucigalpa' }),
-      ])
+      .andWhereBetween('fecha', [fechaInicio, fechaFinal])
     if (marcas.length > 0) {
       marcas = marcas.map((marca) => marca.tipo)
       if (marcas.includes(tipo)) {
