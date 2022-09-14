@@ -15,11 +15,8 @@ function App() {
     window.alert("Cerrando Sesión");
   };
 
-  const { isAuthenticated } = useAuth0();
-
   return (
     <BrowserRouter>
-    
       <Routes>
         <Route path="/menu_principal" element={<TaskList />} />
         <Route path="/crear_empleado" element={<FormularioEmpleado />} />
