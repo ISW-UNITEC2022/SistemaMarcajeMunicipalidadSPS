@@ -9,6 +9,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import axios from 'axios';
+import MenuUsuario from "../MenuUsuario";
 import BotonHome from "../BotonHome";
 
 function Modificar() {
@@ -112,6 +113,8 @@ function Modificar() {
 		<div>
 			<div>
 				<form onSubmit={(e) => submit(e)}>
+					<MenuUsuario></MenuUsuario>
+					<BotonHome></BotonHome>
 					<div className="fila">
 						<select
 							name="empleadoss"

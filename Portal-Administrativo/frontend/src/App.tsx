@@ -15,22 +15,16 @@ function App() {
     window.alert("Cerrando Sesión");
   };
 
-  const { isAuthenticated, user } = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   return (
     <BrowserRouter>
-   {/*   <div>
-        {isAuthenticated ? <MenuUsuario input={user}></MenuUsuario> : ""}
-      </div>
-      <div>{isAuthenticated ? <BotonHome></BotonHome> : ""}</div>*/}
+    
       <Routes>
         <Route path="/menu_principal" element={<TaskList />} />
         <Route path="/crear_empleado" element={<FormularioEmpleado />} />
         <Route path="/modificar_empleado" element={<Modificar />} />
-        <Route
-          path="/asignar_supervisor"
-          element={<AsignarSupervisor />}
-        ></Route>
+        <Route path="/asignar_supervisor" element={<AsignarSupervisor />}></Route>
         <Route path="/" element={<HomePage />} />
       </Routes>
     </BrowserRouter>

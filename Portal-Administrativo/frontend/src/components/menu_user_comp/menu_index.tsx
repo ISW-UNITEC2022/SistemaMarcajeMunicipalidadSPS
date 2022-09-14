@@ -30,25 +30,25 @@ export default function TaskList() {
 
   return (
     <div>
-      <div>{isAuthenticated? <MenuUsuario input={user}></MenuUsuario>:''}</div>
-    <div>{isAuthenticated? <BotonHome></BotonHome>:''}</div>
+      <MenuUsuario></MenuUsuario>
+      <BotonHome></BotonHome>
       <div className='menu_user'>
-      <img src={Logo} style={{ height: '12vw', width: 'auto', marginBottom: '18vw' }} />
+        <img src={Logo} style={{ height: '12vw', width: 'auto', marginBottom: '18vw' }} />
 
         <div className='caja'>
           <Button onClick={abrir} variant="contained"
             style={{
-                width:'19.5vw',
-                height: '3vw',
-                fontSize: '1.5vw',
-                fontWeight: 'bold',
-                fontFamily: 'sans-serif',
-                fontStyle: 'normal',
-                textTransform: 'none',
-  
-                backgroundColor: '#F2B705',
-                color: '#f2f2f2',
-                boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+              width: '19.5vw',
+              height: '3vw',
+              fontSize: '1.5vw',
+              fontWeight: 'bold',
+              fontFamily: 'sans-serif',
+              fontStyle: 'normal',
+              textTransform: 'none',
+
+              backgroundColor: '#F2B705',
+              color: '#f2f2f2',
+              boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
             }}
           >Empleados <div className='down'><i className="fa-solid fa-sort-down"></i></div>
           </Button>
@@ -58,7 +58,7 @@ export default function TaskList() {
         <div className={`caja_R ${open == true ? 'caja_R2' : ''}`}>
           <Button onClick={abrir2} variant="contained"
             style={{
-              width:'19.5vw',
+              width: '19.5vw',
               height: '3vw',
               fontSize: '1.5vw',
               fontWeight: 'bold',

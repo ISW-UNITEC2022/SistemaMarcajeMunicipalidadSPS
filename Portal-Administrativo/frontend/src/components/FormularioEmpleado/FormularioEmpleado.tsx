@@ -48,6 +48,7 @@ export default function FormularioBasico() {
   function refreshPage() {
     window.location.reload();
   }
+
   const { isAuthenticated, user } = useAuth0();
 
   function getAuth0Id() {
@@ -101,11 +102,10 @@ export default function FormularioBasico() {
 
   return (
     <div>
-      <div>
-        {isAuthenticated ? <MenuUsuario input={user}></MenuUsuario> : ""}
-      </div>
-      <div>{isAuthenticated ? <BotonHome></BotonHome> : ""}</div>
       <form onSubmit={(e) => submit(e)}>
+        <MenuUsuario></MenuUsuario>
+        <BotonHome></BotonHome>
+
         <div className="_fila">
           <p className="instruccion">
             Ingrese los datos correspondientes a las siguientes casillas.

@@ -3,6 +3,8 @@ import axios, { Axios } from "axios";
 import React, { useEffect, useState } from "react";
 import Textbox from '../TextBox';
 import '../AsignarSupervisor/Estilos/AsignarSupervisor.css';
+import MenuUsuario from "../MenuUsuario";
+import BotonHome from "../BotonHome";
 
 function FormularioSupervisor() {
 	const url = "https://proyecto-isw1.herokuapp.com/api/empleados/rol";
@@ -13,7 +15,6 @@ function FormularioSupervisor() {
 		idempleado: "",
 		idauth0: "",
 	});
-
 
 	useEffect(() => {
 		getEmpleados();
@@ -55,6 +56,8 @@ function FormularioSupervisor() {
 	return (
 		<>
 			<form onSubmit={submit}>
+				<MenuUsuario></MenuUsuario>
+				<BotonHome></BotonHome>
 				<body>
 					<div className="Box">
 						<div className="Box1">
@@ -88,8 +91,8 @@ function FormularioSupervisor() {
 								_id={"idauth0"}
 								_value={data.idauth0}
 								_type={"text"}
-								_label={"ID de Auth0"} 
-								_habilitar={undefined} 
+								_label={"ID de Auth0"}
+								_habilitar={undefined}
 								_asterisk={"red"}							></Textbox>
 						</div>
 
