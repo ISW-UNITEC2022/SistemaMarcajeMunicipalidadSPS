@@ -133,6 +133,19 @@ function Modificar() {
 
   function print() {
     getEmpleados2();
+	setData({
+		idempleado: infoEmpleado.idempleado,
+		idsupervisor: null,
+		nombre: infoEmpleado.nombre,
+		apellido: infoEmpleado.apellido,
+		correo: "",
+		password: "",
+		distrito: 0,
+		zona: "",
+		departamento: "",
+		horaentrada: "",
+		horasalida: "",
+	  });
     console.log(infoEmpleado.correo);
   }
 
@@ -173,7 +186,7 @@ function Modificar() {
               _width={488}
               _onChange={(e) => handle(e)}
               _id={"idempleado"}
-              _value={data.idempleado}
+              _value={infoEmpleado.idempleado}
               _type={"text"}
               _label={"No° Identidad"}
               _habilitar={true}
@@ -186,7 +199,7 @@ function Modificar() {
               _width={238}
               _onChange={(e) => handle(e)}
               _id={"nombre"}
-              _value={data.nombre}
+              _value={infoEmpleado.nombre}
               _type={"text"}
               _label={"Nombres"}
               _habilitar={true}
@@ -197,7 +210,7 @@ function Modificar() {
               _width={238}
               _onChange={(e) => handle(e)}
               _id={"apellido"}
-              _value={data.apellido}
+              _value={infoEmpleado.apellido}
               _type={"text"}
               _label={"Apellidos"}
               _habilitar={true}
