@@ -103,12 +103,24 @@ export const obtenerIdEmpleado = async (req, res, next) => {
   }
 }
 
-//Ruta /api/supervisores/:idsupervisor/empleados
+//Ruta /api/supervisores/:id/empleados
 //Descripcion Devuelve los empleados asignados a un supervisor segun el idauth0
 export const obtenerEmpleadosPorSupervisor = async (req, res, next) => {
   let transaction = await db.transaction()
   try {
-    const { idsupervisor } = req.params
+    const { id } = req.params
+    const [supervisor] = await db('supervisor')
+      .select('idempleado')
+      .where({
+        idsupervisor: id,
+      })
+      .orWhere({ idempleado: id })
+    if (!supervisor) {
+      throw new CustomError(
+        'El supervisor no existe o no ha sido asignado como supervisor',
+        501
+      )
+    }
     let empleados = await db('empleados')
       .transacting(transaction)
       .select(
@@ -131,15 +143,11 @@ export const obtenerEmpleadosPorSupervisor = async (req, res, next) => {
         'rolxempleado.idempleado'
       )
       .innerJoin('roles', 'rolxempleado.idrol', 'roles.idrol')
-      .where({ idsupervisor: idsupervisor })
+      .where({ idsupervisor: supervisor.idempleado })
     transaction.commit()
     res.json(empleados)
   } catch (error) {
     transaction.rollback()
-    console.log(
-      '🚀 ~ file: supervisoresController.js ~ line 139 ~ obtenerEmpleadosPorSupervisor ~ error',
-      error
-    )
     next(error)
   }
 }

@@ -3,8 +3,10 @@ import { CustomError } from '../utils/CustomError.js'
 import bcrypt from 'bcrypt'
 import {
   dateToTimeString,
+  getRangeDates,
   removeTime,
   toFormat12h,
+  toLocale,
 } from '../utils/convertTime.js'
 import { hashPassword, validarPassword } from '../utils/crypt.js'
 
@@ -415,16 +417,18 @@ export const actualizarStatus = async (req, res, next) => {
   }
 }
 
-//Ruta api/empleados/historial/:idempleado
+//Ruta api/empleados/historial/:idempleado GET
 //Descripcion devuelve un array con el historial de marcas de un empleado
 export const obtenerHistorialDeMarca = async (req, res, next) => {
   let transaction = await db.transaction()
   try {
     let { idempleado } = req.params
+    let [fechaInicio, fechaFinal] = getRangeDates(16)
     let historial = await db('marcaje')
       .transacting(transaction)
       .select('fecha', 'tipo')
-      .where({ idempleado })
+      .where({ idempleado: idempleado })
+      .andWhereBetween('fecha', [fechaInicio, fechaFinal])
     let group = {}
     historial.forEach((element) => {
       const fecha = removeTime(element.fecha)

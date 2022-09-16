@@ -44,7 +44,7 @@ export const marcarEmpleado = async (req, res, next) => {
           tipo,
           latitud: lat,
           longitud: lon,
-          google_url: `https://www.google.com/maps/@${lat},${lon}`,
+          google_url: `https://www.google.com/maps/place/15%C2%B031'37.5%22N+87%C2%B059'17.7%22W/@${lat},${lon}z`,
         },
         [
           'idmarca',
@@ -82,7 +82,7 @@ export const validarMarca = async (req, res, next) => {
       .select('marcaje.tipo')
       .innerJoin('marcaje', 'empleados.idempleado', 'marcaje.idempleado')
       .where({ correo: correo, tipo: tipo })
-      .andWhereBetween('fecha', [fechaInicio, fechaFinal])
+      .andWhereBetween('fecha', [toLocale(fechaInicio), toLocale(fechaFinal)])
     let marca = marcas.find((m) => m.tipo === tipo)
     transaction.commit()
     res.json({ marcado: !marca ? false : true })

@@ -56,3 +56,16 @@ export const toLocale = (date) => {
 export const removeTime = (date) => {
   return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
 }
+
+export const getRangeDates = (days) => {
+  let fechaInicio = new Date()
+  fechaInicio.setHours(0)
+  fechaInicio.setMinutes(0)
+  fechaInicio.setSeconds(0)
+  fechaInicio.setDate(fechaInicio.getDate() - days)
+  let fechaFinal = new Date()
+  fechaFinal.setHours(23)
+  fechaFinal.setMinutes(59)
+  fechaFinal.setSeconds(0)
+  return [fechaInicio, fechaFinal]
+}
