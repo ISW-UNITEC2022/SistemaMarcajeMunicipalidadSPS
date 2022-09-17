@@ -1,22 +1,22 @@
 import { db } from '../db/db.js'
 import { CustomError } from '../utils/CustomError.js'
-import bcrypt from 'bcrypt'
 import {
   dateToTimeString,
   getRangeDates,
   removeTime,
   toFormat12h,
-  toLocale,
 } from '../utils/convertTime.js'
 import { hashPassword, validarPassword } from '../utils/crypt.js'
 
 //Ruta /api/empleados GET
 //Descripcion Devuelve la informacion de todos los empleados
 export const obtenerEmpleados = async (_req, res, next) => {
+  let transaction = await db.transaction()
   try {
-    let empleados = await db
+    let empleados = await db('empleados as e')
+      .transacting(transaction)
       .select(
-        'empleados.idempleado',
+        'e.idempleado',
         'idsupervisor',
         'nombre',
         'apellido',
@@ -29,14 +29,8 @@ export const obtenerEmpleados = async (_req, res, next) => {
         'horasalida',
         'nombrerol as rol'
       )
-      .from('empleados')
-      .innerJoin(
-        'rolxempleado',
-        'rolxempleado.idempleado',
-        '=',
-        'empleados.idempleado'
-      )
-      .innerJoin('roles', 'roles.idrol', '=', 'rolxempleado.idrol')
+      .innerJoin('rolxempleado as re', 're.idempleado', '=', 'e.idempleado')
+      .innerJoin('roles as r', 'r.idrol', '=', 're.idrol')
     if (empleados.length < 1) {
       res.status(404)
       throw new CustomError('No hay ningun empleado', 404)
@@ -48,19 +42,23 @@ export const obtenerEmpleados = async (_req, res, next) => {
         horasalida: toFormat12h(empleado.horasalida),
       }
     })
+    transaction.commit()
     res.json(empleados)
   } catch (error) {
+    transaction.rollback()
     next(error)
   }
 }
 
-//Ruta /api/empleados GET
+//Ruta /api/empleados/rol GET
 //Descripcion Devuelve la informacion de todos los empleados
 export const obtenerEmpleadosPorRol = async (_req, res, next) => {
+  let transaction = await db.transaction()
   try {
-    let empleados = await db
+    let empleados = await db('empleados as e')
+      .transacting(transaction)
       .select(
-        'empleados.idempleado',
+        'e.idempleado',
         'idsupervisor',
         'nombre',
         'apellido',
@@ -73,15 +71,9 @@ export const obtenerEmpleadosPorRol = async (_req, res, next) => {
         'horasalida',
         'nombrerol as rol'
       )
-      .from('empleados')
-      .innerJoin(
-        'rolxempleado',
-        'rolxempleado.idempleado',
-        '=',
-        'empleados.idempleado'
-      )
-      .innerJoin('roles', 'roles.idrol', '=', 'rolxempleado.idrol')
-      .where('roles.idrol', 2)
+      .innerJoin('rolxempleado as re', 're.idempleado', '=', 'e.idempleado')
+      .innerJoin('roles as r', 'r.idrol', '=', 're.idrol')
+      .where('r.idrol', 2)
     if (empleados.length < 1) {
       res.status(404)
       throw new CustomError('No hay ningun empleado', 404)
@@ -93,8 +85,10 @@ export const obtenerEmpleadosPorRol = async (_req, res, next) => {
         horasalida: toFormat12h(empleado.horasalida),
       }
     })
+    transaction.commit()
     res.json(empleados)
   } catch (error) {
+    transaction.rollback()
     next(error)
   }
 }
@@ -118,6 +112,7 @@ Body
 }
 */
 export const crearEmpleado = async (req, res, next) => {
+  let transaction = await db.transaction()
   try {
     const {
       idempleado,
@@ -133,7 +128,7 @@ export const crearEmpleado = async (req, res, next) => {
       horasalida,
     } = req.body
     let hashpassword = hashPassword(password)
-    let [user] = await db('empleados').insert(
+    let [user] = await db('empleados').transacting(transaction).insert(
       {
         idempleado,
         idsupervisor,
@@ -153,32 +148,44 @@ export const crearEmpleado = async (req, res, next) => {
         'nombre',
         'apellido',
         'correo',
-        'distrito',
         'departamento',
+        'distrito',
+        'status',
+        'zona',
         'horaentrada',
         'horasalida',
-        'zona',
       ]
     )
+    let rol
     if (user) {
-      let [idrol] = await db('rolxempleado').insert(
-        {
-          idempleado: user.idempleado,
-          idrol: 2, // Rol de empleado por default
-        },
-        ['idrol']
-      )
-      if (!idrol) {
-        throw new CustomError('No se pudo asignar el rol al empleado')
-      } else user.rol = 'Empleado'
+      let [idrol] = await db('rolxempleado')
+        .transacting(transaction)
+        .insert(
+          {
+            idempleado: user.idempleado,
+            idrol: 2, // Rol de empleado por default
+          },
+          ['idrol']
+        )
+        .catch((err) => {
+          throw new CustomError('No se pudo crear el empleado', 400, {
+            error: err.message,
+          })
+        })
+      if (idrol) {
+        rol = 'empleado'
+      }
     }
     user = {
       ...user,
       horaentrada: toFormat12h(user.horaentrada),
       horasalida: toFormat12h(user.horasalida),
+      rol,
     }
+    transaction.commit()
     res.json(user)
   } catch (error) {
+    transaction.rollback()
     if (error.constraint === 'correo_unico')
       next(new CustomError('El correo ya esta en uso'))
     else if (error.constraint === 'empleados_pkey')
@@ -196,21 +203,22 @@ export const crearEmpleado = async (req, res, next) => {
 //Descripcion valida usuario y contraseña
 //Body { correo: string, password: string }
 export const authEmpleado = async (req, res, next) => {
+  let transaction = await db.transaction()
   try {
     const { correo, password } = req.body
-    let [user] = await db
+    let [user] = await db('empleados')
+      .transacting(transaction)
       .select('hashpassword')
-      .from('empleados')
       .where('correo', '=', correo)
     if (!user) {
       throw new CustomError('Correo o contraseña incorrectos', 401)
     }
     let success = validarPassword(password, user.hashpassword)
-    let userInfo
     if (success) {
-      userInfo = await db
+      var [userInfo] = await db('empleados as e')
+        .transacting(transaction)
         .select(
-          'idempleado',
+          'e.idempleado',
           'idsupervisor',
           'nombre',
           'apellido',
@@ -218,22 +226,26 @@ export const authEmpleado = async (req, res, next) => {
           'departamento',
           'distrito',
           'status',
+          'zona',
           'horaentrada',
           'horasalida',
-          'zona'
+          'r.nombrerol as rol'
         )
-        .from('empleados')
-        .where('correo', correo)
+        .innerJoin('rolxempleado as re', 're.idempleado', '=', 'e.idempleado')
+        .innerJoin('roles as r', 'r.idrol', '=', 're.idrol')
+        .where('e.correo', correo)
     } else {
       throw new CustomError('Correo o contraseña incorrectos', 401)
     }
     userInfo = {
-      ...userInfo[0],
-      horaentrada: userInfo[0].horaentrada,
-      horasalida: userInfo[0].horasalida,
+      ...userInfo,
+      horaentrada: toFormat12h(userInfo.horaentrada),
+      horasalida: toFormat12h(userInfo.horasalida),
     }
+    transaction.commit()
     res.json(userInfo)
   } catch (error) {
+    transaction.rollback()
     next(error)
   }
 }
@@ -241,11 +253,13 @@ export const authEmpleado = async (req, res, next) => {
 //Ruta /api/empleados/:id
 //Descripcion Devuelve la informacion del empleado con el :id
 export const obtenerEmpleadoPorId = async (req, res, next) => {
+  let transaction = await db.transaction()
   try {
     const { id } = req.params
-    let [empleado] = await db
+    let [empleado] = await db('empleados as e')
+      .transacting(transaction)
       .select(
-        'empleados.idempleado',
+        'e.idempleado',
         'idsupervisor',
         'nombre',
         'apellido',
@@ -253,19 +267,14 @@ export const obtenerEmpleadoPorId = async (req, res, next) => {
         'departamento',
         'distrito',
         'status',
+        'zona',
         'horaentrada',
         'horasalida',
-        'roles.nombrerol as rol',
-        'zona'
+        'r.nombrerol as rol'
       )
-      .from('empleados')
-      .innerJoin(
-        'rolxempleado',
-        'empleados.idempleado',
-        'rolxempleado.idempleado'
-      )
-      .innerJoin('roles', 'rolxempleado.idrol', 'roles.idrol')
-      .where('empleados.idempleado', id)
+      .innerJoin('rolxempleado as re', 'e.idempleado', 're.idempleado')
+      .innerJoin('roles as r', 're.idrol', 'r.idrol')
+      .where('e.idempleado', id)
     if (!empleado) {
       res.status(404)
       throw new CustomError('No se ha encontrado el empleado', 404)
@@ -275,8 +284,10 @@ export const obtenerEmpleadoPorId = async (req, res, next) => {
       horaentrada: toFormat12h(empleado.horaentrada),
       horasalida: toFormat12h(empleado.horasalida),
     }
+    transaction.commit()
     res.json(empleado)
   } catch (error) {
+    transaction.rollback()
     next(error)
   }
 }
@@ -298,6 +309,7 @@ export const obtenerEmpleadoPorId = async (req, res, next) => {
 }
 */
 export const actualizarEmpleado = async (req, res, next) => {
+  let transaction = await db.transaction()
   try {
     const {
       idempleado,
@@ -335,22 +347,36 @@ export const actualizarEmpleado = async (req, res, next) => {
       }
     }
     let [empleadoActualizado] = await db('empleados')
-      .where('idempleado', idempleado)
+      .transacting(transaction)
+      .where({ idempleado })
       .update(updateBody, [
         'idempleado',
         'idsupervisor',
         'nombre',
         'apellido',
         'correo',
-        'distrito',
-        'zona',
         'departamento',
+        'distrito',
+        'status',
+        'zona',
         'horaentrada',
         'horasalida',
-        'status',
       ])
+    let [rol] = await db('rolxempleado as re')
+      .transacting(transaction)
+      .select('nombrerol')
+      .innerJoin('roles as r', 'r.idrol', 're.idrol')
+      .where('re.idempleado', idempleado)
+    empleadoActualizado = {
+      ...empleadoActualizado,
+      horaentrada: toFormat12h(empleadoActualizado.horaentrada),
+      horasalida: toFormat12h(empleadoActualizado.horasalida),
+      rol: rol.nombrerol,
+    }
+    transaction.commit()
     res.json(empleadoActualizado)
   } catch (error) {
+    transaction.rollback()
     if (error.constraint === 'correo_unico')
       next(new CustomError('El correo ya esta en uso'))
     else if (error.constraint == 'empleados_departamento_check')
@@ -377,6 +403,7 @@ export const actualizarStatus = async (req, res, next) => {
   try {
     let { idempleado, status } = req.body
     let [empleado] = await db('empleados')
+      .transacting(transaction)
       .select('status')
       .where({ idempleado })
     if (!empleado) {
@@ -391,21 +418,15 @@ export const actualizarStatus = async (req, res, next) => {
         {
           status,
         },
-        [
-          'idempleado',
-          'idsupervisor',
-          'nombre',
-          'apellido',
-          'correo',
-          'distrito',
-          'zona',
-          'departamento',
-          'horaentrada',
-          'horasalida',
-          'status',
-        ]
+        ['idempleado', 'idsupervisor', 'nombre', 'apellido', 'correo', 'status']
       )
       .where('idempleado', idempleado)
+    let [rol] = await db('rolxempleado as re')
+      .transacting(transaction)
+      .select('nombrerol')
+      .innerJoin('roles as r', 'r.idrol', 're.idrol')
+      .where('re.idempleado', idempleado)
+    empleadoActualizado.rol = rol.nombrerol
     transaction.commit()
     res.json(empleadoActualizado)
   } catch (error) {
