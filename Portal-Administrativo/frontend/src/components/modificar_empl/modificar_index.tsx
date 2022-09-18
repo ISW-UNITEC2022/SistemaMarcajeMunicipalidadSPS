@@ -11,6 +11,8 @@ import FormControl from "@mui/material/FormControl";
 import axios from "axios";
 import BotonHome from "../BotonHome";
 import MenuUsuario from "../MenuUsuario";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Modificar() {
   const url = "https://proyecto-isw1.herokuapp.com/api/empleados";
@@ -107,6 +109,7 @@ function Modificar() {
         horasalida: data.horasalida,
       })
       .then((res) => {
+        toast.success("¡Empleado modificado éxitosamente!");
         console.log(res.data);
       });
 
@@ -161,6 +164,8 @@ function Modificar() {
     <div>
       <div>
         <form onSubmit={(e) => submit(e)}>
+        <MenuUsuario></MenuUsuario>
+					<BotonHome></BotonHome>
         <MenuUsuario></MenuUsuario>
 					<BotonHome></BotonHome>
           <div className="fila">

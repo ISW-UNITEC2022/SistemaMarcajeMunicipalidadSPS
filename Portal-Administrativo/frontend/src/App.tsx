@@ -9,6 +9,8 @@ import AsignarSupervisor from "./components/AsignarSupervisor/AsignarSupervisor"
 import MenuUsuario from "./components/MenuUsuario";
 import { useAuth0 } from "@auth0/auth0-react";
 import BotonHome from "./components/BotonHome";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const onButtonClickHandler = () => {
@@ -17,6 +19,17 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Routes>
         <Route path="/menu_principal" element={<TaskList />} />
         <Route path="/crear_empleado" element={<FormularioEmpleado />} />

@@ -7,14 +7,16 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Axios from "axios";
-import { borderColor, fontSize } from "@mui/system";
-import { useAuth0 } from '@auth0/auth0-react'
-import MenuUsuario from '../MenuUsuario';
-import BotonHome from '../BotonHome'
-
+import { useAuth0 } from "@auth0/auth0-react";
+import MenuUsuario from "../MenuUsuario";
+import BotonHome from "../BotonHome";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function FormularioBasico() {
   const url = "https://proyecto-isw1.herokuapp.com/api/empleados";
+  const url2 = "https://proyecto-isw1.herokuapp.com/api/supervisores/";
   const [data, setData] = useState({
     idempleado: "",
     idsupervisor: null,
@@ -27,6 +29,9 @@ export default function FormularioBasico() {
     departamento: "",
     horaentrada: "",
     horasalida: "",
+  });
+  const [dataSupervisor, setDataSupervisor] = useState({
+    idempleado:"",
   });
 
   const [dis, setDis] = React.useState("");
@@ -45,25 +50,42 @@ export default function FormularioBasico() {
     console.log(dep);
   };
 
-  function refreshPage() {
-    window.location.reload();
-  }
   const { user, isAuthenticated } = useAuth0();
 
   const usuario_id = () => {
-    if (isAuthenticated)
-      return user.sub;
-    else
-      return 'Error de Autenticacion';
+    if (isAuthenticated) return user.sub;
+    else return "Error de Autenticacion";
   };
 
+  useEffect(() => {
+    getSupervisor();
+  }, []);
+
+  const idSuper = usuario_id();
+
+  const getSupervisor = () => {
+    console.log("El id auth0 " + idSuper);
+    axios
+      .get(url2 + idSuper)
+      .then((response) => {
+        const info = response.data;
+        setDataSupervisor(info);
+        console.log(dataSupervisor);
+      })
+      .catch((error) => toast.error("Error al crear empleado"));
+  };
+
+  function obtenerSupervisor(){
+    getSupervisor();
+    console.log("El id del supervisor es " +  dataSupervisor.idempleado);
+  }
   function submit(e) {
     e.preventDefault();
-
-    console.log("El id del supervisor es " + usuario_id());
+    obtenerSupervisor();
+    console.log("El id del supervisor es " +  dataSupervisor.idempleado);
     Axios.post(url, {
       idempleado: data.idempleado,
-      idsupervisor: null,
+      idsupervisor: dataSupervisor.idempleado,
       nombre: data.nombre,
       apellido: data.apellido,
       correo: data.correo,
@@ -74,7 +96,11 @@ export default function FormularioBasico() {
       horaentrada: data.horaentrada,
       horasalida: data.horasalida,
     }).then((res) => {
+      toast.success("¡Empleado creado éxitosamente!");
       console.log(res.data);
+    }).catch(error=> {
+      toast.error("Error al crear empleado");
+      console.log(error.response)
     });
 
     setData({
@@ -98,12 +124,13 @@ export default function FormularioBasico() {
     const newdata = { ...data };
     newdata[e.target.id] = e.target.value;
     setData(newdata);
-    console.log(newdata);
   }
 
   return (
     <div>
       <form onSubmit={(e) => submit(e)}>
+      <MenuUsuario></MenuUsuario>
+        <BotonHome></BotonHome>
         <div className="_fila">
           <p className="instruccion">
             Ingrese los datos correspondientes a las siguientes casillas.
@@ -117,7 +144,10 @@ export default function FormularioBasico() {
             _id={"idempleado"}
             _value={data.idempleado}
             _type={"text"}
-            _label={"No° Identidad"} _habilitar={undefined} _asterisk={"red"}          ></TextBox>
+            _label={"No° Identidad"}
+            _habilitar={undefined}
+            _asterisk={"red"}
+          ></TextBox>
         </div>
 
         <div className="_fila">
@@ -127,7 +157,10 @@ export default function FormularioBasico() {
             _id={"nombre"}
             _value={data.nombre}
             _type={"text"}
-            _label={"Nombres"} _habilitar={undefined} _asterisk={"red"}        ></TextBox>
+            _label={"Nombres"}
+            _habilitar={undefined}
+            _asterisk={"red"}
+          ></TextBox>
 
           <TextBox
             _width={238}
@@ -135,7 +168,10 @@ export default function FormularioBasico() {
             _id={"apellido"}
             _value={data.apellido}
             _type={"text"}
-            _label={"Apellidos"} _habilitar={undefined} _asterisk={"red"}         ></TextBox>
+            _label={"Apellidos"}
+            _habilitar={undefined}
+            _asterisk={"red"}
+          ></TextBox>
         </div>
 
         <div className="_fila">
@@ -145,7 +181,10 @@ export default function FormularioBasico() {
             _id={"correo"}
             _value={data.correo}
             _type={"text"}
-            _label={"Correo Electrónico"} _habilitar={undefined} _asterisk={"red"}          ></TextBox>
+            _label={"Correo Electrónico"}
+            _habilitar={undefined}
+            _asterisk={"red"}
+          ></TextBox>
 
           <PasswordBox
             _onChange={(e) => handle(e)}
@@ -290,7 +329,10 @@ export default function FormularioBasico() {
             _id={"zona"}
             _value={data.zona}
             _type={"text"}
-            _label={"Zona"} _habilitar={undefined} _asterisk={"red"}          ></TextBox>
+            _label={"Zona"}
+            _habilitar={undefined}
+            _asterisk={"red"}
+          ></TextBox>
         </div>
         <div className="_fila">
           <p className="horaText">
