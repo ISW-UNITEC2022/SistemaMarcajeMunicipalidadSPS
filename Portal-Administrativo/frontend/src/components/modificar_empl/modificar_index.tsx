@@ -10,6 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import axios from "axios";
 import BotonHome from "../BotonHome";
+import MenuUsuario from "../MenuUsuario";
 
 function Modificar() {
   const url = "https://proyecto-isw1.herokuapp.com/api/empleados";
@@ -160,6 +161,8 @@ function Modificar() {
     <div>
       <div>
         <form onSubmit={(e) => submit(e)}>
+        <MenuUsuario></MenuUsuario>
+					<BotonHome></BotonHome>
           <div className="fila">
             <select
               name="empleadoss"

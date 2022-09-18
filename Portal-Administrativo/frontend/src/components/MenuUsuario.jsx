@@ -11,7 +11,7 @@ import { useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react'
 import { useNavigate } from "react-router-dom";
 
-const SplitButton = ({ input }) => {
+const SplitButton = () => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const { isAuthenticated, user } = useAuth0();
@@ -35,10 +35,6 @@ const SplitButton = ({ input }) => {
     else
       return 'Error de Autenticacion';
   };
-
-  if(!isAuthenticated)
-    navigate('/');
-
 
   return (
     <React.Fragment>
@@ -100,7 +96,7 @@ const SplitButton = ({ input }) => {
                   display: 'flex',
                 }}
               >
-                <BotonV input={"Configurar Perfil"} width={ '33.3vw'} type={""}></BotonV>
+                <BotonV input={"Configurar Perfil"} width={ '33.3vw'} type={"confi"}></BotonV>
               </div>
               <div
                 sx={{
