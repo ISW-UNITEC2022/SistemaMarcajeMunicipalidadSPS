@@ -96,7 +96,16 @@ function Modificar() {
     axios
       .put(url, {
         idempleado: infoEmpleado.idempleado,
-        correo:data.correo
+        idsupervisor: null,
+        nombre: infoEmpleado.nombre,
+        apellido: infoEmpleado.apellido,
+        correo:data.correo,
+        password: data.password,
+        distrito: data.distrito,
+        departamento: data.departamento,
+        zona: data.zona,
+        horaentrada: data.horaentrada,
+        horasalida: data.horasalida,
       })
       .then((res) => {
         console.log(res.data);
