@@ -86,7 +86,7 @@ export const obtenerIdEmpleado = async (req, res, next) => {
   let transaction = await db.transaction()
   try {
     const { idauth0 } = req.params
-    let [idempleado] = await db('empleados')
+    let [idempleado] = await db('supervisor')
       .transacting(transaction)
       .select('idempleado')
       .where({ idsupervisor: idauth0 })
