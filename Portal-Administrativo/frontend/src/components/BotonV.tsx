@@ -6,7 +6,7 @@ import { inputBaseClasses } from "@mui/material";
 import { useAuth0 } from '@auth0/auth0-react'
 import { useNavigate } from 'react-router-dom';
 
-const BotonV = ({ input, width, type }) => {  
+const BotonV = ({ input, width, type }) => {
   const handleClick = (e) => {
     e.preventDefault();
     console.log('The link was clicked.');
@@ -14,8 +14,19 @@ const BotonV = ({ input, width, type }) => {
 
   const { logout } = useAuth0();
 
+  const configuracion = () => {
+
+  }
+
+  const action = () => {
+    if (type == "confi")
+      return configuracion();
+    else if (type == "logout")
+      return logout();
+  }
+
   return (
-    <Button onClick={() => logout()}
+    <Button onClick={() => action()}
       sx={{
         width: { width },
         height: 45,
@@ -29,7 +40,7 @@ const BotonV = ({ input, width, type }) => {
         color: '#f2f2f2',
 
         marginTop: '2px',
-        
+
 
         '&:hover': {
           backgroundColor: '#80E673',

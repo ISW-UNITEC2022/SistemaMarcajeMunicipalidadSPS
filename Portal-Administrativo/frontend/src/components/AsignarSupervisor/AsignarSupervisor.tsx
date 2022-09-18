@@ -3,8 +3,9 @@ import axios, { Axios } from "axios";
 import React, { useEffect, useState } from "react";
 import Textbox from '../TextBox';
 import '../AsignarSupervisor/Estilos/AsignarSupervisor.css';
-import MenuUsuario from '../MenuUsuario';
-import BotonHome from '../BotonHome'
+import MenuUsuario from "../MenuUsuario";
+import BotonHome from "../BotonHome";
+
 
 function FormularioSupervisor() {
 	const url = "https://proyecto-isw1.herokuapp.com/api/empleados/rol";
@@ -15,7 +16,6 @@ function FormularioSupervisor() {
 		idempleado: "",
 		idauth0: "",
 	});
-
 
 	useEffect(() => {
 		getEmpleados();
@@ -56,27 +56,28 @@ function FormularioSupervisor() {
 
 	return (
 		<>
-			<div>
-				<form onSubmit={submit}>
-					<body>
-						<div className="Box">
-							<div className="Box1">
-								<p>Seleccione al empleado al cual desea asignar el rol de supervisor.</p>
-							</div>
-							<div className="Box2">
-								<select
-									name="empleadoss"
-									id="empleadoss"
-									onChange={handle}
-									value={supervisor}
-								>
-									{empleados.map((emp) => (
-										<option value={emp.idempleado} key={emp.idempleado}>
-											NOMBRE: {emp.nombre} {emp.apellido} | CORREO: {emp.correo}
-										</option>
-									))}
-								</select>
-							</div>
+			<form onSubmit={submit}>
+				<MenuUsuario></MenuUsuario>
+				<BotonHome></BotonHome>
+				<body>
+					<div className="Box">
+						<div className="Box1">
+							<p>Seleccione al empleado al cual desea asignar el rol de supervisor.</p>
+						</div>
+						<div className="Box2">
+							<select
+								name="empleadoss"
+								id="empleadoss"
+								onChange={handle}
+								value={supervisor}
+							>
+								{empleados.map((emp) => (
+									<option value={emp.idempleado} key={emp.idempleado}>
+										NOMBRE: {emp.nombre} {emp.apellido} | CORREO: {emp.correo}
+									</option>
+								))}
+							</select>
+						</div>
 
 							<div className="Box3">
 								<p><span className="_asterisco">*</span> Para que el superivisor pueda tener acceso al portal,
@@ -84,17 +85,18 @@ function FormularioSupervisor() {
 									de identificación de auth0 del usuario creado.</p>
 							</div>
 
-							<div className="Box4">
-								<Textbox
-									_width={250}
-									_onChange={(e) => handleChange(e)}
-									_id={"idauth0"}
-									_value={data.idauth0}
-									_type={"text"}
-									_label={"ID de Auth0"}
-									_habilitar={undefined}
-									_asterisk={"red"}							></Textbox>
-							</div>
+
+						<div className="Box4">
+							<Textbox
+								_width={250}
+								_onChange={(e) => handleChange(e)}
+								_id={"idauth0"}
+								_value={data.idauth0}
+								_type={"text"}
+								_label={"ID de Auth0"}
+								_habilitar={undefined}
+								_asterisk={"red"}							></Textbox>
+						</div>
 
 							<div className="Box5">
 								<button
@@ -113,17 +115,7 @@ function FormularioSupervisor() {
 							</div>
 						</div>
 					</body>
-
 				</form>
-			</div>
-			{/*<ul>
-        {empleados.map((emp) => (
-          <li key={emp.correo}>
-            Nombre {emp.nombre} {emp.apellido} Correo:{emp.correo} id{" "}
-            {emp.idempleado}
-          </li>
-        ))}
-      </ul>*/}
 		</>
 	);
 }
