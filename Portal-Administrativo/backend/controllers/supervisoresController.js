@@ -4,25 +4,28 @@ import { CustomError } from '../utils/CustomError.js'
 //Ruta api/supervisores GET
 //Descripcion Devuelve una lista con todos los supervisores
 export const obtenerSupervisores = async (_req, res, next) => {
+  let transaction = await db.transaction()
   try {
-    let supervisores = await db
+    let supervisores = await db('supervisor as s')
+      .transacting(transaction)
       .select(
-        'empleados.idempleado',
-        'supervisor.idsupervisor as idauth0',
-        'empleados.idsupervisor as supervisor',
-        'empleados.nombre',
-        'empleados.apellido',
-        'empleados.correo',
-        'empleados.departamento',
-        'empleados.distrito',
-        'empleados.status',
-        'empleados.horaentrada',
-        'empleados.horasalida'
+        'e.idempleado',
+        's.idsupervisor as idauth0',
+        'e.idsupervisor as supervisor',
+        'e.nombre',
+        'e.apellido',
+        'e.correo',
+        'e.departamento',
+        'e.distrito',
+        'e.status',
+        'e.horaentrada',
+        'e.horasalida'
       )
-      .from('supervisor')
-      .innerJoin('empleados', 'empleados.idempleado', 'supervisor.idempleado')
+      .innerJoin('empleados as e', 'e.idempleado', 's.idempleado')
+    transaction.commit()
     res.json(supervisores)
   } catch (error) {
+    transaction.rollback()
     next(error)
   }
 }
@@ -38,9 +41,9 @@ export const obtenerSupervisores = async (_req, res, next) => {
 }
 */
 export const crearSupervisor = async (req, res, next) => {
+  let transaction = await db.transaction()
   try {
     const { idempleado, idauth0 } = req.body
-    let transaction = await db.transaction()
     let [supervisor] = await db('supervisor')
       .transacting(transaction)
       .returning(['idempleado', 'idsupervisor as idauth0'])
@@ -76,6 +79,7 @@ export const crearSupervisor = async (req, res, next) => {
     transaction.commit()
     res.json(supervisor)
   } catch (error) {
+    transaction.rollback()
     next(error)
   }
 }
@@ -110,6 +114,7 @@ export const obtenerEmpleadosPorSupervisor = async (req, res, next) => {
   try {
     const { id } = req.params
     const [supervisor] = await db('supervisor')
+      .transacting(transaction)
       .select('idempleado')
       .where({
         idsupervisor: id,

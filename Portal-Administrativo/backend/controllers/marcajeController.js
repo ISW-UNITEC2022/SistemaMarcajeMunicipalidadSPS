@@ -14,12 +14,12 @@ import { CustomError } from '../utils/CustomError.js'
 }
 */
 export const marcarEmpleado = async (req, res, next) => {
+  let transaction = await db.transaction()
   try {
     let { idempleado, lat, lon, tipo } = req.body
     tipo = tipo ? 'entrada' : 'salida'
     //El rango de tiempo para validar si ya se marco, desde 'hoy' en la mañana hasta la noche
     let [fecha, fechaInicio, fechaFinal] = getToday()
-    let transaction = await db.transaction()
     let marcas = await db('marcaje')
       .transacting(transaction)
       .select('tipo')
@@ -56,13 +56,14 @@ export const marcarEmpleado = async (req, res, next) => {
           'google_url',
         ]
       )
-    transaction.commit()
     marcaje = {
       ...marcaje,
       fecha: toLocale(marcaje.fecha),
     }
+    transaction.commit()
     res.json(marcaje)
   } catch (error) {
+    transaction.rollback()
     next(error)
   }
 }
@@ -70,13 +71,12 @@ export const marcarEmpleado = async (req, res, next) => {
 //Ruta api/marcaje/:correo?tipo=boolean GET
 //Descripcion Devuelve true si el empleado ya marco
 export const validarMarca = async (req, res, next) => {
+  let transaction = await db.transaction()
   try {
     const { correo } = req.params
     let { tipo } = req.query || true
     tipo = tipo === 'true' ? 'entrada' : 'salida'
     let [_, fechaInicio, fechaFinal] = getToday()
-    console.log(toLocale(fechaInicio), toLocale(fechaFinal))
-    let transaction = await db.transaction()
     let marcas = await db('empleados')
       .transacting(transaction)
       .select('marcaje.tipo')
@@ -87,6 +87,7 @@ export const validarMarca = async (req, res, next) => {
     transaction.commit()
     res.json({ marcado: !marca ? false : true })
   } catch (error) {
+    transaction.rollback()
     next(error)
   }
 }
