@@ -444,7 +444,7 @@ export const obtenerHistorialDeMarca = async (req, res, next) => {
   let transaction = await db.transaction()
   try {
     let { idempleado } = req.params
-    let [fechaInicio, fechaFinal] = getRangeDates(16)
+    let [fechaInicio, fechaFinal] = getRangeDates(30)
     let historial = await db('marcaje')
       .transacting(transaction)
       .select('fecha', 'tipo')
