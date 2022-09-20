@@ -1,13 +1,51 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity,Pressable,TouchableHighlight,Button,Alert,Image} from 'react-native';
+import { StyleSheet, ScrollView,Text, View, TouchableOpacity,Pressable,TouchableHighlight,Button,Alert,Image} from 'react-native';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import axios from "axios";
 
-const Historial = ({route}) => {
-  
-	const cerrarsesion = () =>{Alert.alert(	
+export class TuplaMarca extends React.Component {
+
+  s_color="#202020";
+  state={
+    h_entrada:this.props.h_entrada,
+    h_salida:this.props.h_salida,
+    fecha:this.props.fecha,
+  }
+
+  componentDidMount(){
+  }
+
+  render(){
+
+    return (
+    <View>
+      <TouchableOpacity disabled={true} style={styles.tupla}>
+        <Text style={{color:this.s_color}}>{this.state.fecha}</Text>
+        <Text>        |      </Text>
+        <Text style={{color:this.s_color}}>{this.state.h_entrada}</Text>
+        <Text>        |         </Text>
+        <Text style={{color:this.s_color}}>{this.state.h_salida}</Text>
+      </TouchableOpacity>
+    </View>
+   );
+  }
+}
+
+const Historial = ({route,navigation}) => {
+
+  const idEmpleado=route.params.id;
+  const horario=route.params.data;
+
+
+  const widthArr = [110, 110, 110,];
+  const x={h_entrada:"7:00",h_salida:"17:00",fecha:"15/9/2022"};
+    const data = horario
+    console.log(horario)
+
+
+	  const cerrarsesion = () =>{Alert.alert(	
     "",	
     "Desea cerrar sesión?",	
     [	
@@ -19,25 +57,30 @@ const Historial = ({route}) => {
     ]	
     );	
   }
-
-  return (
-  <View style={styles.container}> 
-    <View style={styles.shape_conatiner}>
-     <View style={[styles.square,{
-      backgroundColor: '#02732A'
-     }]}/>
-     <View style={[styles.square,{
-      backgroundColor: '#F2B705'
-     }]}/>
-     <View style={[styles.square,{
-      backgroundColor: '#BF0404'
-     }]}/>
-     </View>
-    
-  <View style={styles.container}>
-  
-  </View>
-  </View>
+  return(
+    <View style={[styles.container]}>
+      <View style={styles.container}>
+      <Text>
+      </Text>
+      <Text style={[{fontSize:24,fontWeight:'bold'}]}>
+        Historial
+      </Text>
+      <TouchableOpacity disabled={true} style={styles.header}>
+          <Text>      Fecha</Text>
+          <Text>     </Text>
+          <Text>      H. de Entrada</Text>
+          <Text>     </Text>
+          <Text>H. de Salida</Text>
+        </TouchableOpacity>
+      <ScrollView style={styles.dataWrapper} horizontal={false}>
+                {
+                  data.map((d) => (
+                    <TuplaMarca h_entrada={d.horaentrada} h_salida={d.horasalida} fecha={d.fecha}></TuplaMarca>
+                  ))
+                }
+      </ScrollView>
+      </View>
+    </View>
   )
 };
 
@@ -163,6 +206,29 @@ const styles = StyleSheet.create({
   gray:{
     backgroundColor:'#757575',
     fontSize:'30px'
+  },
+  tupla:{
+    //Touchable: #DBDBDB
+    //Letra: #202020
+    backgroundColor:'#DBDBDB',
+    fontSize:'30px',
+    alignItems:'center',
+    height: 90,
+    width:350,
+    justifyContent: 'center',
+    borderRadius:5,
+    marginTop:3,
+    flexDirection:"row",
+    color:"#202020",
+  },
+  header:{
+    backgroundColor: 'rgba(52, 52, 52, 0.0)',
+    height: 30,
+    width:350,
+    justifyContent: 'center',
+    borderRadius:5,
+    marginTop:3,
+    flexDirection:"row"
   }
 
 });

@@ -44,7 +44,15 @@ export class BotonMarca extends React.Component {
       console.log(response.status);
       this.setState({
         pressed:true,
+        
       })
+      Alert.alert(
+        "",
+        "Ha marcado su salida con éxito.",
+        [
+          { text: "Ok", onPress: () => console.log("OK Pressed") }
+        ]
+      );
     }).catch(error => {
       console.log("Error:"+error)
       console.log(error.response.data);
@@ -56,6 +64,15 @@ export class BotonMarca extends React.Component {
             { text: "Ok", onPress: () => console.log("OK Pressed") }
           ]
         );
+        if(error.response.data.status==401){
+          Alert.alert(
+            "",
+            "No ha marcado su entrada el dia de hoy.",
+            [
+              { text: "Ok", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+        }
       }
     });
   }
@@ -96,6 +113,15 @@ export class BotonMarca extends React.Component {
             { text: "Ok", onPress: () => console.log("OK Pressed") }
           ]
         );
+      if(error.response.data.status==401){
+          Alert.alert(
+            "",
+            "No ha marcado su entrada el dia de hoy.",
+            [
+              { text: "Ok", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+        }
       }
     });
   }
@@ -162,6 +188,13 @@ export class BotonMarca1 extends React.Component {
       this.setState({
         pressed:true,
       })
+      Alert.alert(
+        "",
+        "Ha marcado su entrada con éxito.",
+        [
+          { text: "Ok", onPress: () => console.log("OK Pressed") }
+        ]
+      );
     }).catch(error => {
       console.log("Error:"+error)
       console.log(error.response.data);
@@ -247,7 +280,7 @@ const Menu = ({route,navigation}) => {
   const {correo,nombre,id,hora_entrada,hora_salida,apellido} =route.params;
   var hora_entrada2=hora_entrada.slice(0,5);
   var hora_salida2=hora_salida.slice(0,5);
-  
+
 
 	const cerrarsesion = () =>{Alert.alert(	
     "",	
@@ -261,11 +294,24 @@ const Menu = ({route,navigation}) => {
     ]	
     );	
   }
-  const historial = () =>{
+  const historial = () =>{  
+    
+    var dataH=[]
+    
+    axios.get('https://proyecto-isw1.herokuapp.com/api/empleados/historial/'+id,{
+    }).then(response => {
+    dataH=response.data
+    
+      navigation.navigate('Historial',{
+        id:id,
+        data:dataH})
 
-    navigation.navigate("Historial")
-
-   }
+    }).catch(error => {
+      console.log(error)
+    }) 
+   
+    
+    }
 
   return (
   <View style={styles.container}> 
