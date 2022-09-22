@@ -120,6 +120,9 @@ function FormularioSupervisor() {
               ></Textbox>
             </div>
 
+            <div className="Box6">
+              <button style={{ width: "285px" }}>Asignar Supervisor</button>
+            </div>
             <div className="Box5">
               <a
                 href="https://manage.auth0.com/dashboard/us/dev-am-lc7yg/users"
@@ -130,10 +133,6 @@ function FormularioSupervisor() {
                   Registrar en Auth0
                 </button>
               </a>
-            </div>
-
-            <div className="Box6">
-              <button style={{ width: "285px" }}>Asignar Supervisor</button>
             </div>
           </div>
         </body>
