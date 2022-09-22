@@ -54,8 +54,8 @@ function FormularioSupervisor() {
       toast.success("¡Estado de empleado cambiado éxitosamente!");
 			console.log(res.data)
 		}).catch(error=> {
-      toast.error("Error al cambiar estado de empleado");
-      console.log(error.response)
+      toast.error(error.response.data.message);
+      console.log(error.response.data.message)
     });
   }
 
