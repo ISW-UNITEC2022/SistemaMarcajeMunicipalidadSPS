@@ -11,6 +11,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import BotonHome from "./components/BotonHome";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DarBajaAlta from "./components/DarBajaAlta/DarBajaAlta";
 
 function App() {
   const onButtonClickHandler = () => {
@@ -34,6 +35,7 @@ function App() {
         <Route path="/menu_principal" element={<TaskList />} />
         <Route path="/crear_empleado" element={<FormularioEmpleado />} />
         <Route path="/modificar_empleado" element={<Modificar />} />
+        <Route path="/dar_baja_alta" element={<DarBajaAlta />} />
         <Route path="/asignar_supervisor" element={<AsignarSupervisor />} />
         <Route path="/" element={<HomePage />} />
       </Routes>

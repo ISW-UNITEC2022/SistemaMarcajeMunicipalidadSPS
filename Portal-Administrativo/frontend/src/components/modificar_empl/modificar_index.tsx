@@ -111,6 +111,9 @@ function Modificar() {
       .then((res) => {
         toast.success("¡Empleado modificado éxitosamente!");
         console.log(res.data);
+      }).catch((error) => {
+        toast.error("Error al modificar empleado");
+        console.log(error.response);
       });
 
     setData({

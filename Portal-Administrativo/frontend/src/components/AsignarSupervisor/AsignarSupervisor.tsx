@@ -41,8 +41,12 @@ function FormularioSupervisor() {
         idauth0: data.idauth0,
       })
       .then((res) => {
-		toast.success("¡Supervisor asignado éxitosamente!");
+        toast.success("¡Supervisor asignado éxitosamente!");
         console.log(res.data);
+      })
+      .catch((error) => {
+        toast.error("Error al asignar supervisor");
+        console.log(error.response);
       });
 
     setData({
@@ -114,6 +118,7 @@ function FormularioSupervisor() {
             </div>
 
             <div className="Box5">
+              <a href="https://manage.auth0.com/dashboard/us/dev-am-lc7yg/users" target="_blank" rel="noreferrer">
               <button
                 style={{ width: "250px" }}
                 type="submit"
@@ -121,6 +126,7 @@ function FormularioSupervisor() {
               >
                 Registrar en Auth0
               </button>
+              </a>
             </div>
 
             <div className="Box6">
