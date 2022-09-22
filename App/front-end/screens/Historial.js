@@ -41,6 +41,10 @@ const Historial = ({route,navigation}) => {
 
   const widthArr = [110, 110, 110,];
   const x={h_entrada:"7:00",h_salida:"17:00",fecha:"15/9/2022"};
+  horario.map((d)=>{
+      if(d.horaentrada==null){d.horaentrada=" N/A        ";};
+      if(d.horasalida==null){d.horasalida=" N/A        ";};
+  });
     const data = horario
     console.log(horario)
 
