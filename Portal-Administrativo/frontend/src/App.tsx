@@ -6,6 +6,7 @@ import FormularioEmpleado from "./components/FormularioEmpleado/FormularioEmplea
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage/HomePage";
 import AsignarSupervisor from "./components/AsignarSupervisor/AsignarSupervisor";
+import Informacion from "./components/InformacionEmpleados/InformacionEmpleados";
 import MenuUsuario from "./components/MenuUsuario";
 import { useAuth0 } from "@auth0/auth0-react";
 import BotonHome from "./components/BotonHome";
@@ -37,6 +38,7 @@ function App() {
         <Route path="/modificar_empleado" element={<Modificar />} />
         <Route path="/dar_baja_alta" element={<DarBajaAlta />} />
         <Route path="/asignar_supervisor" element={<AsignarSupervisor />} />
+        <Route path="/informacion_empleado" element={<Informacion />} />
         <Route path="/" element={<HomePage />} />
       </Routes>
     </BrowserRouter>

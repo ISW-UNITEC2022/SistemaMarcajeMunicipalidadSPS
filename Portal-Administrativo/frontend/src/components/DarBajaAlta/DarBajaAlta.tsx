@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import Textbox from "../TextBox";
 import "../DarBajaAlta/DarBajaAlta.css";
 import { toast } from "react-toastify";
+import MenuUsuario from "../MenuUsuario";
+import BotonHome from "../BotonHome";
 
 function FormularioSupervisor() {
   const url = "https://proyecto-isw1.herokuapp.com/api/empleados";
@@ -47,16 +49,19 @@ function FormularioSupervisor() {
     e.preventDefault();
     console.log(empleado);
     console.log(status);
-    axios.put(url2, {
-			idempleado: empleado,
-			status: status
-		}).then((res) => {
-      toast.success("¡Estado de empleado cambiado éxitosamente!");
-			console.log(res.data)
-		}).catch(error=> {
-      toast.error(error.response.data.message);
-      console.log(error.response.data.message)
-    });
+    axios
+      .put(url2, {
+        idempleado: empleado,
+        status: status,
+      })
+      .then((res) => {
+        toast.success("¡Estado de empleado cambiado éxitosamente!");
+        console.log(res.data);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+        console.log(error.response.data.message);
+      });
   }
 
   function handle(e) {
@@ -70,7 +75,11 @@ function FormularioSupervisor() {
   }
 
   return (
+    <div>
+    <MenuUsuario></MenuUsuario>
+      <BotonHome></BotonHome>
     <div className="BoxDBA">
+      
       <form onSubmit={submit}>
         <div className="_filaDBA">
           <p>
@@ -87,8 +96,8 @@ function FormularioSupervisor() {
             defaultValue={firstem}
           >
             <option value="" key="">
-                Desplegar empleados
-              </option>
+              Desplegar empleados
+            </option>
             {empleados.map((emp) => (
               <option value={emp.idempleado} key={emp.idempleado}>
                 NOMBRE: {emp.nombre} {emp.apellido} | CORREO: {emp.correo}
@@ -112,6 +121,7 @@ function FormularioSupervisor() {
           <button id="botonDBA">Modificar Estado del Empleado</button>
         </div>
       </form>
+    </div>
     </div>
   );
 }

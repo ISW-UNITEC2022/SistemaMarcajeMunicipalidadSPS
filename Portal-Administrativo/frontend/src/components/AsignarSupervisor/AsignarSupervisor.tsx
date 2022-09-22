@@ -87,6 +87,9 @@ function FormularioSupervisor() {
                 onChange={handle}
                 value={supervisor}
               >
+                <option value="" key="">
+                  Desplegar empleados
+                </option>
                 {empleados.map((emp) => (
                   <option value={emp.idempleado} key={emp.idempleado}>
                     NOMBRE: {emp.nombre} {emp.apellido} | CORREO: {emp.correo}
@@ -118,14 +121,14 @@ function FormularioSupervisor() {
             </div>
 
             <div className="Box5">
-              <a href="https://manage.auth0.com/dashboard/us/dev-am-lc7yg/users" target="_blank" rel="noreferrer">
-              <button
-                style={{ width: "250px" }}
-                type="submit"
-                className="btn btn-primary"
+              <a
+                href="https://manage.auth0.com/dashboard/us/dev-am-lc7yg/users"
+                target="_blank"
+                rel="noreferrer"
               >
-                Registrar en Auth0
-              </button>
+                <button style={{ width: "250px" }} className="btn btn-primary">
+                  Registrar en Auth0
+                </button>
               </a>
             </div>
 

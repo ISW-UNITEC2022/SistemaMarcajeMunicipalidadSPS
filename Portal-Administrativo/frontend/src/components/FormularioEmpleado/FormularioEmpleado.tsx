@@ -72,7 +72,7 @@ export default function FormularioBasico() {
         setDataSupervisor(info);
         console.log(dataSupervisor);
       })
-      .catch((error) => toast.error("Error al crear empleado"));
+
   };
 
   function obtenerSupervisor(){
@@ -99,7 +99,7 @@ export default function FormularioBasico() {
       toast.success("¡Empleado creado éxitosamente!");
       console.log(res.data);
     }).catch(error=> {
-      toast.error("Error al crear empleado");
+      toast.error(error.response.data.message);
       console.log(error.response)
     });
 

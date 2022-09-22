@@ -169,8 +169,6 @@ function Modificar() {
         <form onSubmit={(e) => submit(e)}>
         <MenuUsuario></MenuUsuario>
 					<BotonHome></BotonHome>
-        <MenuUsuario></MenuUsuario>
-					<BotonHome></BotonHome>
           <div className="fila">
             <select
               name="empleadoss"
