@@ -22,7 +22,7 @@ const BotonV = ({ input, width, type }) => {
     if (type == "confi")
       return configuracion();
     else if (type == "logout")
-      return logout();
+      return logout({returnTo: window.location.origin});
   }
 
   return (
