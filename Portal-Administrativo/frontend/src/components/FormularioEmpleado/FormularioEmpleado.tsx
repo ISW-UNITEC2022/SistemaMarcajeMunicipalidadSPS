@@ -65,11 +65,15 @@ export default function FormularioBasico() {
 
   const getSupervisor = async () => {
     console.log("El id auth0 " + idSuper);
-    await axios.get(url2 + idSuper).then((response) => {
+    let res = await axios.get(url2 + idSuper);
+    let { data } = res.data;
+    this.setDataSupervisor(info);
+    console.log(dataSupervisor);
+   /*axios.get(url2 + idSuper).then((response) => {
       const info = response.data;
       setDataSupervisor(info);
-      console.log(dataSupervisor);
-    });
+      console.log(dataSupervisor);*/
+ 
   };
 
   function obtenerSupervisor() {
