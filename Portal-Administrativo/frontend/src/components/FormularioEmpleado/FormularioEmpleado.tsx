@@ -63,16 +63,13 @@ export default function FormularioBasico() {
 
   const idSuper = usuario_id();
 
-  const getSupervisor = () => {
+  const getSupervisor = async () => {
     console.log("El id auth0 " + idSuper);
-    axios
-      .get(url2 + idSuper)
-      .then((response) => {
-        const info = response.data;
-        setDataSupervisor(info);
-        console.log(dataSupervisor);
-      })
-
+    await axios.get(url2 + idSuper).then((response) => {
+      const info = response.data;
+      setDataSupervisor(info);
+      console.log(dataSupervisor);
+    });
   };
 
   function obtenerSupervisor() {
@@ -96,13 +93,15 @@ export default function FormularioBasico() {
       departamento: dep,
       horaentrada: data.horaentrada,
       horasalida: data.horasalida,
-    }).then((res) => {
-      toast.success("¡Empleado creado éxitosamente!");
-      console.log(res.data);
-    }).catch(error => {
-      toast.error(error.response.data.message);
-      console.log(error.response)
-    });
+    })
+      .then((res) => {
+        toast.success("¡Empleado creado éxitosamente!");
+        console.log(res.data);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+        console.log(error.response);
+      });
 
     setData({
       idempleado: "",
