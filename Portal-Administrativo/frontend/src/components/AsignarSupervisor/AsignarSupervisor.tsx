@@ -105,7 +105,7 @@ function FormularioSupervisor() {
             <p>
               <span id="asterisco">*</span> Para que el supervisor
               pueda tener acceso al portal, se debe registrar en la plataforma
-              auth0, para luego, ingresar el codigo de identificación de auth0
+              auth0, para luego, ingresar el código de identificación de auth0
               del usuario creado.
             </p>
           </div>

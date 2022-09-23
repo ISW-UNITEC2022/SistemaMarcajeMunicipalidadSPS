@@ -63,26 +63,26 @@ export default function FormularioBasico() {
 
   const idSuper = usuario_id();
 
-  const getSupervisor = async () => {
+  const getSupervisor = () => {
     console.log("El id auth0 " + idSuper);
-    let res = await axios.get(url2 + idSuper);
-    let { data } = res.data;
-    this.setDataSupervisor(data);
-    console.log(dataSupervisor);
-   /*axios.get(url2 + idSuper).then((response) => {
-      const info = response.data;
-      setDataSupervisor(info);
-      console.log(dataSupervisor);*/
- 
+   axios
+      .get(url2 + idSuper)
+      .then((response) => {
+        const info = response.data;
+        setDataSupervisor(info);
+      })
   };
 
   function obtenerSupervisor() {
     getSupervisor();
+    setDataSupervisor((state) => {
+      console.log(state.idempleado); 
+      return state;
+    });
     console.log("El id del supervisor es " + dataSupervisor.idempleado);
   }
   function submit(e) {
     e.preventDefault();
-    getSupervisor();
     obtenerSupervisor();
     console.log("El id del supervisor es " + dataSupervisor.idempleado);
     Axios.post(url, {
