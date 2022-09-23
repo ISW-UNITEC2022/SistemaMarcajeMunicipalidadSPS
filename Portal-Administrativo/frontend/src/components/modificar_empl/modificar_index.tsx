@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import "./modificar.css";
-import Caja from "../CajaTitulo";
-import User from "../MenuUsuario";
 import TextBox from "../TextBox";
 import PasswordBox from "../PasswordBox";
 import InputLabel from "@mui/material/InputLabel";
@@ -52,7 +50,7 @@ function Modificar() {
 
   const getEmpleados2 = () => {
     axios
-      .get(url2+idEmpleado)
+      .get(url2 + idEmpleado)
       .then((response) => {
         const info = response.data;
         setInfoEmpleado(info);
@@ -100,7 +98,7 @@ function Modificar() {
       .put(url, {
         idempleado: infoEmpleado.idempleado,
         idsupervisor: null,
-        correo:data.correo,
+        correo: data.correo,
         password: data.password,
         distrito: dis,
         departamento: dep,
@@ -147,29 +145,29 @@ function Modificar() {
 
   function print() {
     getEmpleados2();
-	setData({
-		idempleado: infoEmpleado.idempleado,
-		idsupervisor: null,
-		nombre: infoEmpleado.nombre,
-		apellido: infoEmpleado.apellido,
-		correo: "",
-		password: "",
-		distrito: 0,
-		zona: "",
-		departamento: "",
-		horaentrada: "",
-		horasalida: "",
-	  });
+    setData({
+      idempleado: infoEmpleado.idempleado,
+      idsupervisor: null,
+      nombre: infoEmpleado.nombre,
+      apellido: infoEmpleado.apellido,
+      correo: "",
+      password: "",
+      distrito: 0,
+      zona: "",
+      departamento: "",
+      horaentrada: "",
+      horasalida: "",
+    });
     console.log(infoEmpleado.correo);
   }
 
   return (
-    <div>
+    <body id="body">
       <div>
         <form onSubmit={(e) => submit(e)}>
-        <MenuUsuario></MenuUsuario>
-					<BotonHome></BotonHome>
-          <div className="fila">
+          <MenuUsuario></MenuUsuario>
+          <BotonHome></BotonHome>
+          <div id="cabeza">
             <select
               name="empleadoss"
               id="empleadoss"
@@ -185,11 +183,10 @@ function Modificar() {
 
             <button
               onClick={() => print()}
+              id="button"
               style={{
-                blockSize: "50px",
                 width: "280px",
-                height: "45px",
-                marginTop: "25px",
+                height: "55px",
                 marginLeft: "10px",
               }}
             >
@@ -197,7 +194,7 @@ function Modificar() {
             </button>
           </div>
 
-          <div className="fila">
+          <div id="fila">
             <TextBox
               _width={488}
               _onChange={(e) => handle(e)}
@@ -210,7 +207,7 @@ function Modificar() {
             ></TextBox>
           </div>
 
-          <div className="fila">
+          <div id="fila">
             <TextBox
               _width={238}
               _onChange={(e) => handle(e)}
@@ -234,7 +231,7 @@ function Modificar() {
             ></TextBox>
           </div>
 
-          <div className="fila">
+          <div id="fila">
             <TextBox
               _width={238}
               _onChange={(e) => handle(e)}
@@ -254,7 +251,7 @@ function Modificar() {
             ></PasswordBox>
           </div>
 
-          <div className="fila">
+          <div id="fila">
             <FormControl sx={{ minWidth: 250, marginLeft: "-12px" }}>
               <InputLabel
                 sx={{
@@ -382,7 +379,7 @@ function Modificar() {
             </FormControl>
           </div>
 
-          <div className="fila">
+          <div id="fila">
             <TextBox
               _width={488}
               _onChange={(e) => handle(e)}
@@ -394,15 +391,15 @@ function Modificar() {
               _asterisk={"red"}
             ></TextBox>
           </div>
-          <div className="fila">
+          <div id="fila">
             <p className="horaText">
-              Hora Entrada <span className="_asterisco">*</span>
+              Hora Entrada <span id="_asterisco">*</span>
             </p>
             <p className="horaText">
-              Hora Salida <span className="_asterisco">*</span>
+              Hora Salida <span id="_asterisco">*</span>
             </p>
           </div>
-          <div className="fila">
+          <div id="fila">
             <input
               onChange={(e) => handle(e)}
               id="horaentrada"
@@ -424,13 +421,14 @@ function Modificar() {
             />
           </div>
 
-          <div className="fila">
+          <div id="fila">
             <button
+              id="button"
               className="btn btn-primary"
               style={{
                 width: "488px",
-                marginTop: "6px",
-                marginLeft: "-12px",
+                height: "55px",
+                marginLeft: "-10px"
               }}
             >
               Modificar Empleado
@@ -438,7 +436,7 @@ function Modificar() {
           </div>
         </form>
       </div>
-    </div>
+    </body>
   );
 }
 

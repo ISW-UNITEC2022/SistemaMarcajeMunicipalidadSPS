@@ -1,28 +1,47 @@
-.fila {
+#cabeza {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#fila {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   margin-bottom: 10px;
 }
 
-input:hover {
-  border-color: #02732A;
+#horaentrada:hover {
+  border: 2px solid #02732A;
 }
 
-.horasalida:focus{
+#horasalida:hover {
+  border: 2px solid #02732A;
+}
+
+.horasalida {
+  background-color: #f2f2f2;
+  border: 2px solid #02732A;
+  outline: none;
+  
+}
+
+.horaentrada {
+  background-color: #f2f2f2;
   border: 2px solid #02732A;
   outline: none;
 }
 
-.horaentrada:focus{
-  border: 2px solid #02732A;
-  outline: none;
+#body {
+  background-color: #f2f2f2;
 }
 
-input {
-  width: 230px;
-  height: 48px;
 
+#horaentrada {
+  width: 238px;
+  height: 55px;
+  
   text-align: center;
   font-size: 20px;
   font-family: sans-serif;
@@ -31,19 +50,42 @@ input {
   
   border-radius: 5px;
   border-color: #02732A;
+  background-color: #f2f2f2;
+
   border-width: 1px;
+  margin-right: 12px;
 }
 
-button{
-  background-color: #02732A;
-  color: #f2f2f2;
+#horasalida {
+  width: 238px;
+  height: 55px;
+
+  text-align: center;
+  font-size: 20px;
+  font-family: sans-serif;
+  font-weight: 100;
+  color: #757575;
+
   border-radius: 5px;
   border-color: #02732A;
   border-width: 1px;
+  margin-right: 12px;
+}
+
+#button{
+  background-color: #02732A;
+  color: #f2f2f2;
+
+  border-radius: 5px;
+  border-color: #02732A;
+  border-width: 1px;
+
+  margin-top: 20px;
+  
   font-size: 18px;
 }
 
-button:hover{
+#button:hover{
   background-color: #80E673;
   border-color: #80E673;
   color: #1F3821;
@@ -58,15 +100,17 @@ button:hover{
   font-size: 16.5px;
 }
 
-select {
+#empleadoss {
 	background-color: #f2f2f2;
 	border: 1.5px solid #02732A;
 	border-radius: 5px;
 	width: 430px;
-	height: 45px;
+	height: 55px;
 
 	font-size: 15px;
+}
 
-  margin-top: 25px;
+#_asterisco {
+  color: red;
 }
 

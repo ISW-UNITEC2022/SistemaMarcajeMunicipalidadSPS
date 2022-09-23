@@ -1,112 +1,94 @@
-.Box {
-	width: 680px;
+#Box_AS {
+	width: 660px;
 	border: 2px solid #02732A;
 	border-radius: 10px;
 
-	margin: 40px;
-
-	display: grid;
-	grid-template-areas:
-		"a a"
-		"b b"
-		"c c"
-		"d e"
-		"f f";
+	position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+	
 }
 
-.Box1 {
-	grid-area: a;
+#Box1 {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+
+	margin-top: 2vw;
 	margin-left: 2vw;
 	margin-bottom: 1vw;
 }
 
-.Box2 {
-	grid-area: b;
-
-	display: grid;
+#Box2 {
+	display: flex;
 	justify-content: center;
 	align-content: center;
 
 	margin-bottom: 1vw;
 }
 
-.Box3 {
-	grid-area: c;
-
-	display: grid;
+#Box3 {
+	display: flex;
 	justify-content: center;
 	align-content: center;
-
+	
 	margin-left: 2vw;
 	margin-right: 2vw;
 	margin-bottom: 1vw;
 }
 
-.Box4 {
-	grid-area: d;
-
-	display: grid;
+#Box4 {
+	display: flex;
 	justify-content: center;
 	align-content: center;
 
-	margin-bottom: 1vw;
+	margin-bottom: 2vw;
 }
 
-.Box5 {
-	grid-area: e;
-
-	display: grid;
+#Box5 {
+	display: flex;
 	justify-content: center;
 	align-content: center;
 
-	margin-bottom: 1vw;
+	margin-bottom: 2vw;
 }
 
-.Box6 {
-	grid-area: f;
-
-	display: grid;
-	justify-content: center;
-	align-content: center;
-
-	margin-bottom: 1vw;
-}
-
-.asterisco {
+#asterisco {
 	font-size: 20px;
 	color: #BF0404;
 	font-weight: bold;
 }
 
-body {
-	background-color: #f2f2f2;
-}
+#body {
+	background-color: red;
+}  
 
-button {
+#Boton {
 	background-color: #02732A;
 	color: #f2f2f2;
 
 	border-radius: 5px;
 	border-color: #02732A;
-	border-width: 1px;
 
 	font-size: 18px;
 
 	height: 55px;
 }
 
-button:hover {
+#Boton:hover {
 	background-color: #80E673;
 	border-color: #80E673;
 	color: #1F3821;
 }
 
-select {
+#empleadoss {
 	background-color: #f2f2f2;
 	border: 1.5px solid #02732A;
 	border-radius: 5px;
 	width: 520px;
-	height: 45px;
+	height: 50px;
 
 	font-size: 15px;
 }
