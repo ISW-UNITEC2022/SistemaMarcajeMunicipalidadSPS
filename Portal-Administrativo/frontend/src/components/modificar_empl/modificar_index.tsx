@@ -174,6 +174,9 @@ function Modificar() {
               onChange={handleSelect}
               value={idEmpleado}
             >
+               <option value="" key="">
+                Desplegar empleados
+              </option>
               {empleados.map((emp) => (
                 <option value={emp.idempleado} key={emp.idempleado}>
                   NOMBRE: {emp.nombre} {emp.apellido} | CORREO: {emp.correo}
