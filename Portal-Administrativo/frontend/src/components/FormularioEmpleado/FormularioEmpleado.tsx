@@ -81,6 +81,7 @@ export default function FormularioBasico() {
   }
   function submit(e) {
     e.preventDefault();
+    getSupervisor();
     obtenerSupervisor();
     console.log("El id del supervisor es " + dataSupervisor.idempleado);
     Axios.post(url, {
