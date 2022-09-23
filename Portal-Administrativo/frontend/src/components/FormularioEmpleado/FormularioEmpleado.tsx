@@ -101,27 +101,28 @@ export default function FormularioBasico() {
       .then((res) => {
         toast.success("¡Empleado creado éxitosamente!");
         console.log(res.data);
+        setData({
+          idempleado: "",
+          idsupervisor: null,
+          nombre: "",
+          apellido: "",
+          correo: "",
+          password: "",
+          distrito: 0,
+          zona: "",
+          departamento: "",
+          horaentrada: "",
+          horasalida: "",
+        });
+        setDis("");
+        setDep("");
       })
       .catch((error) => {
         toast.error(error.response.data.message);
         console.log(error.response);
       });
 
-    setData({
-      idempleado: "",
-      idsupervisor: null,
-      nombre: "",
-      apellido: "",
-      correo: "",
-      password: "",
-      distrito: 0,
-      zona: "",
-      departamento: "",
-      horaentrada: "",
-      horasalida: "",
-    });
-    setDis("");
-    setDep("");
+    
   }
 
   function handle(e) {
