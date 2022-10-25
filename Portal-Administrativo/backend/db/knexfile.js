@@ -1,4 +1,6 @@
 //Objeto de configuracion para conectar la base de datos
+import dotenv from 'dotenv'
+dotenv.config()
 export const staging = {
   client: 'postgresql',
   connection: {
