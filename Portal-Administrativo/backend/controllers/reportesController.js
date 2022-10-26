@@ -1,6 +1,11 @@
 import { db } from '../db/db.js'
 //import { CustomError } from '../utils/CustomError.js'
-import { getRangeDates, getToday, toFormat12h } from '../utils/convertTime.js'
+import {
+  getRangeDates,
+  getToday,
+  removeTime,
+  toFormat12h,
+} from '../utils/convertTime.js'
 
 //Ruta api/reportes/tarde?supervisor=
 //Descripcion Devuelve las entradas tardes de los empleados
@@ -9,9 +14,6 @@ export const obtenerReportesTarde = async (req, res, next) => {
   try {
     let { supervisor } = req.query
     let [fechaInicio, fechaFinal] = getRangeDates(16)
-    let [_, hoyInicio, hoyFinal] = getToday()
-    console.log(`rango: ${fechaInicio} -> ${fechaFinal}`)
-    console.log(`hoy: ${hoyInicio} -> ${hoyFinal}`)
     let reportes = await db('marcaje as m')
       .transacting(transaction)
       .select(
@@ -32,7 +34,7 @@ export const obtenerReportesTarde = async (req, res, next) => {
       .andWhere('status', 'alta')
       .modify((m) => {
         if (supervisor) {
-          m.where('idsupervisor', supervisor)
+          m.andWhere('idsupervisor', supervisor)
         }
       })
       .orderBy('m.idempleado')
@@ -40,11 +42,53 @@ export const obtenerReportesTarde = async (req, res, next) => {
     reportes = reportes.map((reporte) => {
       return {
         ...reporte,
-        fecha: reporte.fecha.toLocaleDateString(),
+        fecha: removeTime(reporte.fecha),
         hora_asignada: toFormat12h(reporte.hora_asignada),
         hora_entrada: toFormat12h(reporte.hora_entrada),
       }
     })
+
+    transaction.commit()
+    res.json(reportes)
+  } catch (error) {
+    transaction.rollback()
+    next(error)
+  }
+}
+
+//Ruta api/reportes/incompleto?supervisor=
+//Descripcion Devuelve las marcas incompletas de los usuarios
+export const obtenerReportesIncompletos = async (req, res, next) => {
+  let transaction = await db.transaction()
+  try {
+    let { supervisor } = req.query
+    let [fechaInicio, fechaFinal] = getRangeDates(16)
+    let reportes = await db('marcas_empleados as me')
+      .transacting(transaction)
+      .with(
+        'marcas_empleados',
+        db('marcaje as m')
+          .transacting(transaction)
+          .select(
+            'm.idempleado as idempleado',
+            db.raw(`array_agg(
+              json_build_object(
+                "tipo", "fecha"
+              ) 
+              ) as marcas`)
+          )
+          .whereBetween('fecha', [fechaInicio, fechaFinal])
+          .groupBy('m.idempleado', db.raw('date(fecha)'))
+          .orderBy('m.idempleado')
+      )
+      .select('me.idempleado', 'nombre', 'apellido', 'marcas[1]')
+      .innerJoin('empleados as e', 'e.idempleado', 'me.idempleado')
+      .where(db.raw(`array_length(marcas, 1) < 2 `))
+      .modify((m) => {
+        if (supervisor) {
+          m.andWhere('e.idsupervisor', supervisor)
+        }
+      })
 
     transaction.commit()
     res.json(reportes)
