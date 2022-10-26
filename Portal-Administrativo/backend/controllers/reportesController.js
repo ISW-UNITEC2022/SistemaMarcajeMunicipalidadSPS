@@ -1,13 +1,13 @@
 import { db } from '../db/db.js'
 //import { CustomError } from '../utils/CustomError.js'
 import { getRangeDates, getToday, toFormat12h } from '../utils/convertTime.js'
-//Ruta api/reportes/tarde
-//Descripcion Devuelve las entradas tardes de los empleados
 
-export const obtenerReportesTarde = async (_req, res, next) => {
+//Ruta api/reportes/tarde?supervisor=
+//Descripcion Devuelve las entradas tardes de los empleados
+export const obtenerReportesTarde = async (req, res, next) => {
   let transaction = await db.transaction()
   try {
-    //let { supervisor } = req.query
+    let { supervisor } = req.query
     let [fechaInicio, fechaFinal] = getRangeDates(16)
     let [_, hoyInicio, hoyFinal] = getToday()
     console.log(`rango: ${fechaInicio} -> ${fechaFinal}`)
@@ -30,6 +30,11 @@ export const obtenerReportesTarde = async (_req, res, next) => {
         )
       })
       .andWhere('status', 'alta')
+      .modify((m) => {
+        if (supervisor) {
+          m.where('idsupervisor', supervisor)
+        }
+      })
       .orderBy('m.idempleado')
 
     reportes = reportes.map((reporte) => {
