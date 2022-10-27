@@ -1,6 +1,7 @@
 import { db } from '../db/db.js'
 //import { CustomError } from '../utils/CustomError.js'
 import {
+  dateToTimeString,
   getRangeDates,
   getToday,
   removeTime,
@@ -89,6 +90,17 @@ export const obtenerReportesIncompletos = async (req, res, next) => {
           m.andWhere('e.idsupervisor', supervisor)
         }
       })
+
+    reportes = reportes.map((reporte) => {
+      let entrada = reporte.marcas.entrada
+      delete reporte.marcas
+      return {
+        ...reporte,
+        fecha: removeTime(entrada),
+        entrada: toFormat12h(dateToTimeString(entrada)),
+        salida: 'N/A',
+      }
+    })
 
     transaction.commit()
     res.json(reportes)

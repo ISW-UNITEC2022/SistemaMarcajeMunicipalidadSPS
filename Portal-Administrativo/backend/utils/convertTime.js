@@ -53,7 +53,8 @@ export const toLocale = (date) => {
   })
 }
 
-export const removeTime = (date) => {
+export const removeTime = (dateObject) => {
+  let date = new Date(dateObject)
   return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
 }
 
