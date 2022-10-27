@@ -115,20 +115,20 @@ function Modificar() {
       });
 
     setData({
-      idempleado: "",
-      idsupervisor: null,
-      nombre: "",
-      apellido: "",
-      correo: "",
+      idempleado: infoEmpleado.idempleado,
+      idsupervisor: infoEmpleado.idsupervisor,
+      nombre: infoEmpleado.nombre,
+      apellido: infoEmpleado.apellido,
+      correo: infoEmpleado.correo,
       password: "",
-      distrito: 0,
-      zona: "",
-      departamento: "",
-      horaentrada: "",
-      horasalida: "",
+      distrito: infoEmpleado.distrito,
+      zona: infoEmpleado.zona,
+      departamento: infoEmpleado.departamento,
+      horaentrada: infoEmpleado.horaentrada,
+      horasalida: infoEmpleado.horasalida,
     });
-    setDis("");
-    setDep("");
+    setDis(infoEmpleado.distrito.toString());
+    setDep(infoEmpleado.departamento.toString());
   }
 
   function handle(e) {
@@ -145,18 +145,19 @@ function Modificar() {
 
   function print() {
     getEmpleados2();
+    console.log("HOLA MUNDO");
     setData({
       idempleado: infoEmpleado.idempleado,
       idsupervisor: null,
       nombre: infoEmpleado.nombre,
       apellido: infoEmpleado.apellido,
-      correo: "",
+      correo: infoEmpleado.correo,
       password: "",
-      distrito: 0,
-      zona: "",
-      departamento: "",
-      horaentrada: "",
-      horasalida: "",
+      distrito: infoEmpleado.distrito,
+      zona: infoEmpleado.zona,
+      departamento: infoEmpleado.departamento,
+      horaentrada: infoEmpleado.horaentrada,
+      horasalida: infoEmpleado.horasalida,
     });
     console.log(infoEmpleado.correo);
   }
@@ -434,7 +435,7 @@ function Modificar() {
                 marginLeft: "-10px"
               }}
             >
-              Modificar Empleado
+              Modificarrrrr Empleado
             </button>
           </div>
         </form>
