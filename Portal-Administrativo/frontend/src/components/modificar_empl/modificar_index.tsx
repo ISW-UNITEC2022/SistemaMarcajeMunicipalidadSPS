@@ -72,6 +72,7 @@ function Modificar() {
     horaentrada: "",
     horasalida: "",
   });
+  
 
   const [dis, setDis] = React.useState("");
 
@@ -159,6 +160,8 @@ function Modificar() {
       horaentrada: infoEmpleado.horaentrada,
       horasalida: infoEmpleado.horasalida,
     });
+    setDep(infoEmpleado.departamento);
+    setDis(infoEmpleado.distrito + "");
     console.log(infoEmpleado.correo);
   }
 
