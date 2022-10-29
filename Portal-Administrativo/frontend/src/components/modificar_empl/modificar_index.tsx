@@ -17,6 +17,7 @@ function Modificar() {
   const url2 = "https://proyecto-isw1.herokuapp.com/api/empleados/";
   const [empleados, setEmpleados] = useState([]);
   const [idEmpleado, setIdEmpleado] = useState("");
+
   //InfoEmpleado tiene toda la información del empleado seleccionado
   const [infoEmpleado, setInfoEmpleado] = useState({
     idempleado: "",
@@ -98,13 +99,13 @@ function Modificar() {
       .put(url, {
         idempleado: infoEmpleado.idempleado,
         idsupervisor: null,
-        correo: data.correo,
+        correo: infoEmpleado.correo,
         password: data.password,
         distrito: dis,
         departamento: dep,
-        zona: data.zona,
-        horaentrada: data.horaentrada,
-        horasalida: data.horasalida,
+        zona: infoEmpleado.zona,
+        horaentrada: infoEmpleado.horaentrada,
+        horasalida: infoEmpleado.horasalida,
       })
       .then((res) => {
         toast.success("¡Empleado modificado éxitosamente!");
@@ -115,26 +116,26 @@ function Modificar() {
       });
 
     setData({
-      idempleado: infoEmpleado.idempleado,
-      idsupervisor: infoEmpleado.idsupervisor,
-      nombre: infoEmpleado.nombre,
-      apellido: infoEmpleado.apellido,
-      correo: infoEmpleado.correo,
+      idempleado: "",
+      idsupervisor: "",
+      nombre: "",
+      apellido: "",
+      correo: "",
       password: "",
-      distrito: infoEmpleado.distrito,
-      zona: infoEmpleado.zona,
-      departamento: infoEmpleado.departamento,
-      horaentrada: infoEmpleado.horaentrada,
-      horasalida: infoEmpleado.horasalida,
+      distrito: 0,
+      zona: "",
+      departamento: "",
+      horaentrada: "",
+      horasalida: "",
     });
-    setDis(infoEmpleado.distrito.toString());
-    setDep(infoEmpleado.departamento.toString());
+    setDis("");
+    setDep("");
   }
 
   function handle(e) {
-    const newdata = { ...data };
+    const newdata = { ...infoEmpleado };
     newdata[e.target.id] = e.target.value;
-    setData(newdata);
+    setInfoEmpleado(newdata);
     console.log(newdata);
   }
 
@@ -145,7 +146,6 @@ function Modificar() {
 
   function print() {
     getEmpleados2();
-    console.log("HOLA MUNDO");
     setData({
       idempleado: infoEmpleado.idempleado,
       idsupervisor: null,
@@ -240,7 +240,7 @@ function Modificar() {
               _width={238}
               _onChange={(e) => handle(e)}
               _id={"correo"}
-              _value={data.correo}
+              _value={infoEmpleado.correo}
               _type={"text"}
               _label={"Correo Electrónico"}
               _habilitar={false}
@@ -388,7 +388,7 @@ function Modificar() {
               _width={488}
               _onChange={(e) => handle(e)}
               _id={"zona"}
-              _value={data.zona}
+              _value={infoEmpleado.zona}
               _type={"text"}
               _label={"Zona"}
               _habilitar={false}
@@ -407,7 +407,7 @@ function Modificar() {
             <input
               onChange={(e) => handle(e)}
               id="horaentrada"
-              value={data.horaentrada}
+              value={infoEmpleado.horaentrada}
               placeholder="Hora de Entrada"
               type="time"
               required
@@ -417,7 +417,7 @@ function Modificar() {
             <input
               onChange={(e) => handle(e)}
               id="horasalida"
-              value={data.horasalida}
+              value={infoEmpleado.horasalida}
               placeholder="Hora de Salida"
               type="time"
               required
@@ -435,7 +435,7 @@ function Modificar() {
                 marginLeft: "-10px"
               }}
             >
-              Modificarrrrr Empleado
+              Modificar Empleado
             </button>
           </div>
         </form>
