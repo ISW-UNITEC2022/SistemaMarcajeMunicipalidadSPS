@@ -8,8 +8,8 @@ return(
     <div className={`ventana2 ${props.children==false ? 'hide' : ''}`} >
 
         <div>
-            <a href="" ><div className='sub'><div className='point'><i className="fa-solid fa-circle"></i></div>Reportes de  Asistencia</div></a>
-            <a href="" ><div className='sub'><div className='point'><i className="fa-solid fa-circle"></i></div>Reportes de Tardias</div></a>
+            <a href=""><div id='sub'><div id='point'><i className="fa-solid fa-circle"></i></div>Reporte de Asistencia</div></a> 
+            <a href="" ><div id='sub'><div id='point'><i className="fa-solid fa-circle"></i></div>Reporte de Tardias</div></a> 
         </div>
     </div>
 )
