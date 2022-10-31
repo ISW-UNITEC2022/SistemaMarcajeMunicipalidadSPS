@@ -58,6 +58,9 @@ function Modificar() {
         setInfoEmpleado(info);
       })
       .catch((error) => console.error(`Error: ${error}`));
+
+      setDep(infoEmpleado.departamento);
+      setDis(infoEmpleado.distrito + "");
   };
 
   const [data, setData] = useState({
@@ -73,7 +76,7 @@ function Modificar() {
     horaentrada: "",
     horasalida: "",
   });
-  
+
 
   const [dis, setDis] = React.useState("");
 
@@ -170,10 +173,16 @@ function Modificar() {
       horaentrada: infoEmpleado.horaentrada,
       horasalida: infoEmpleado.horasalida,
     });
-    setDep(infoEmpleado.departamento);
-    setDis(infoEmpleado.distrito + "");
+    //setDep(infoEmpleado.departamento);
+    //setDis(infoEmpleado.distrito + "");
     setPass("");
     console.log(infoEmpleado.correo);
+  }
+
+  function desplegarInfo() {
+    print();
+    setDep(infoEmpleado.departamento);
+    setDis(infoEmpleado.distrito + "");
   }
 
   return (
@@ -189,7 +198,7 @@ function Modificar() {
               onChange={handleSelect}
               value={idEmpleado}
             >
-               <option value="" key="">
+              <option value="" key="">
                 Desplegar empleados
               </option>
               {empleados.map((emp) => (
@@ -200,7 +209,7 @@ function Modificar() {
             </select>
 
             <button
-              onClick={() => print()}
+              onClick={() => desplegarInfo()}
               id="button"
               style={{
                 width: "280px",
@@ -285,7 +294,7 @@ function Modificar() {
                 required
                 id="demo-simple-select-autowidth-label"
               >
-                Distrito {infoEmpleado.distrito}
+                Distrito:  {infoEmpleado.distrito}
               </InputLabel>
               <Select
                 required
@@ -356,7 +365,7 @@ function Modificar() {
                 required
                 id="demo-simple-select-autowidth-label"
               >
-                Departamento {infoEmpleado.departamento}
+                Departamento: {infoEmpleado.departamento}
               </InputLabel>
               <Select
                 required
