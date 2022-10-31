@@ -11,6 +11,7 @@ import BotonHome from "../BotonHome";
 import MenuUsuario from "../MenuUsuario";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { InferencePriority } from "typescript";
 
 function Modificar() {
   const url = "https://proyecto-isw1.herokuapp.com/api/empleados";
@@ -90,6 +91,14 @@ function Modificar() {
     console.log(dep);
   };
 
+  const [pass, setPass] = React.useState("");
+
+  const handleChangePass = (event: SelectChangeEvent) => {
+    console.log(pass);
+    setPass(event.target.value);
+    console.log(pass);
+  };
+
   function refreshPage() {
     window.location.reload();
   }
@@ -101,7 +110,7 @@ function Modificar() {
         idempleado: infoEmpleado.idempleado,
         idsupervisor: null,
         correo: infoEmpleado.correo,
-        password: data.password,
+        password: pass,
         distrito: dis,
         departamento: dep,
         zona: infoEmpleado.zona,
@@ -131,6 +140,7 @@ function Modificar() {
     });
     setDis("");
     setDep("");
+    setPass("");
   }
 
   function handle(e) {
@@ -162,6 +172,7 @@ function Modificar() {
     });
     setDep(infoEmpleado.departamento);
     setDis(infoEmpleado.distrito + "");
+    setPass("");
     console.log(infoEmpleado.correo);
   }
 
@@ -251,9 +262,9 @@ function Modificar() {
             ></TextBox>
 
             <PasswordBox
-              _onChange={(e) => handle(e)}
+              _onChange={(e) => handleChangePass(e)}
               _id={"password"}
-              _value={data.password}
+              _value={pass}
               _label={"Contraseña"}
             ></PasswordBox>
           </div>
@@ -274,7 +285,7 @@ function Modificar() {
                 required
                 id="demo-simple-select-autowidth-label"
               >
-                Distrito
+                Distrito {infoEmpleado.distrito}
               </InputLabel>
               <Select
                 required
@@ -345,7 +356,7 @@ function Modificar() {
                 required
                 id="demo-simple-select-autowidth-label"
               >
-                Departamento
+                Departamento {infoEmpleado.departamento}
               </InputLabel>
               <Select
                 required
@@ -400,10 +411,10 @@ function Modificar() {
           </div>
           <div id="fila">
             <p className="horaText">
-              Hora Entrada <span id="_asterisco">*</span>
+              Hora Entrada <span id="_asterisco">* {infoEmpleado.horaentrada}</span>
             </p>
             <p className="horaText">
-              Hora Salida <span id="_asterisco">*</span>
+              Hora Salida <span id="_asterisco">* {infoEmpleado.horasalida}</span>
             </p>
           </div>
           <div id="fila">
