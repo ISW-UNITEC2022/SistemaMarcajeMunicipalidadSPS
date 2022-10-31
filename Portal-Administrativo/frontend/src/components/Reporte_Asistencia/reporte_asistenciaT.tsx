@@ -3,7 +3,8 @@ import MaterialTable from 'material-table';
 import MenuUsuario from '../MenuUsuario';
 import BotonHome from '../BotonHome';
 import Logo from "../logo.png";
-import './asistencia.css'
+import './asistencia.css';
+import DataTable from 'react-data-table-component';
 
 
 export default function TaskList() {
@@ -20,30 +21,26 @@ export default function TaskList() {
         loadTasks();
     },[])
 
-    loadTasks();
-
-    
-
-    const columnas=[
+    const columns=[
         {
-            title: 'No° Identidad',
-            field: 'idempleado'
+            name: 'No° Identidad',
+            selector: row => row.idempleado
         },
         {
-            title: 'Nombre Completo',
-            field: 'nombre'
+            name: 'Nombre Completo',
+            selector: row => row.nombre + ' ' + row.apellido
         },
         {
-            title: 'Fecha',
-            field: 'fecha'
+            name: 'Fecha',
+            selector: row => row.fecha
         },
         {
-            title: 'Hora Asignada',
-            field: 'hora_asignada'
+            name: 'Hora Asignada',
+            selector: row => row.hora_asignada
         },
         {
-            title: 'Hora entrada',
-            field: 'hora_entrada'
+            name: 'Hora entrada',
+            selector: row => row.hora_entrada
         },
     ]
     
@@ -57,28 +54,10 @@ export default function TaskList() {
         </div>
 
         <div id='contenedorR' style={{width: '90vw', marginLeft: '4vw', marginTop: '2vh'}}>
-            <table className="table table-bordered ">
-                <thead>
-                    <tr>
-                        <th scope="col">No° Identidad</th>
-                        <th scope="col">Nombre Completo</th>
-                        <th scope="col">Departamento</th>
-                        <th scope="col">Distrito</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Hora Entrada</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
+        <DataTable 
+            columns={columns}
+            data={Tasks}
+        />
         </div>
       
 
