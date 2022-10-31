@@ -45,6 +45,7 @@ export default function TaskList() {
         loadD(Tasks[i].idempleado);
         loadDist(Tasks[i].idempleado);
         dataT[i]={
+            num: i+1,
             idempleado: Tasks[i].idempleado,
             nombre: Tasks[i].nombre + ' ' + Tasks[i].apellido,
             departamento: departamento,
@@ -56,6 +57,10 @@ export default function TaskList() {
     }
 
     const columns=[
+        {
+            name: '#',
+            selector: row => row.num
+        },
         {
             name: 'No° Identidad',
             selector: row => row.idempleado
