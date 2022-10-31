@@ -21,7 +21,9 @@ export default function TaskList() {
     },[])
 
     loadTasks();
+
     
+
     const columnas=[
         {
             title: 'No° Identidad',
@@ -55,10 +57,28 @@ export default function TaskList() {
         </div>
 
         <div id='contenedorR' style={{width: '90vw', marginLeft: '4vw', marginTop: '2vh'}}>
-            <MaterialTable
-                columns={columnas}
-                data={Tasks}
-            />
+            <table className="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th scope="col">No° Identidad</th>
+                        <th scope="col">Nombre Completo</th>
+                        <th scope="col">Departamento</th>
+                        <th scope="col">Distrito</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Hora Entrada</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
       
 
