@@ -3,7 +3,7 @@ import "./App.css";
 import TaskList from "./components/menu_user_comp/menu_index";
 import Modificar from "./components/modificar_empl/modificar_index";
 import FormularioEmpleado from "./components/FormularioEmpleado/FormularioEmpleado";
-import Reporte_Asistencia from "./components/Reporte_Asistencia/reporte_asistencia";
+import Reporte_Asistencia_Tardia from "./components/Reporte_Asistencia/reporte_asistenciaT";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage/HomePage";
 import AsignarSupervisor from "./components/AsignarSupervisor/AsignarSupervisor";
@@ -40,7 +40,7 @@ function App() {
         <Route path="/dar_baja_alta" element={<DarBajaAlta />} />
         <Route path="/asignar_supervisor" element={<AsignarSupervisor />} />
         <Route path="/informacion_empleado" element={<Informacion />} />
-        <Route path="/asistencias" element={<Reporte_Asistencia />} />
+        <Route path="/asistencias_Tardias" element={<Reporte_Asistencia_Tardia />} />
         <Route path="/" element={<HomePage />} />
       </Routes>
     </BrowserRouter>
