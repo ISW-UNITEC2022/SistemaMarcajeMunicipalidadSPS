@@ -56,6 +56,30 @@ export default function TaskList() {
         }
     }
 
+
+    /*
+        const downloadPdf=()=>{
+        const doc=new jsPDF();
+    
+        doc.text("Ejemplo Reporte",20,10);
+        doc.autoTable({
+          columns:[
+            {header: '#', dataKey: 'num'},
+            {header: 'No° Identidad', dataKey: 'idempleado'},
+            {header: 'Nombre Completo', dataKey: 'nombre'},
+            {header: 'Departamento', dataKey: 'departamento'},
+            {header: 'Distrito', dataKey: 'distrito'},
+            {header: 'Fecha', dataKey: 'fecha'},
+            {header: 'Hora Asignad', dataKey: 'hora_asignada'},
+            {header: 'Hora entrada', dataKey: 'hora_entrada'}
+          ],
+          body:Tasks
+        })
+    
+        doc.save('reporte_Tardias.pdf');
+      }
+    */
+
     const columns=[
         {
             name: '#',
