@@ -1,64 +1,24 @@
 import axios, { Axios } from "axios";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Link } from 'react-router-dom';
-import Textbox from "../TextBox";
-import "../Reportes/R_Tardias.css";
-import MenuUsuario from "../MenuUsuario";
-import BotonHome from "../BotonHome";
+import Textbox from "../../TextBox";
+import "./PantReportes_EntradasTardes.css";
+import MenuUsuario from "../../MenuUsuario";
+import BotonHome from "../../BotonHome";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 function FormularioSupervisor() {
-  const url = "https://proyecto-isw1.herokuapp.com/api/empleados/rol";
   const url2 = "https://proyecto-isw1.herokuapp.com/api/supervisores";
-  const [empleados, setEmpleados] = useState([]);
   const [supervisor, setSupervisor] = useState(""); //Guarda el id del empleado supervisor
   const [data, setData] = useState({
     idempleado: "",
     idauth0: "",
   });
 
-  useEffect(() => {
-    getEmpleados();
-  }, []);
-
-  const getEmpleados = () => {
-    axios
-      .get(url)
-      .then((response) => {
-        const empleados = response.data;
-        setEmpleados(empleados);
-      })
-      .catch((error) => console.error(`Error: ${error}`));
-  };
-
   function submit(e) {
-    console.log(supervisor);
-    e.preventDefault();
-    axios
-      .post(url2, {
-        idempleado: supervisor,
-        idauth0: data.idauth0,
-      })
-      .then((res) => {
-        toast.success("¡Supervisor asignado éxitosamente!");
-        console.log(res.data);
-      })
-      .catch((error) => {
-        toast.error("Error al asignar supervisor");
-        console.log(error.response);
-      });
-
-    setData({
-      idempleado: "",
-      idauth0: "",
-    });
-  }
-
-  function handle(e) {
-    setSupervisor(e.target.value);
-    console.log(supervisor);
+    
   }
 
   function handleChange(e) {
@@ -67,10 +27,6 @@ function FormularioSupervisor() {
     setData(newdata);
     console.log(newdata);
   }
-
-  const openInNewTab = url => {
-    window.open(url, '_blank', 'noreferrer');
-  };
 
   return (
     <>
@@ -103,7 +59,6 @@ function FormularioSupervisor() {
             ></Textbox>
 
             <button id="Boton_RT" 
-              /*onClick={() => openInNewTab('https://manage.auth0.com/dashboard/us/dev-am-lc7yg/users')}*/
               style={{ width: "285px" }}>
               Enviar Reporte
             </button>

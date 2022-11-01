@@ -13,7 +13,7 @@ import BotonHome from "./components/BotonHome";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DarBajaAlta from "./components/DarBajaAlta/DarBajaAlta";
-import Reportes_T from "./components/Reportes/R_Tardias";
+import Reportes_T from "./components/Reportes/reportes_entradas_tardes/PantReportes_EntradasTardes";
 
 function App() {
   const onButtonClickHandler = () => {
