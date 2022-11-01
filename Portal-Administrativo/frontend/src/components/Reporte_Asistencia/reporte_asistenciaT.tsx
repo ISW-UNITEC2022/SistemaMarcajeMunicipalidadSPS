@@ -51,7 +51,7 @@ export default function TaskList() {
             departamento: departamento,
             distrito: distrito,
             fecha: Tasks[i].fecha,
-            hora_asignada: Tasks[i].fecha,
+            hora_asignada: Tasks[i].hora_asignada,
             hora_entrada: Tasks[i].hora_entrada,
         }
     }
