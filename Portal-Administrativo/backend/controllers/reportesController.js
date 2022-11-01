@@ -14,7 +14,7 @@ export const obtenerReportesTarde = async (req, res, next) => {
   let transaction = await db.transaction()
   try {
     let { supervisor } = req.query
-    let [fechaInicio, fechaFinal] = getRangeDates(16)
+    let [fechaInicio, fechaFinal] = getRangeDates(30)
     let reportes = await db('marcaje as m')
       .transacting(transaction)
       .select(
@@ -63,7 +63,7 @@ export const obtenerReportesIncompletos = async (req, res, next) => {
   let transaction = await db.transaction()
   try {
     let { supervisor } = req.query
-    let [fechaInicio, fechaFinal] = getRangeDates(16)
+    let [fechaInicio, fechaFinal] = getRangeDates(30)
     let reportes = await db('marcas_empleados as me')
       .transacting(transaction)
       .with(
@@ -102,6 +102,58 @@ export const obtenerReportesIncompletos = async (req, res, next) => {
       }
     })
 
+    transaction.commit()
+    res.json(reportes)
+  } catch (error) {
+    transaction.rollback()
+    next(error)
+  }
+}
+
+//Ruta api/reportes/asistencias
+//Descripcion Devuelve las asistencias de los empleados
+export const obtenerReportesAsistencias = async (req, res, next) => {
+  let transaction = await db.transaction()
+  try {
+    let { supervisor } = req.query
+    let [fechaInicio, fechaFinal] = getRangeDates(30)
+    let reportes = await db('marcaje as m')
+      .transacting(transaction)
+      .select(
+        'm.idempleado',
+        'nombre',
+        'apellido',
+        db.raw('date(fecha) as fecha'),
+        db.raw(`json_agg(
+        json_build_object(
+          "tipo", "fecha"::time
+          ) 
+        ) as marcas`)
+      )
+      .innerJoin('empleados as e', 'e.idempleado', 'm.idempleado')
+      .whereBetween('fecha', [fechaInicio, fechaFinal])
+      .modify((m) => {
+        if (supervisor) {
+          m.andWhere('idsupervisor', supervisor)
+        }
+      })
+      .groupBy('m.idempleado', db.raw('date(fecha)'), 'nombre', 'apellido')
+      .orderBy('idempleado')
+    reportes = reportes.map((reporte) => {
+      let marcas = {}
+      for (let marca of reporte.marcas) {
+        if (marca.entrada) {
+          marcas['entrada'] = toFormat12h(marca.entrada)
+        } else if (marca.salida) {
+          marcas['salida'] = toFormat12h(marca.salida)
+        }
+      }
+      return {
+        ...reporte,
+        fecha: removeTime(reporte.fecha),
+        marcas,
+      }
+    })
     transaction.commit()
     res.json(reportes)
   } catch (error) {
