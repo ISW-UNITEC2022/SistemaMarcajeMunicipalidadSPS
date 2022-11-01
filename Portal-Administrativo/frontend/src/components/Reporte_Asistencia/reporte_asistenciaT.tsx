@@ -41,6 +41,8 @@ export default function TaskList() {
         loadTasks();
     },[])
 
+    let mes='Octubre';
+
     for(let i=0; i<Tasks.length; i++){
         loadD(Tasks[i].idempleado);
         loadDist(Tasks[i].idempleado);
@@ -55,7 +57,6 @@ export default function TaskList() {
             hora_entrada: Tasks[i].hora_entrada,
         }
     }
-
 
     /*
         const downloadPdf=()=>{
@@ -126,8 +127,19 @@ export default function TaskList() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            height: '100vh',
-      }}><h3>Dirección C3i Municipalidad de San Pedro Sula</h3></div>
+        }}><h3>Dirección C3i Municipalidad de San Pedro Sula</h3></div>
+        </div>
+        <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        }}><h5>Formato de Reportes de Asistencia</h5></div>
+        <div id='contenedorR' style={{width: '90vw', marginLeft: '4vw', marginTop: '2vh'}}>
+        <p>
+        A continuación se presenta un reporte completo de las asistencias marcadas dentro de 
+        la aplicación por el equipo de “Los Amigos de la Municipalidad”, con un reporte completo
+        de datos personales y fechas de dichos marcajes en el mes de {mes}.
+        </p>
         </div>
 
         <div id='contenedorR' style={{width: '90vw', marginLeft: '4vw', marginTop: '2vh'}}>
