@@ -122,6 +122,12 @@ export default function TaskList() {
         <BotonHome></BotonHome>
         <div>
             <img src={Logo} style={{ height: '10vw', width: 'auto', marginLeft: '4vw' }} />
+            <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100vh',
+      }}><h3>Dirección C3i Municipalidad de San Pedro Sula</h3></div>
         </div>
 
         <div id='contenedorR' style={{width: '90vw', marginLeft: '4vw', marginTop: '2vh'}}>
