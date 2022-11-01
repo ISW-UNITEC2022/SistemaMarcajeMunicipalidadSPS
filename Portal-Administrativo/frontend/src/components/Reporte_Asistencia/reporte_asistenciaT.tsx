@@ -37,6 +37,29 @@ export default function Reporte_Asistencia_Tardia() {
     }
   }
 
+  /*
+    const downloadPdf=()=>{
+        const doc=new jsPDF();
+    
+        doc.text("Ejemplo Reporte",20,10);
+        doc.autoTable({
+          columns:[
+            {header: '#', dataKey: 'num'},
+            {header: 'No° Identidad', dataKey: 'idempleado'},
+            {header: 'Nombre Completo', dataKey: 'nombre'},
+            {header: 'Departamento', dataKey: 'departamento'},
+            {header: 'Distrito', dataKey: 'distrito'},
+            {header: 'Fecha', dataKey: 'fecha'},
+            {header: 'Hora Asignad', dataKey: 'hora_asignada'},
+            {header: 'Hora entrada', dataKey: 'hora_entrada'}
+          ],
+          body:dataT
+        })
+    
+        doc.save('reporte_Tardias.pdf');
+    }
+    */
+
   let mes='Octubre';
 
   const columns = [
@@ -90,7 +113,7 @@ export default function Reporte_Asistencia_Tardia() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-        }}><h5>Formato de Reportes de Asistencia</h5></div>
+        }}><h5>Formato de Reportes de Tardias</h5></div>
         <div id='contenedorR' style={{width: '90vw', marginLeft: '4vw', marginTop: '2vh'}}>
         <p>
         A continuación se presenta un reporte completo de las asistencias marcadas dentro de 
