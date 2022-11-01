@@ -21,6 +21,8 @@ export const obtenerReportesTarde = async (req, res, next) => {
         'm.idempleado',
         'nombre',
         'apellido',
+        'departamento',
+        'distrito',
         db.raw('date(fecha) as fecha'),
         'e.horaentrada as hora_asignada',
         db.raw('m.fecha::time as hora_entrada')
@@ -82,7 +84,14 @@ export const obtenerReportesIncompletos = async (req, res, next) => {
           .groupBy('m.idempleado', db.raw('date(fecha)'))
           .orderBy('m.idempleado')
       )
-      .select('me.idempleado', 'nombre', 'apellido', 'marcas[1]')
+      .select(
+        'me.idempleado',
+        'nombre',
+        'apellido',
+        'departamento',
+        'distrito',
+        'marcas[1]'
+      )
       .innerJoin('empleados as e', 'e.idempleado', 'me.idempleado')
       .where(db.raw(`array_length(marcas, 1) < 2 `))
       .modify((m) => {
@@ -123,6 +132,8 @@ export const obtenerReportesAsistencias = async (req, res, next) => {
         'm.idempleado',
         'nombre',
         'apellido',
+        'departamento',
+        'distrito',
         db.raw('date(fecha) as fecha'),
         db.raw(`json_agg(
         json_build_object(
