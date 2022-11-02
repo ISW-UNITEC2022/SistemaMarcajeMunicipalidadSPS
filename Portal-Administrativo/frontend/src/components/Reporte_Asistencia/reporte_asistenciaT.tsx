@@ -1,6 +1,5 @@
 
 import { useEffect, useState } from 'react'
-import MaterialTable from 'material-table'
 import MenuUsuario from '../MenuUsuario'
 import BotonHome from '../BotonHome'
 import Logo from '../logo.png'
