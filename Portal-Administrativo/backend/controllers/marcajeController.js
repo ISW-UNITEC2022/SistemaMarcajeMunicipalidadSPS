@@ -38,9 +38,7 @@ export const marcarEmpleado = async (req, res, next) => {
       .insert(
         {
           idempleado,
-          fecha: fecha.toLocaleString('en-US', {
-            timeZone: 'America/Tegucigalpa',
-          }),
+          fecha,
           tipo,
           latitud: lat,
           longitud: lon,
