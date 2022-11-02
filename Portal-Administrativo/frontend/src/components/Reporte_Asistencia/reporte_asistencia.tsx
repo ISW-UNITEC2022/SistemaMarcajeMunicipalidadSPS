@@ -12,7 +12,7 @@ export default function Reporte_Asistencia_Tardia() {
 
   const loadTasks = async () => {
     const response = await fetch(
-      'https://proyecto-isw-dev.herokuapp.com/api/reportes/tarde'
+      'https://proyecto-isw-dev.herokuapp.com/api/reportes'
     )
     const data = await response.json()
     setTasks(data)
@@ -32,8 +32,8 @@ export default function Reporte_Asistencia_Tardia() {
       departamento: Tasks[i].departamento,
       distrito: Tasks[i].distrito,
       fecha: Tasks[i].fecha,
-      hora_asignada: Tasks[i].hora_asignada,
-      hora_entrada: Tasks[i].hora_entrada,
+      salida: Tasks[i].marcas.salida,
+      entrada: Tasks[i].marcas.entrada,
     }
   }
 
@@ -88,12 +88,12 @@ export default function Reporte_Asistencia_Tardia() {
       selector: (row: any) => row.fecha,
     },
     {
-      name: 'Hora Asignada',
-      selector: (row: any) => row.hora_asignada,
+      name: 'Salida',
+      selector: (row: any) => row.salida,
     },
     {
-      name: 'Hora entrada',
-      selector: (row: any) => row.hora_entrada,
+      name: 'Entrada',
+      selector: (row: any) => row.entrada,
     },
   ]
 

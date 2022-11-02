@@ -3,8 +3,11 @@ import { useEffect, useState } from 'react'
 import MenuUsuario from '../MenuUsuario'
 import BotonHome from '../BotonHome'
 import Logo from '../logo.png'
+import {Button} from '@mui/material'
 import './asistencia.css'
 import DataTable from 'react-data-table-component'
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 export default function Reporte_Asistencia_Tardia() {
   const [Tasks, setTasks] = useState([])
@@ -36,28 +39,26 @@ export default function Reporte_Asistencia_Tardia() {
     }
   }
 
-  /*
-    const downloadPdf=()=>{
-        const doc=new jsPDF();
+  
+  /*const downloadPdf=()=>{
+    let columns=[
+      {header: '#', dataKey: 'num'},
+      {header: 'No° Identidad', dataKey: 'idempleado'},
+      {header: 'Nombre Completo', dataKey: 'nombre'},
+      {header: 'Departamento', dataKey: 'departamento'},
+      {header: 'Distrito', dataKey: 'distrito'},
+      {header: 'Fecha', dataKey: 'fecha'},
+      {header: 'Hora Asignad', dataKey: 'hora_asignada'},
+      {header: 'Hora entrada', dataKey: 'hora_entrada'}
+    ]
+    let doc = new jsPDF('p', 'pt');
+
+    doc.autoTable(columns, dataT);
+
+    doc.save('reporte_Tardias.pdf');
+  }*/
     
-        doc.text("Ejemplo Reporte",20,10);
-        doc.autoTable({
-          columns:[
-            {header: '#', dataKey: 'num'},
-            {header: 'No° Identidad', dataKey: 'idempleado'},
-            {header: 'Nombre Completo', dataKey: 'nombre'},
-            {header: 'Departamento', dataKey: 'departamento'},
-            {header: 'Distrito', dataKey: 'distrito'},
-            {header: 'Fecha', dataKey: 'fecha'},
-            {header: 'Hora Asignad', dataKey: 'hora_asignada'},
-            {header: 'Hora entrada', dataKey: 'hora_entrada'}
-          ],
-          body:dataT
-        })
     
-        doc.save('reporte_Tardias.pdf');
-    }
-    */
 
   let mes='Octubre';
 
@@ -127,6 +128,7 @@ export default function Reporte_Asistencia_Tardia() {
       >
         <DataTable columns={columns} data={dataT} />
       </div>
+      
     </div>
   )
 }
