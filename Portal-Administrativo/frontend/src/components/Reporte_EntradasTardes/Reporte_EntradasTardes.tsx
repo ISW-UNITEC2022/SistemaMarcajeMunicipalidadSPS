@@ -4,7 +4,6 @@ import MenuUsuario from '../MenuUsuario'
 import BotonHome from '../BotonHome'
 import Logo from '../logo.png'
 import {Button} from '@mui/material'
-import './asistencia.css'
 import DataTable from 'react-data-table-component'
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';

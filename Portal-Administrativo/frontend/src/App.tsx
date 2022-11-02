@@ -4,8 +4,8 @@ import './App.css'
 import TaskList from './components/menu_user_comp/menu_index'
 import Modificar from './components/modificar_empl/modificar_index'
 import FormularioEmpleado from './components/FormularioEmpleado/FormularioEmpleado'
-import Reporte_Asistencia_Tardia from './components/Reporte_Asistencia/reporte_asistenciaT'
-import Reporte_Asistencia from './components/Reporte_Asistencia/reporte_asistencia'
+import Reporte_Asistencia_Tardia from './components/Reporte_EntradasTardes/Reporte_EntradasTardes'
+import Reporte_Asistencia from './components/Reporte_Asistencias/Reporte_Asistencias'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import HomePage from './components/HomePage/HomePage'
 import AsignarSupervisor from './components/AsignarSupervisor/AsignarSupervisor'
@@ -43,11 +43,11 @@ function App() {
         <Route path='/asignar_supervisor' element={<AsignarSupervisor />} />
         <Route path='/informacion_empleado' element={<Informacion />} />
         <Route
-          path='/asistencias_tardias'
+          path='/reporte_entradas_tardes'
           element={<Reporte_Asistencia_Tardia />}
         />
         <Route
-          path='/asistencias'
+          path='/reporte_asistencias'
           element={<Reporte_Asistencia />}
         />
         <Route path='/' element={<HomePage />} />

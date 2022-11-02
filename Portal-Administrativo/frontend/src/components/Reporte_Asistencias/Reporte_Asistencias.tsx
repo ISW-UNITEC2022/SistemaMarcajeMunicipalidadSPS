@@ -4,7 +4,6 @@ import MaterialTable from 'material-table'
 import MenuUsuario from '../MenuUsuario'
 import BotonHome from '../BotonHome'
 import Logo from '../logo.png'
-import './asistencia.css'
 import DataTable from 'react-data-table-component'
 
 export default function Reporte_Asistencia_Tardia() {
