@@ -80,7 +80,7 @@ export const validarMarca = async (req, res, next) => {
       .select('marcaje.tipo')
       .innerJoin('marcaje', 'empleados.idempleado', 'marcaje.idempleado')
       .where({ correo: correo, tipo: tipo })
-      .andWhereBetween('fecha', [toLocale(fechaInicio), toLocale(fechaFinal)])
+      .andWhereBetween('fecha', [fechaInicio, fechaFinal])
     let marca = marcas.find((m) => m.tipo === tipo)
     transaction.commit()
     res.json({ marcado: !marca ? false : true })
