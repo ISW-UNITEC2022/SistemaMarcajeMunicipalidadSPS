@@ -148,7 +148,14 @@ export const obtenerReportesAsistencias = async (req, res, next) => {
           m.andWhere('idsupervisor', supervisor)
         }
       })
-      .groupBy('m.idempleado', db.raw('date(fecha)'), 'nombre', 'apellido')
+      .groupBy(
+        'm.idempleado',
+        db.raw('date(fecha)'),
+        'nombre',
+        'apellido',
+        'departamento',
+        'distrito'
+      )
       .orderBy('idempleado')
     reportes = reportes.map((reporte) => {
       let marcas = {}
