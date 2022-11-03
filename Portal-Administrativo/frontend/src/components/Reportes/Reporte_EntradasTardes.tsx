@@ -5,8 +5,6 @@ import BotonHome from '../BotonHome'
 import Logo from '../logo.png'
 import {Button} from '@mui/material'
 import DataTable from 'react-data-table-component'
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
 
 export default function Reporte_Asistencia_Tardia() {
   const [Tasks, setTasks] = useState([])
@@ -37,27 +35,6 @@ export default function Reporte_Asistencia_Tardia() {
       hora_entrada: Tasks[i].hora_entrada,
     }
   }
-
-  
-  /*const downloadPdf=()=>{
-    let columns=[
-      {header: '#', dataKey: 'num'},
-      {header: 'No° Identidad', dataKey: 'idempleado'},
-      {header: 'Nombre Completo', dataKey: 'nombre'},
-      {header: 'Departamento', dataKey: 'departamento'},
-      {header: 'Distrito', dataKey: 'distrito'},
-      {header: 'Fecha', dataKey: 'fecha'},
-      {header: 'Hora Asignad', dataKey: 'hora_asignada'},
-      {header: 'Hora entrada', dataKey: 'hora_entrada'}
-    ]
-    let doc = new jsPDF('p', 'pt');
-
-    doc.autoTable(columns, dataT);
-
-    doc.save('reporte_Tardias.pdf');
-  }*/
-    
-    
 
   let mes='Octubre';
 

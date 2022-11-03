@@ -36,29 +36,6 @@ export default function Reporte_Asistencia_Tardia() {
     }
   }
 
-  /*
-    const downloadPdf=()=>{
-        const doc=new jsPDF();
-    
-        doc.text("Ejemplo Reporte",20,10);
-        doc.autoTable({
-          columns:[
-            {header: '#', dataKey: 'num'},
-            {header: 'No° Identidad', dataKey: 'idempleado'},
-            {header: 'Nombre Completo', dataKey: 'nombre'},
-            {header: 'Departamento', dataKey: 'departamento'},
-            {header: 'Distrito', dataKey: 'distrito'},
-            {header: 'Fecha', dataKey: 'fecha'},
-            {header: 'Hora Asignad', dataKey: 'hora_asignada'},
-            {header: 'Hora entrada', dataKey: 'hora_entrada'}
-          ],
-          body:dataT
-        })
-    
-        doc.save('reporte_Tardias.pdf');
-    }
-    */
-
   let mes='Octubre';
 
   const columns = [
@@ -94,6 +71,17 @@ export default function Reporte_Asistencia_Tardia() {
       name: 'Entrada',
       selector: (row: any) => row.entrada,
     },
+  ]
+
+  let columnas=[
+    {title: '#', field: 'num'},
+    {title: 'No° Identidad', field: 'idempleado'},
+    {title: 'Nombre Completo', field: 'nombre'},
+    {title: 'Departamento', field: 'departamento'},
+    {title: 'Distrito', field: 'distrito'},
+    {title: 'Fecha', field: 'fecha'},
+    {title: 'Hora Asignad', field: 'hora_asignada'},
+    {title: 'Hora entrada', field: 'hora_entrada'}
   ]
 
   return (
