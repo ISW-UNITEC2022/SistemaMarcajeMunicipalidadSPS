@@ -13,6 +13,8 @@ import BotonHome from "./components/BotonHome";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DarBajaAlta from "./components/DarBajaAlta/DarBajaAlta";
+import Reporte_Asistencia_Tardia from './components/Reportes/Reporte_EntradasTardes'
+import Reporte_Asistencia from './components/Reportes/Reporte_Asistencias'
 
 function App() {
   const onButtonClickHandler = () => {
@@ -40,6 +42,14 @@ function App() {
         <Route path="/asignar_supervisor" element={<AsignarSupervisor />} />
         <Route path="/informacion_empleado" element={<Informacion />} />
         <Route path="/" element={<HomePage />} />
+        <Route
+          path='/reporte_entradas_tardes'
+          element={<Reporte_Asistencia_Tardia />}
+        />
+        <Route
+          path='/reporte_asistencias'
+          element={<Reporte_Asistencia />}
+        />
       </Routes>
     </BrowserRouter>
   );
