@@ -5,12 +5,12 @@ import BotonHome from '../BotonHome'
 import Logo from '../logo.png'
 import DataTable from 'react-data-table-component'
 
-export default function Reporte_Asistencia_Tardia() {
+export default function Reporte_Marcas_Incompletas() {
   const [Tasks, setTasks] = useState([])
 
   const loadTasks = async () => {
     const response = await fetch(
-      'https://proyecto-isw-dev.herokuapp.com/api/reportes'
+      'https://proyecto-isw-dev.herokuapp.com/api/reportes/incompleto'
     )
     const data = await response.json()
     setTasks(data)
@@ -30,12 +30,10 @@ export default function Reporte_Asistencia_Tardia() {
       departamento: Tasks[i].departamento,
       distrito: Tasks[i].distrito,
       fecha: Tasks[i].fecha,
-      salida: Tasks[i].marcas.salida || 'N/A',
-      entrada: Tasks[i].marcas.entrada,
+      hora_entrada: Tasks[i].entrada,
+      hora_salida: Tasks[i].salida,
     }
   }
-
-  let mes = 'Octubre'
 
   const columns = [
     {
@@ -63,24 +61,13 @@ export default function Reporte_Asistencia_Tardia() {
       selector: (row: any) => row.fecha,
     },
     {
-      name: 'Salida',
-      selector: (row: any) => row.salida,
+      name: 'Hora Entrada',
+      selector: (row: any) => row.hora_entrada,
     },
     {
-      name: 'Entrada',
-      selector: (row: any) => row.entrada,
+      name: 'Hora Salida',
+      selector: (row: any) => row.hora_salida,
     },
-  ]
-
-  let columnas = [
-    { title: '#', field: 'num' },
-    { title: 'No° Identidad', field: 'idempleado' },
-    { title: 'Nombre Completo', field: 'nombre' },
-    { title: 'Departamento', field: 'departamento' },
-    { title: 'Distrito', field: 'distrito' },
-    { title: 'Fecha', field: 'fecha' },
-    { title: 'Hora Asignad', field: 'hora_asignada' },
-    { title: 'Hora entrada', field: 'hora_entrada' },
   ]
 
   return (
@@ -88,10 +75,12 @@ export default function Reporte_Asistencia_Tardia() {
       <MenuUsuario></MenuUsuario>
       <BotonHome></BotonHome>
       <div>
-        <img
-          src={Logo}
-          style={{ height: '10vw', width: 'auto', marginLeft: '4vw' }}
-        />
+        <div>
+          <img
+            src={Logo}
+            style={{ height: '10vw', width: 'auto', marginLeft: '4vw' }}
+          />
+        </div>
         <div
           style={{
             display: 'flex',
@@ -117,9 +106,9 @@ export default function Reporte_Asistencia_Tardia() {
       >
         <p>
           A continuación se presenta un reporte completo de las asistencias
-          marcadas dentro de la aplicación por el equipo de “Los Amigos de la
+          incompletas dentro de la aplicación por el equipo de “Los Amigos de la
           Municipalidad”, con un reporte completo de datos personales y fechas
-          de dichos marcajes en el mes de {mes}.
+          de dichos marcajes en el mes.
         </p>
       </div>
 
