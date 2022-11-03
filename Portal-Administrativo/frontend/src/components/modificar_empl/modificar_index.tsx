@@ -11,12 +11,14 @@ import BotonHome from "../BotonHome";
 import MenuUsuario from "../MenuUsuario";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { InferencePriority } from "typescript";
 
 function Modificar() {
   const url = "https://proyecto-isw1.herokuapp.com/api/empleados";
   const url2 = "https://proyecto-isw1.herokuapp.com/api/empleados/";
   const [empleados, setEmpleados] = useState([]);
   const [idEmpleado, setIdEmpleado] = useState("");
+
   //InfoEmpleado tiene toda la información del empleado seleccionado
   const [infoEmpleado, setInfoEmpleado] = useState({
     idempleado: "",
@@ -36,7 +38,7 @@ function Modificar() {
   useEffect(() => {
     getEmpleados();
     getEmpleados2();
-  }, []);
+  }, [idEmpleado]);
 
   const getEmpleados = () => {
     axios
@@ -56,6 +58,9 @@ function Modificar() {
         setInfoEmpleado(info);
       })
       .catch((error) => console.error(`Error: ${error}`));
+
+      setDep(infoEmpleado.departamento);
+      setDis(infoEmpleado.distrito + "");
   };
 
   const [data, setData] = useState({
@@ -71,6 +76,7 @@ function Modificar() {
     horaentrada: "",
     horasalida: "",
   });
+
 
   const [dis, setDis] = React.useState("");
 
@@ -88,6 +94,14 @@ function Modificar() {
     console.log(dep);
   };
 
+  const [pass, setPass] = React.useState("");
+
+  const handleChangePass = (event: SelectChangeEvent) => {
+    console.log(pass);
+    setPass(event.target.value);
+    console.log(pass);
+  };
+
   function refreshPage() {
     window.location.reload();
   }
@@ -98,13 +112,13 @@ function Modificar() {
       .put(url, {
         idempleado: infoEmpleado.idempleado,
         idsupervisor: null,
-        correo: data.correo,
-        password: data.password,
+        correo: infoEmpleado.correo,
+        password: pass,
         distrito: dis,
         departamento: dep,
-        zona: data.zona,
-        horaentrada: data.horaentrada,
-        horasalida: data.horasalida,
+        zona: infoEmpleado.zona,
+        horaentrada: infoEmpleado.horaentrada,
+        horasalida: infoEmpleado.horasalida,
       })
       .then((res) => {
         toast.success("¡Empleado modificado éxitosamente!");
@@ -116,7 +130,7 @@ function Modificar() {
 
     setData({
       idempleado: "",
-      idsupervisor: null,
+      idsupervisor: "",
       nombre: "",
       apellido: "",
       correo: "",
@@ -129,12 +143,13 @@ function Modificar() {
     });
     setDis("");
     setDep("");
+    setPass("");
   }
 
   function handle(e) {
-    const newdata = { ...data };
+    const newdata = { ...infoEmpleado };
     newdata[e.target.id] = e.target.value;
-    setData(newdata);
+    setInfoEmpleado(newdata);
     console.log(newdata);
   }
 
@@ -150,15 +165,24 @@ function Modificar() {
       idsupervisor: null,
       nombre: infoEmpleado.nombre,
       apellido: infoEmpleado.apellido,
-      correo: "",
+      correo: infoEmpleado.correo,
       password: "",
-      distrito: 0,
-      zona: "",
-      departamento: "",
-      horaentrada: "",
-      horasalida: "",
+      distrito: infoEmpleado.distrito,
+      zona: infoEmpleado.zona,
+      departamento: infoEmpleado.departamento,
+      horaentrada: infoEmpleado.horaentrada,
+      horasalida: infoEmpleado.horasalida,
     });
+    //setDep(infoEmpleado.departamento);
+    //setDis(infoEmpleado.distrito + "");
+    setPass("");
     console.log(infoEmpleado.correo);
+  }
+
+  function desplegarInfo() {
+    print();
+    setDep(infoEmpleado.departamento);
+    setDis(infoEmpleado.distrito + "");
   }
 
   return (
@@ -174,7 +198,7 @@ function Modificar() {
               onChange={handleSelect}
               value={idEmpleado}
             >
-               <option value="" key="">
+              <option value="" key="">
                 Desplegar empleados
               </option>
               {empleados.map((emp) => (
@@ -185,7 +209,7 @@ function Modificar() {
             </select>
 
             <button
-              onClick={() => print()}
+              onClick={() => desplegarInfo()}
               id="button"
               style={{
                 width: "280px",
@@ -239,7 +263,7 @@ function Modificar() {
               _width={238}
               _onChange={(e) => handle(e)}
               _id={"correo"}
-              _value={data.correo}
+              _value={infoEmpleado.correo}
               _type={"text"}
               _label={"Correo Electrónico"}
               _habilitar={false}
@@ -247,9 +271,9 @@ function Modificar() {
             ></TextBox>
 
             <PasswordBox
-              _onChange={(e) => handle(e)}
+              _onChange={(e) => handleChangePass(e)}
               _id={"password"}
-              _value={data.password}
+              _value={pass}
               _label={"Contraseña"}
             ></PasswordBox>
           </div>
@@ -270,7 +294,7 @@ function Modificar() {
                 required
                 id="demo-simple-select-autowidth-label"
               >
-                Distrito
+                Distrito:  {infoEmpleado.distrito}
               </InputLabel>
               <Select
                 required
@@ -341,7 +365,7 @@ function Modificar() {
                 required
                 id="demo-simple-select-autowidth-label"
               >
-                Departamento
+                Departamento: {infoEmpleado.departamento}
               </InputLabel>
               <Select
                 required
@@ -387,7 +411,7 @@ function Modificar() {
               _width={488}
               _onChange={(e) => handle(e)}
               _id={"zona"}
-              _value={data.zona}
+              _value={infoEmpleado.zona}
               _type={"text"}
               _label={"Zona"}
               _habilitar={false}
@@ -396,17 +420,17 @@ function Modificar() {
           </div>
           <div id="fila">
             <p className="horaText">
-              Hora Entrada <span id="_asterisco">*</span>
+              Hora Entrada <span id="_asterisco">* {infoEmpleado.horaentrada}</span>
             </p>
             <p className="horaText">
-              Hora Salida <span id="_asterisco">*</span>
+              Hora Salida <span id="_asterisco">* {infoEmpleado.horasalida}</span>
             </p>
           </div>
           <div id="fila">
             <input
               onChange={(e) => handle(e)}
               id="horaentrada"
-              value={data.horaentrada}
+              value={infoEmpleado.horaentrada}
               placeholder="Hora de Entrada"
               type="time"
               required
@@ -416,7 +440,7 @@ function Modificar() {
             <input
               onChange={(e) => handle(e)}
               id="horasalida"
-              value={data.horasalida}
+              value={infoEmpleado.horasalida}
               placeholder="Hora de Salida"
               type="time"
               required

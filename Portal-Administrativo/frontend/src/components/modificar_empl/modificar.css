@@ -53,7 +53,6 @@
   background-color: #f2f2f2;
 
   border-width: 1px;
-  margin-right: 12px;
 }
 
 #horasalida {
@@ -69,7 +68,6 @@
   border-radius: 5px;
   border-color: #02732A;
   border-width: 1px;
-  margin-right: 12px;
 }
 
 #button{
@@ -94,8 +92,6 @@
 .horaText {
   margin-bottom: -10px;
   margin-top: -2px;
-  margin-left: 13px;
-  margin-right: 128px;
   color: #757575;
   font-size: 16.5px;
 }
