@@ -38,7 +38,7 @@ function Modificar() {
   useEffect(() => {
     getEmpleados();
     getEmpleados2();
-  }, []);
+  }, [idEmpleado]);
 
   const getEmpleados = () => {
     axios
