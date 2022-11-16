@@ -1,28 +1,25 @@
 import axios, { Axios } from "axios";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Link, useNavigate } from 'react-router-dom';
-import Textbox from "../TextBox";
-import "./PantReportes_Asistencias.css";
-import MenuUsuario from "../MenuUsuario";
-import BotonHome from "../BotonHome";
-import CajaTitulo from "../CajaTitulo";
+import Textbox from "../../Componentes UI/TextBox";
+import "./PantReportes_MarcasIncompletas.css";
+import MenuUsuario from "../../MenuUsuario";
+import BotonHome from "../../Componentes UI/BotonHome";
+import CajaTitulo from "../../CajaTitulo";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-function FormularioReporteAsistencias() {
+function FormularioReporteMarcasIncompletas() {
+  const navigate = useNavigate();
 
+  const navigateToReportes = () => {
+    navigate('/reporte_marcas_incompletas');
+  };
   const [data, setData] = useState({
     idempleado: "",
     idauth0: "",
   });
-
-  const navigate = useNavigate();
-
-  const navigateToReportes = () => {
-    navigate('/reporte_asistencias');
-  };
- 
 
   function handleChange(e) {
     const newdata = { ...data };
@@ -35,12 +32,12 @@ function FormularioReporteAsistencias() {
     <>
       <MenuUsuario></MenuUsuario>
       <BotonHome></BotonHome>
-      <CajaTitulo input={"Reporte Asistencias"}></CajaTitulo>
+      <CajaTitulo input={"Reporte Marcas Incompletas"}></CajaTitulo>
       <body>
         <div id="Box_RT">
           <div id="Box1_RT">
             <p>
-              <span id="asterisco_RT">*</span> Se generará el reporte de las asistencias de los empleados. Ingresar el correo electrónico al cuál desee enviar el reporte. El reporte se enviará en formato de PDF.
+              <span id="asterisco_RT">*</span> Se generará el reporte de marcas incompletas de los empleados. Ingresar el correo electrónico al cuál desee enviar el reporte. El reporte se enviará en formato de PDF.
             </p>
           </div>
           <div id="Box2_RT">
@@ -73,11 +70,10 @@ function FormularioReporteAsistencias() {
             </p>
           </div>
 
-          
+
             <div id="Box5_RT">
               <button id="Boton_RT" style={{ width: "285px" }} onClick={navigateToReportes}>Generar Reporte</button>
             </div>
-        
         </div>
       </body>
 
@@ -85,4 +81,4 @@ function FormularioReporteAsistencias() {
   );
 }
 
-export default FormularioReporteAsistencias;
+export default FormularioReporteMarcasIncompletas;

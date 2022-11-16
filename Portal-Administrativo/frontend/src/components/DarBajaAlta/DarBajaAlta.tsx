@@ -1,11 +1,11 @@
 import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import axios, { Axios } from "axios";
 import React, { useEffect, useState } from "react";
-import Textbox from "../TextBox";
+import Textbox from "../Componentes UI/TextBox";
 import "../DarBajaAlta/DarBajaAlta.css";
 import { toast } from "react-toastify";
 import MenuUsuario from "../MenuUsuario";
-import BotonHome from "../BotonHome";
+import BotonHome from "../Componentes UI/BotonHome";
 
 function FormularioSupervisor() {
   const url = "https://proyecto-isw1.herokuapp.com/api/empleados";

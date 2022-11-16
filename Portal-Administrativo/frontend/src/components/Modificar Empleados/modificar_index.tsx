@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import "./modificar.css";
-import TextBox from "../TextBox";
-import PasswordBox from "../PasswordBox";
+import TextBox from "../Componentes UI/TextBox";
+import PasswordBox from "../Componentes UI/PasswordBox";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import axios from "axios";
-import BotonHome from "../BotonHome";
-import MenuUsuario from "../MenuUsuario";
+import BotonHome from "../Componentes UI/BotonHome";
+import MenuUsuario from "../Componentes UI/MenuUsuario";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { InferencePriority } from "typescript";

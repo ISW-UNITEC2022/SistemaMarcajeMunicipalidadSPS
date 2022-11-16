@@ -1,10 +1,10 @@
 import axios, { Axios } from "axios";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Link } from 'react-router-dom';
-import Textbox from "../TextBox";
+import Textbox from "../Componentes UI/TextBox";
 import "../AsignarSupervisor/Estilos/AsignarSupervisor.css";
 import MenuUsuario from "../MenuUsuario";
-import BotonHome from "../BotonHome";
+import BotonHome from "../Componentes UI/BotonHome";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

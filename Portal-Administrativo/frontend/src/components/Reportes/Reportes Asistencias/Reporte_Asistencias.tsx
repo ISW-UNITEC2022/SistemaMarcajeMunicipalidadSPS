@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import MaterialTable from 'material-table'
-import MenuUsuario from '../MenuUsuario'
-import BotonHome from '../BotonHome'
-import Logo from '../logo.png'
+import MenuUsuario from '../../Componentes UI/MenuUsuario'
+import BotonHome from '../../Componentes UI/BotonHome'
+import Logo from '../../../assets/Logo C3i Oficial.png'
 import DataTable from 'react-data-table-component'
 
 export default function Reporte_Asistencia_Tardia() {

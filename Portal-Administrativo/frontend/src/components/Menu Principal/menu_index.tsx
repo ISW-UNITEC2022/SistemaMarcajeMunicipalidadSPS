@@ -7,7 +7,7 @@ import Logo from "../logo.png";
 import React from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import MenuUsuario from '../MenuUsuario';
-import BotonHome from '../BotonHome';
+import BotonHome from '../Componentes UI/BotonHome';
 
 export default function TaskList() {
 

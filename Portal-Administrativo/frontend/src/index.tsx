@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Login from './auth0/Login';
-import Prueba from './components/menu_user_comp/menu_index'
+import Prueba from './components/Menu Principal/menu_index'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import BarraS from './components/BarraSuperior';
-import BarraI from './components/BarraInferior';
+import BarraS from './components/Componentes UI/BarraSuperior';
+import BarraI from './components/Componentes UI/BarraInferior';
 import { Auth0Provider } from '@auth0/auth0-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

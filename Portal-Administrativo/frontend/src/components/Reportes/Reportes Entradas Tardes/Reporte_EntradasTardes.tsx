@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react'
-import MaterialTable from 'material-table'
-import MenuUsuario from '../MenuUsuario'
-import BotonHome from '../BotonHome'
-import Logo from '../logo.png'
+import MenuUsuario from '../../Componentes UI/MenuUsuario'
+import BotonHome from '../../Componentes UI/BotonHome'
+import Logo from '../../../assets/Logo C3i Oficial.png'
+import {Button} from '@mui/material'
 import DataTable from 'react-data-table-component'
 
-export default function Reporte_Marcas_Incompletas() {
+export default function Reporte_Asistencia_Tardia() {
   const [Tasks, setTasks] = useState([])
 
   const loadTasks = async () => {
     const response = await fetch(
-      'https://proyecto-isw-dev.herokuapp.com/api/reportes/incompleto'
+      'https://proyecto-isw-dev.herokuapp.com/api/reportes/tarde'
     )
     const data = await response.json()
     setTasks(data)
@@ -30,10 +30,12 @@ export default function Reporte_Marcas_Incompletas() {
       departamento: Tasks[i].departamento,
       distrito: Tasks[i].distrito,
       fecha: Tasks[i].fecha,
-      hora_entrada: Tasks[i].entrada,
-      hora_salida: Tasks[i].salida,
+      hora_asignada: Tasks[i].hora_asignada,
+      hora_entrada: Tasks[i].hora_entrada,
     }
   }
+
+  let mes='Octubre';
 
   const columns = [
     {
@@ -61,12 +63,12 @@ export default function Reporte_Marcas_Incompletas() {
       selector: (row: any) => row.fecha,
     },
     {
-      name: 'Hora Entrada',
-      selector: (row: any) => row.hora_entrada,
+      name: 'Hora Asignada',
+      selector: (row: any) => row.hora_asignada,
     },
     {
-      name: 'Hora Salida',
-      selector: (row: any) => row.hora_salida,
+      name: 'Hora entrada',
+      selector: (row: any) => row.hora_entrada,
     },
   ]
 
@@ -75,42 +77,25 @@ export default function Reporte_Marcas_Incompletas() {
       <MenuUsuario></MenuUsuario>
       <BotonHome></BotonHome>
       <div>
-        <div>
-          <img
-            src={Logo}
-            style={{ height: '10vw', width: 'auto', marginLeft: '4vw' }}
-          />
-        </div>
-        <div
-          style={{
+            <img src={Logo} style={{ height: '10vw', width: 'auto', marginLeft: '4vw' }} />
+            <div style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-          }}
-        >
-          <h3>Dirección C3i Municipalidad de San Pedro Sula</h3>
+        }}><h3>Dirección C3i Municipalidad de San Pedro Sula</h3></div>
         </div>
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <h5>Formato de Reportes de Asistencia</h5>
-      </div>
-      <div
-        id='contenedorR'
-        style={{ width: '90vw', marginLeft: '4vw', marginTop: '2vh' }}
-      >
+        <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        }}><h5>Formato de Reportes de Tardias</h5></div>
+        <div id='contenedorR' style={{width: '90vw', marginLeft: '4vw', marginTop: '2vh'}}>
         <p>
-          A continuación se presenta un reporte completo de las asistencias
-          incompletas dentro de la aplicación por el equipo de “Los Amigos de la
-          Municipalidad”, con un reporte completo de datos personales y fechas
-          de dichos marcajes en el mes.
+        A continuación se presenta un reporte completo de las asistencias marcadas dentro de 
+        la aplicación por el equipo de “Los Amigos de la Municipalidad”, con un reporte completo
+        de datos personales y fechas de dichos marcajes en el mes de {mes}.
         </p>
-      </div>
+        </div>
 
       <div
         id='contenedorR'
@@ -118,6 +103,7 @@ export default function Reporte_Marcas_Incompletas() {
       >
         <DataTable columns={columns} data={dataT} />
       </div>
+      
     </div>
   )
 }

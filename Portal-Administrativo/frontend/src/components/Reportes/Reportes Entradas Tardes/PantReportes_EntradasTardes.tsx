@@ -1,17 +1,16 @@
 import axios, { Axios } from "axios";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Link, useNavigate } from 'react-router-dom';
-import Textbox from "../TextBox";
+import Textbox from "../../Componentes UI/TextBox";
 import "./PantReportes_EntradasTardes.css";
-import MenuUsuario from "../MenuUsuario";
-import BotonHome from "../BotonHome";
-import CajaTitulo from "../CajaTitulo";
+import MenuUsuario from '../../Componentes UI/MenuUsuario'
+import BotonHome from "../../Componentes UI/BotonHome";
+import CajaTitulo from "../../Componentes UI/CajaTitulo";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 function FormularioSupervisor() {
-  
   const navigate = useNavigate();
 
   const navigateToReportes = () => {
