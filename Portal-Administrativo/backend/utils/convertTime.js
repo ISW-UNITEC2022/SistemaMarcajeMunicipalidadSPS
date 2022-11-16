@@ -1,3 +1,5 @@
+import { CustomError } from './CustomError.js'
+
 export const dateToTimeString = (dataD) => {
   let data = new Date(dataD)
   let hrs = data.getHours()
@@ -68,5 +70,44 @@ export const getRangeDates = (days) => {
   fechaFinal.setHours(23)
   fechaFinal.setMinutes(59)
   fechaFinal.setSeconds(0)
+  return [fechaInicio, fechaFinal]
+}
+
+export const getRangeMonth = (month) => {
+  if (month > 12 || month < 1) {
+    throw CustomError('El rango del mes es incorrecto')
+  }
+  month = month - 1
+  let fecha = new Date()
+  let fechaInicio = new Date(fecha.getFullYear(), month, 1)
+  fechaInicio.setHours(0)
+  fechaInicio.setMinutes(0)
+  fechaInicio.setSeconds(0)
+  let fechaFinal = new Date(fecha.getFullYear(), month + 1, 0)
+  fechaFinal.setDate(fechaFinal.getDate() - 1)
+  fechaFinal.setHours(23)
+  fechaFinal.setMinutes(59)
+  fechaFinal.setSeconds(0)
+  return [fechaInicio, fechaFinal]
+}
+
+export const getRangeMonths = (rangoInicial, rangoFinal) => {
+  let { month: firstMonth, year: firstYear } = rangoInicial
+  let { month: lastMonth, year: lastYear } = rangoFinal
+  if (firstMonth > 12 || firstMonth < 1) {
+    throw new CustomError('El mes inicial es incorrecto')
+  } else if (lastMonth < 1 || lastMonth > 12) {
+    throw new CustomError('El mes final es incorrecto')
+  }
+  firstMonth -= 1
+  let fechaInicio = new Date(firstYear, firstMonth, 1)
+  fechaInicio.setHours(0)
+  fechaInicio.setMinutes(0)
+  fechaInicio.setSeconds(0)
+  let fechaFinal = new Date(lastYear, lastMonth, 1)
+  fechaFinal.setHours(23)
+  fechaFinal.setMinutes(59)
+  fechaFinal.setSeconds(0)
+  fechaFinal.setDate(fechaFinal.getDate() - 1)
   return [fechaInicio, fechaFinal]
 }

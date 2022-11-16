@@ -7,8 +7,8 @@ import {
 
 const router = Router()
 
-router.get('/', obtenerReportesAsistencias)
-router.get('/tarde', obtenerReportesTarde)
-router.get('/incompleto', obtenerReportesIncompletos)
+router.post('/', obtenerReportesAsistencias)
+router.post('/tarde', obtenerReportesTarde)
+router.post('/incompleto', obtenerReportesIncompletos)
 
 export default router

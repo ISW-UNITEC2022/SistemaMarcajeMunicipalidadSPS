@@ -2,8 +2,8 @@ import { db } from '../db/db.js'
 //import { CustomError } from '../utils/CustomError.js'
 import {
   dateToTimeString,
-  getRangeDates,
-  getToday,
+  getRangeMonth,
+  getRangeMonths,
   removeTime,
   toFormat12h,
 } from '../utils/convertTime.js'
@@ -14,7 +14,8 @@ export const obtenerReportesTarde = async (req, res, next) => {
   let transaction = await db.transaction()
   try {
     let { supervisor } = req.query
-    let [fechaInicio, fechaFinal] = getRangeDates(30)
+    let { mesInicial, mesFinal } = req.body
+    let [fechaInicio, fechaFinal] = getRangeMonths(mesInicial, mesFinal)
     let reportes = await db('marcaje as m')
       .transacting(transaction)
       .select(
@@ -65,7 +66,8 @@ export const obtenerReportesIncompletos = async (req, res, next) => {
   let transaction = await db.transaction()
   try {
     let { supervisor } = req.query
-    let [fechaInicio, fechaFinal] = getRangeDates(30)
+    let { mesInicial, mesFinal } = req.body
+    let [fechaInicio, fechaFinal] = getRangeMonths(mesInicial, mesFinal)
     let reportes = await db('marcas_empleados as me')
       .transacting(transaction)
       .with(
@@ -125,7 +127,8 @@ export const obtenerReportesAsistencias = async (req, res, next) => {
   let transaction = await db.transaction()
   try {
     let { supervisor } = req.query
-    let [fechaInicio, fechaFinal] = getRangeDates(30)
+    let { mesInicial, mesFinal } = req.body
+    let [fechaInicio, fechaFinal] = getRangeMonths(mesInicial, mesFinal)
     let reportes = await db('marcaje as m')
       .transacting(transaction)
       .select(
