@@ -2,7 +2,6 @@ import { db } from '../db/db.js'
 //import { CustomError } from '../utils/CustomError.js'
 import {
   dateToTimeString,
-  getRangeMonth,
   getRangeMonths,
   removeTime,
   toFormat12h,
@@ -24,6 +23,8 @@ export const obtenerReportesTarde = async (req, res, next) => {
         'apellido',
         'departamento',
         'distrito',
+        'latitud',
+        'longitud',
         db.raw('date(fecha) as fecha'),
         'e.horaentrada as hora_asignada',
         db.raw('m.fecha::time as hora_entrada')
@@ -78,7 +79,9 @@ export const obtenerReportesIncompletos = async (req, res, next) => {
             'm.idempleado as idempleado',
             db.raw(`array_agg(
               json_build_object(
-                "tipo", "fecha"
+                "tipo", "fecha",
+                'latitud', "latitud",
+                'longitud', "longitud"
               ) 
               ) as marcas`)
           )
@@ -103,13 +106,15 @@ export const obtenerReportesIncompletos = async (req, res, next) => {
       })
 
     reportes = reportes.map((reporte) => {
-      let entrada = reporte.marcas.entrada
+      let { entrada, latitud, longitud } = reporte.marcas
       delete reporte.marcas
       return {
         ...reporte,
         fecha: removeTime(entrada),
         entrada: toFormat12h(dateToTimeString(entrada)),
         salida: 'N/A',
+        latitud,
+        longitud,
       }
     })
 
@@ -140,7 +145,7 @@ export const obtenerReportesAsistencias = async (req, res, next) => {
         db.raw('date(fecha) as fecha'),
         db.raw(`json_agg(
         json_build_object(
-          "tipo", "fecha"::time
+          "tipo", json_build_object( 'hora', "fecha"::time, 'latitud', "latitud", 'longitud', "longitud" )
           ) 
         ) as marcas`)
       )
@@ -164,9 +169,17 @@ export const obtenerReportesAsistencias = async (req, res, next) => {
       let marcas = {}
       for (let marca of reporte.marcas) {
         if (marca.entrada) {
-          marcas['entrada'] = toFormat12h(marca.entrada)
+          marcas['entrada'] = {
+            hora: toFormat12h(marca.entrada.hora),
+            latitud: marca.entrada.latitud,
+            longitud: marca.entrada.longitud,
+          }
         } else if (marca.salida) {
-          marcas['salida'] = toFormat12h(marca.salida)
+          marcas['salida'] = marcas['salida'] = {
+            hora: toFormat12h(marca.salida.hora),
+            latitud: marca.salida.latitud,
+            longitud: marca.salida.longitud,
+          }
         }
       }
       return {
