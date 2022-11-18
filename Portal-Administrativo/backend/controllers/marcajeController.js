@@ -16,10 +16,12 @@ import { CustomError } from '../utils/CustomError.js'
 export const marcarEmpleado = async (req, res, next) => {
   let transaction = await db.transaction()
   try {
-    let { idempleado, lat, lon, tipo } = req.body
+    let { idempleado, lat, lon, tipo, fecha: fechaOffline } = req.body
     tipo = tipo ? 'entrada' : 'salida'
     //El rango de tiempo para validar si ya se marco, desde 'hoy' en la mañana hasta la noche
-    let [fecha, fechaInicio, fechaFinal] = getToday()
+    let [fecha, fechaInicio, fechaFinal] = fechaOffline
+      ? getToday(fechaOffline)
+      : getToday()
     let marcas = await db('marcaje')
       .transacting(transaction)
       .select('tipo')

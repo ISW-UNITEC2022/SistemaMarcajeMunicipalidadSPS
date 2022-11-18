@@ -175,7 +175,7 @@ export const obtenerReportesAsistencias = async (req, res, next) => {
             longitud: marca.entrada.longitud,
           }
         } else if (marca.salida) {
-          marcas['salida'] = marcas['salida'] = {
+          marcas['salida'] = {
             hora: toFormat12h(marca.salida.hora),
             latitud: marca.salida.latitud,
             longitud: marca.salida.longitud,
