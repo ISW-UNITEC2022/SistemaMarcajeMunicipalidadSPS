@@ -6,6 +6,7 @@ import {
   removeTime,
   toFormat12h,
 } from '../utils/convertTime.js'
+import { CustomError } from '../utils/CustomError.js'
 
 //Ruta api/reportes/tarde?supervisor=
 //Descripcion Devuelve las entradas tardes de los empleados
@@ -190,6 +191,26 @@ export const obtenerReportesAsistencias = async (req, res, next) => {
     })
     transaction.commit()
     res.json(reportes)
+  } catch (error) {
+    transaction.rollback()
+    next(error)
+  }
+}
+
+//Ruta /api/reportes/disponible
+//Descripcion Devuelve los años disponibles para reporte
+export const obtenerFechasDisponible = async (_req, res, next) => {
+  let transaction = await db.transaction()
+  try {
+    let years = await db('marcaje')
+      .transacting(transaction)
+      .select(db.raw('extract (year from fecha)::integer as fecha'))
+      .groupBy(db.raw('extract (year from fecha)'))
+    if (years.length < 1) {
+      throw new CustomError('No existen años disponibles', 404)
+    }
+    transaction.commit()
+    res.json(years)
   } catch (error) {
     transaction.rollback()
     next(error)
