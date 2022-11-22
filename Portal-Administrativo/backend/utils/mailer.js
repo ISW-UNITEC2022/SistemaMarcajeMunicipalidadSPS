@@ -11,7 +11,7 @@ import nodemailer from 'nodemailer'
     debemos indicar al transportador que aplique las medidas, y enviarle los datos
     de autenticacion.
 */
-export default transporter = nodemailer.createTransport({
+let transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 465,
   secure: true,
@@ -28,3 +28,5 @@ export default transporter = nodemailer.createTransport({
 transporter.verify().then(() => {
   console.log('Configuracion del transportador diseñada con exito.')
 })
+
+export default transporter;
