@@ -1,4 +1,5 @@
 import { db } from '../db/db.js'
+import transporter from '../utils/mailer.js'
 //import { CustomError } from '../utils/CustomError.js'
 import {
   dateToTimeString,
@@ -213,6 +214,52 @@ export const obtenerFechasDisponible = async (_req, res, next) => {
     res.json(years)
   } catch (error) {
     transaction.rollback()
+    next(error)
+  }
+}
+
+//Ruta /api/reportes/correo
+//Descripcion Envia un correo con el reporte
+
+import fs from 'fs'
+
+export const enviarCorreo = async (req, res, next) => {
+  try {
+    
+    let { user, cc, subject, message, attachment_name, attachment_content } =
+      req.body
+    let info = await transporter.sendMail({
+      //Direccion de quien envia el Correo:
+      from: '"DIRECCION C3i MUNICIPALIDAD DE SPS" <municipalidadspshn@gmail.com>',
+
+      //Direccion de a quien o quienes va dirigio el Correo:
+      to: user,
+
+      //CC del correo:
+      cc: cc,
+
+      //Sujeto del correo:
+      subject: subject,
+
+      //Texto plano con el contenido del correo:
+      text: message,
+
+      //Archivos adjuntos en el formato:
+      attachments: [
+        //Archivo en formato STEAM de lectura
+        {
+          filename: attachment_name,
+          content: fs.createReadStream(attachment_content),
+        },
+      ],
+
+      html: '<b>' + message + '</b>',
+    })
+    res.json({
+      enviado: true,
+      info,
+    })
+  } catch (error) {
     next(error)
   }
 }
