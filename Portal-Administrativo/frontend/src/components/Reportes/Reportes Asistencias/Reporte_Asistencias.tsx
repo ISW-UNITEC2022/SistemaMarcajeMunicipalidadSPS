@@ -280,7 +280,7 @@ export default function Reporte_Asistencia_Tardia() {
 
       <button onClick={downloadR} id='button_RA'
         style={{
-          marginLeft: "71vw",
+          marginLeft: "83vw",
           marginTop: "20px",
           marginBottom: "20px"
         }}
@@ -288,7 +288,7 @@ export default function Reporte_Asistencia_Tardia() {
         <span>
           <DownloadIcon
             style={{
-              fontSize: "22px"
+              fontSize: "22px",
             }}
           ></DownloadIcon>
         </span>
