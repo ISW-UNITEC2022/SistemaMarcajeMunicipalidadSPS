@@ -257,16 +257,6 @@ export default function Reporte_Asistencia_Tardia() {
         <h5>Formato de Reportes de Asistencia</h5>
       </div>
 
-      <button onClick={buscarFecha} id='button_RA'
-        style={{
-          marginLeft: "71vw",
-          marginTop: "20px",
-          marginBottom: "20px"
-        }}
-      >
-        Buscar Fecha
-      </button>
-
       <button onClick={downloadR} id='button_RA'
         style={{
           marginLeft: "71vw",
@@ -309,7 +299,7 @@ export default function Reporte_Asistencia_Tardia() {
           </select>
 
           <span style={{ marginLeft: "5px" }}></span>
-
+            
           <select 
             id='select_A_RA'
             onChange={handleAñoI}
@@ -359,7 +349,14 @@ export default function Reporte_Asistencia_Tardia() {
               </option>
             ))}
           </select>
-
+          <button onClick={buscarFecha} id='button_RA'
+          style={{
+            width: "auto",
+            marginLeft: '0.5vw'
+          }}
+          >
+          Buscar Fecha
+        </button>
           <p>
             <span style={{ marginLeft: "0.5vw" }}>Desde: </span>
             <span style={{ marginLeft: "14.5vw" }} >Hasta: </span>
@@ -391,7 +388,7 @@ export default function Reporte_Asistencia_Tardia() {
         id='contenedorR'
         style={{ width: '90vw', marginLeft: '4vw', marginTop: '2vh' }}
       >
-        <DataTable columns={columns} data={dataT} />
+        <DataTable noDataComponent="Sin registros que mostrar" columns={columns} data={dataT} />
       </div>
     </div>
   )

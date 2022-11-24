@@ -90,8 +90,8 @@ export default function Reporte_Asistencia_Tardia() {
       fecha: data1[i].fecha,
       latitud: data1[i].latitud,
       longitud: data1[i].longitud,
-      hora_asignada: data1[i].hora_asignada,
-      hora_entrada: data1[i].hora_entrada,
+      entrada: data1[i].entrada,
+      salida: data1[i].salida,
     }
   }
   setdataT(data);
@@ -165,11 +165,11 @@ export default function Reporte_Asistencia_Tardia() {
     },
     {
       name: 'Hora Asignada',
-      selector: (row: any) => row.hora_asignada,
+      selector: (row: any) => row.entrada,
     },
     {
       name: 'Hora entrada',
-      selector: (row: any) => row.hora_entrada,
+      selector: (row: any) => row.salida,
     },
   ]
 
@@ -182,8 +182,8 @@ export default function Reporte_Asistencia_Tardia() {
     'Departamento',
     'Distrito',
     'Fecha',
-    'Hora Asignada',
-    'Hora entrada',
+    'Entrada',
+    'Salida',
     'Latitud',
     'Longitud',
   ]
@@ -195,8 +195,8 @@ export default function Reporte_Asistencia_Tardia() {
         Tasks[i-1].departamento,
         Tasks[i-1].distrito,
         Tasks[i-1].fecha,
-        Tasks[i-1].hora_asignada,
-        Tasks[i-1].hora_entrada,
+        Tasks[i-1].entrada,
+        Tasks[i-1].salida,
         Tasks[i-1].latitud,
         Tasks[i-1].longitud,
       ]
@@ -261,16 +261,6 @@ export default function Reporte_Asistencia_Tardia() {
       >
         <h5>Formato de Reportes de Marcas Incompletas</h5>
       </div>
-
-      <button onClick={buscarFecha} id='button_RA'
-        style={{
-          marginLeft: "71vw",
-          marginTop: "20px",
-          marginBottom: "20px"
-        }}
-      >
-        Buscar Fecha
-      </button>
 
       <button onClick={downloadR} id='button_RMI'
         style={{
@@ -363,6 +353,15 @@ export default function Reporte_Asistencia_Tardia() {
             ))}
           </select>
 
+          <button onClick={buscarFecha} id='button_RA'
+          style={{
+            width: "auto",
+            marginLeft: '0.5vw'
+          }}
+          >
+          Buscar Fecha
+        </button>
+
           <p>
             <span style={{ marginLeft: "0.5vw" }}>Desde: </span>
             <span style={{ marginLeft: "14.5vw" }} >Hasta: </span>
@@ -395,7 +394,7 @@ export default function Reporte_Asistencia_Tardia() {
         id='contenedorR'
         style={{ width: '90vw', marginLeft: '4vw', marginTop: '2vh' }}
       >
-        <DataTable columns={columns} data={dataT} />
+        <DataTable noDataComponent="Sin registros que mostrar" columns={columns} data={dataT} />
       </div>
     </div>
   )
