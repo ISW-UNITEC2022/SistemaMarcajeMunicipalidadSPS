@@ -6,7 +6,7 @@ import DataTable from 'react-data-table-component'
 import '../Reportes Asistencias/PantReportes_Asistencias.css'
 import DownloadIcon from '@mui/icons-material/Download';
 import axios from 'axios'
-import {Reporte_Asistencia_D} from './Reporte_Asistencias_D'
+import {Reporte_Asistencia_D} from './Reporte_Asistencias_D';
 import {pdf} from "@react-pdf/renderer";
 import { saveAs } from 'file-saver';
 

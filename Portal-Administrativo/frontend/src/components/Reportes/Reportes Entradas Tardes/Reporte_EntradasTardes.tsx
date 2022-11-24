@@ -6,7 +6,6 @@ import DataTable from 'react-data-table-component'
 import '../Reportes Entradas Tardes/PantReportes_EntradasTardes.css'
 import DownloadIcon from '@mui/icons-material/Download';
 import axios from 'axios'
-
 import {Button} from '@mui/material'
 import {Reporte_AsistenciaT_D} from './Reporte_EntradasTardes_D'
 import {pdf} from "@react-pdf/renderer";
