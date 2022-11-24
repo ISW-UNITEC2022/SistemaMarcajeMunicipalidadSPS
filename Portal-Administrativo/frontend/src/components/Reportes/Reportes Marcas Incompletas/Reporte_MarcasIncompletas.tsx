@@ -17,7 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Reporte_Asistencia_Tardia() {
   const url = "https://proyecto-isw-dev.herokuapp.com/api/reportes/disponibles";
-  const url_emails = "";
+  const url_emails = "https://proyecto-isw-dev.herokuapp.com/api/reportes/correo";
 
   const [Tasks, setTasks] = useState([])
   const [dataT, setdataT] = useState([])
@@ -132,7 +132,7 @@ export default function Reporte_Asistencia_Tardia() {
         subject: "REPORTE DE ASISTENCIAS INCOMPLETAS",
         message: "SE ADJUNTA EN ESTE CORREO EL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS INCOMPLETAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + "/" + añoI + " HASTA:" + mesF + "/" + añoF,
         attachment_name: "reporte_asistencias_incompletas.pdf",
-        attachment_content: files
+        attachment_content: "PRUEBA"
       })
       .then((res) => {
         toast.success("¡REPORTE DE ASISTENCIAS INCOMPLETAS ENVIADO CON EXITO!");

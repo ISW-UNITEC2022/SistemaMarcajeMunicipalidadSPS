@@ -14,9 +14,11 @@ import { saveAs } from 'file-saver';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import fs from 'fs';
+
 export default function Reporte_Asistencia_Tardia() {
   const url = "https://proyecto-isw-dev.herokuapp.com/api/reportes/disponibles";
-  const url_emails = "";
+  const url_emails = "https://proyecto-isw-dev.herokuapp.com/api/reportes/correo";
 
   const [Tasks, setTasks] = useState([])
   const [dataT, setdataT] = useState([])
@@ -131,7 +133,7 @@ export default function Reporte_Asistencia_Tardia() {
         subject: "REPORTE DE ASISTENCIAS TARDIAS",
         message: "SE ADJUNTA EN ESTE CORREO EL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS TARDIAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + "/" + añoI + " HASTA:" + mesF + "/" + añoF,
         attachment_name: "reporte_asistencias_tardias.pdf",
-        attachment_content: files
+        attachment_content: "PRUEBA"
       })
       .then((res) => {
         toast.success("¡REPORTE DE ASISTENCIAS TARDIAS ENVIADO CON EXITO!");
