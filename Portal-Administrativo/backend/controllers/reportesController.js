@@ -1,5 +1,8 @@
 import { db } from '../db/db.js'
 import transporter from '../utils/mailer.js'
+import { Buffer } from 'node:buffer'
+import fs from 'fs'
+
 //import { CustomError } from '../utils/CustomError.js'
 import {
   dateToTimeString,
@@ -221,11 +224,8 @@ export const obtenerFechasDisponible = async (_req, res, next) => {
 //Ruta /api/reportes/correo
 //Descripcion Envia un correo con el reporte
 
-import fs from 'fs'
-
 export const enviarCorreo = async (req, res, next) => {
   try {
-    
     let { user, cc, subject, message, attachment_name, attachment_content } =
       req.body
     let info = await transporter.sendMail({
@@ -249,7 +249,7 @@ export const enviarCorreo = async (req, res, next) => {
         //Archivo en formato STEAM de lectura
         {
           filename: attachment_name,
-          content: fs.createReadStream(attachment_content),
+          content: Buffer(attachment_content, 'utf-8'),
         },
       ],
 
