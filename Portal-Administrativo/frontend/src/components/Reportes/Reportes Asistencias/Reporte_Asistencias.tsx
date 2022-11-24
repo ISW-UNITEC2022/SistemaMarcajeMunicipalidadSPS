@@ -80,6 +80,13 @@ export default function Reporte_Asistencia_Tardia() {
 
     let data=[];
     for (let i = 0; i < data1.length; i++) {
+      let salida;
+
+      if(data1[i].marcas.salida)
+        salida=data1[i].marcas.salida.hora;
+      else 
+        salida='N/A';
+
       data[i] = {
         counter: i + 1,
         idempleado: data1[i].idempleado,
@@ -89,7 +96,8 @@ export default function Reporte_Asistencia_Tardia() {
         fecha: data1[i].fecha,
         latitud: data1[i].marcas.entrada.latitud,
         longitud: data1[i].marcas.entrada.longitud,
-        hora: data1[i].marcas.entrada.hora,
+        horaE: data1[i].marcas.entrada.hora,
+        horaS: salida,
       }
     }
     setdataT(data);
@@ -125,8 +133,12 @@ export default function Reporte_Asistencia_Tardia() {
       selector: (row: any) => row.fecha,
     },
     {
-      name: 'Hora',
-      selector: (row: any) => row.hora,
+      name: 'Hora Entrada',
+      selector: (row: any) => row.horaE,
+    },
+    {
+      name: 'Hora Salida',
+      selector: (row: any) => row.horaS,
     },
     {
       name: 'Latitud',
@@ -177,12 +189,20 @@ export default function Reporte_Asistencia_Tardia() {
     'Departamento',
     'Distrito',
     'Fecha',
-    'Hora',
+    'Hora Entrada',
+    'Hora Salida',
     'Latitud',
     'Longitud',
   ]
 
     for (let i = 1; i <= Tasks.length; i++) {
+      let salida;
+
+      if(Tasks[i-1].marcas.salida)
+        salida=Tasks[i-1].marcas.salida.hora;
+      else 
+        salida='N/A';
+
       dataT[i] = [
         Tasks[i-1].idempleado,
         Tasks[i-1].nombre + ' ' + Tasks[i-1].apellido,
@@ -190,6 +210,7 @@ export default function Reporte_Asistencia_Tardia() {
         Tasks[i-1].distrito,
         Tasks[i-1].fecha,
         Tasks[i-1].marcas.entrada.hora,
+        salida,
         Tasks[i-1].marcas.entrada.latitud,
         Tasks[i-1].marcas.entrada.longitud,
       ]

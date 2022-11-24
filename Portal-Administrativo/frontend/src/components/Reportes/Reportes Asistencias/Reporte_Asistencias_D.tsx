@@ -133,7 +133,7 @@ const Reporte_Asistencia_PDF = (mesI, mesF, año)=> {
       {children.map((row, ind) =>
         <View key={ind} style={[styles.tableRow, th && ind === 0 ? styles.em: {}]}>
           {row.map((cell, j) =>
-            <View key={j} style={[styles.cell, {width:'100%', height: 'auto', backgroundColor: detectarF_C(ind,0)?'#078C03':'', borderBottom:1, borderLeft:1, borderTop:detectarF_C(ind,0)?1:0, borderRight:detectarF_C(j,7)?1:0}]}>
+            <View key={j} style={[styles.cell, {width:'100%', height: 'auto', backgroundColor: detectarF_C(ind,0)?'#078C03':'', borderBottom:1, borderLeft:1, borderTop:detectarF_C(ind,0)?1:0, borderRight:detectarF_C(j,8)?1:0}]}>
               {
                 typeof(cell) === 'string' || typeof(cell) === 'number' ? 
                 <Text style={{marginBottom:6, marginTop:6, color: detectarF_C(ind,0)?'#FFFFFF':''}}>{cell}</Text> : cell
@@ -221,7 +221,7 @@ const Table = ({children, th}) => (
     {children.map((row, ind) =>
       <View key={ind} style={[styles.tableRow, th && ind === 0 ? styles.em: {}]}>
         {row.map((cell, j) =>
-          <View key={j} style={[styles.cell, {width:'100%', height: 'auto', backgroundColor: detectarF_C(ind,0)?'#078C03':'', borderBottom:1, borderLeft:1, borderTop:detectarF_C(ind,0)?1:0, borderRight:detectarF_C(j,7)?1:0}]}>
+          <View key={j} style={[styles.cell, {width:'100%', height: 'auto', backgroundColor: detectarF_C(ind,0)?'#078C03':'', borderBottom:1, borderLeft:1, borderTop:detectarF_C(ind,0)?1:0, borderRight:detectarF_C(j,8)?1:0}]}>
             {
               typeof(cell) === 'string' || typeof(cell) === 'number' ? 
               <Text style={{marginBottom:6, marginTop:6, color: detectarF_C(ind,0)?'#FFFFFF':''}}>{cell}</Text> : cell
