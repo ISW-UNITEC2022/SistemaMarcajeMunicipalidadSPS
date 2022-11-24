@@ -156,20 +156,20 @@ export default function Reporte_Asistencia_Tardia() {
       selector: (row: any) => row.fecha,
     },
     {
+      name: 'Entrada',
+      selector: (row: any) => row.entrada,
+    },
+    {
+      name: 'Salida',
+      selector: (row: any) => row.salida,
+    },
+    {
       name: 'Latitud',
       selector: (row: any) => row.latitud,
     },
     {
       name: 'Longitud',
       selector: (row: any) => row.longitud,
-    },
-    {
-      name: 'Hora Asignada',
-      selector: (row: any) => row.entrada,
-    },
-    {
-      name: 'Hora entrada',
-      selector: (row: any) => row.salida,
     },
   ]
 
