@@ -6,14 +6,18 @@ import DataTable from 'react-data-table-component'
 import '../Reportes Asistencias/PantReportes_Asistencias.css'
 import DownloadIcon from '@mui/icons-material/Download';
 import axios from 'axios'
-import {Reporte_Asistencia_D} from './Reporte_Asistencias_D';
-import {pdf} from "@react-pdf/renderer";
+import { Reporte_Asistencia_D } from './Reporte_Asistencias_D';
+import { pdf } from "@react-pdf/renderer";
 import { saveAs } from 'file-saver';
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Reporte_Asistencia_Tardia() {
   //https://proyecto-isw-dev.herokuapp.com/api/reportes/disponibles
   const url = "https://proyecto-isw-dev.herokuapp.com/api/reportes/disponibles";
+  const url_emails = "";
+
   const [Tasks, setTasks] = useState([])
   const [dataT, setdataT] = useState([])
 
@@ -47,45 +51,45 @@ export default function Reporte_Asistencia_Tardia() {
   };
 
   const loadTasks = async (mI, mF, yearI, yearF) => {
-    if(mI.length===0){
-      mI='Enero';
+    if (mI.length === 0) {
+      mI = 'Enero';
       setMesI(mI);
     }
 
-    if(mF.length===0){
-      mF='Enero';
+    if (mF.length === 0) {
+      mF = 'Enero';
       setMesF(mF);
     }
-      
+
     const response = await fetch(
-      'https://proyecto-isw-dev.herokuapp.com/api/reportes',{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      'https://proyecto-isw-dev.herokuapp.com/api/reportes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "mesInicial": {
+          "month": getMes(mI),
+          "year": 2022
         },
-        body: JSON.stringify({
-          "mesInicial": {
-            "month": getMes(mI),
-            "year": 2022
-          },
-          "mesFinal": {
-            "month":  getMes(mF),
-            "year": 2022
-          }
-        }),
-      }
+        "mesFinal": {
+          "month": getMes(mF),
+          "year": 2022
+        }
+      }),
+    }
     )
     const data1 = await response.json()
     setTasks(data1)
 
-    let data=[];
+    let data = [];
     for (let i = 0; i < data1.length; i++) {
       let salida;
 
-      if(data1[i].marcas.salida)
-        salida=data1[i].marcas.salida.hora;
-      else 
-        salida='N/A';
+      if (data1[i].marcas.salida)
+        salida = data1[i].marcas.salida.hora;
+      else
+        salida = 'N/A';
 
       data[i] = {
         counter: i + 1,
@@ -101,6 +105,48 @@ export default function Reporte_Asistencia_Tardia() {
       }
     }
     setdataT(data);
+  }
+
+  function selectFile(contentType, multiple) {
+    return new Promise(resolve => {
+      let input = document.createElement('input');
+      input.type = 'file';
+      input.multiple = multiple;
+      input.accept = contentType;
+
+      input.onchange = _ => {
+        let files = Array.from(input.files);
+        if (multiple)
+          resolve(files);
+        else
+          resolve(files[0]);
+      };
+
+      input.click();
+    });
+  }
+
+  async function send_email(e) {
+    let files = await selectFile("pdf/*", false);
+
+    e.preventDefault();
+    axios
+      .post(url_emails, {
+        user: correo,
+        cc: "municipalidadspshn@gmail.com",
+        subject: "REPORTE DE ASISTENCIAS",
+        message: "SE ADJUNTA EN ESTE CORREO EL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + "/" + añoI + " HASTA:" + mesF + "/" + añoF,
+        attachment_name: "reporte_asistencia.pdf",
+        attachment_content: files
+      })
+      .then((res) => {
+        toast.success("¡REPORTE DE ASISTENCIAS ENVIADO CON EXITO!");
+        console.log(res.data);
+      })
+      .catch((error) => {
+        toast.error("ERROR AL ENVIAR EL CORREO");
+        console.log(error.response);
+      });
   }
 
   useEffect(() => {
@@ -151,68 +197,68 @@ export default function Reporte_Asistencia_Tardia() {
   ]
 
 
-  const getMes=(mes)=>{
-    switch(mes){
+  const getMes = (mes) => {
+    switch (mes) {
       case 'Enero':
         return 1;
-        case 'Febrero':
-          return 2;
-        case 'Marzo':
-          return 3;
-        case 'Abril':
-          return 4;
-        case 'Mayo':
-          return 5;
-        case 'Junio':
-          return 6;
-        case 8:
-          return 7;
-        case 'Agosto':
-          return 8;
-        case 'Septiembre':
-          return 9;
-        case 'Octubre':
-          return 10;
-        case 'Noviembre':
-          return 11;
-        case 'Diciembre':
-          return 12;
+      case 'Febrero':
+        return 2;
+      case 'Marzo':
+        return 3;
+      case 'Abril':
+        return 4;
+      case 'Mayo':
+        return 5;
+      case 'Junio':
+        return 6;
+      case 8:
+        return 7;
+      case 'Agosto':
+        return 8;
+      case 'Septiembre':
+        return 9;
+      case 'Octubre':
+        return 10;
+      case 'Noviembre':
+        return 11;
+      case 'Diciembre':
+        return 12;
     }
   }
 
-  const generarD=()=>{
+  const generarD = () => {
 
-    let dataT=[];
-    dataT[0]=[
-    'No° Identidad',
-    'Nombre Completo', 
-    'Departamento',
-    'Distrito',
-    'Fecha',
-    'Hora Entrada',
-    'Hora Salida',
-    'Latitud',
-    'Longitud',
-  ]
+    let dataT = [];
+    dataT[0] = [
+      'No° Identidad',
+      'Nombre Completo',
+      'Departamento',
+      'Distrito',
+      'Fecha',
+      'Hora Entrada',
+      'Hora Salida',
+      'Latitud',
+      'Longitud',
+    ]
 
     for (let i = 1; i <= Tasks.length; i++) {
       let salida;
 
-      if(Tasks[i-1].marcas.salida)
-        salida=Tasks[i-1].marcas.salida.hora;
-      else 
-        salida='N/A';
+      if (Tasks[i - 1].marcas.salida)
+        salida = Tasks[i - 1].marcas.salida.hora;
+      else
+        salida = 'N/A';
 
       dataT[i] = [
-        Tasks[i-1].idempleado,
-        Tasks[i-1].nombre + ' ' + Tasks[i-1].apellido,
-        Tasks[i-1].departamento,
-        Tasks[i-1].distrito,
-        Tasks[i-1].fecha,
-        Tasks[i-1].marcas.entrada.hora,
+        Tasks[i - 1].idempleado,
+        Tasks[i - 1].nombre + ' ' + Tasks[i - 1].apellido,
+        Tasks[i - 1].departamento,
+        Tasks[i - 1].distrito,
+        Tasks[i - 1].fecha,
+        Tasks[i - 1].marcas.entrada.hora,
         salida,
-        Tasks[i-1].marcas.entrada.latitud,
-        Tasks[i-1].marcas.entrada.longitud,
+        Tasks[i - 1].marcas.entrada.latitud,
+        Tasks[i - 1].marcas.entrada.longitud,
       ]
     }
 
@@ -220,9 +266,9 @@ export default function Reporte_Asistencia_Tardia() {
   }
 
 
-  const downloadR = ()=>{
+  const downloadR = () => {
     let data = generarD();
-    
+
     pdf(
       <Reporte_Asistencia_D mesI={getMes(mesI)} mesF={getMes(mesF)} dataT={data}></Reporte_Asistencia_D>
     ).toBlob().then(blob => saveAs(blob, 'Reporte_Entradas_Tardias.pdf'))
@@ -245,7 +291,11 @@ export default function Reporte_Asistencia_Tardia() {
     setMesF(e.target.value);
   }
 
-  function buscarFecha(){
+  function handleCorreo(e) {
+    setCorreo(e.target.value);
+  }
+
+  function buscarFecha() {
     loadTasks(mesI, mesF, añoI, añoF);
   }
 
@@ -292,14 +342,14 @@ export default function Reporte_Asistencia_Tardia() {
             }}
           ></DownloadIcon>
         </span>
-        
+
         Descargar
       </button>
 
       <div id='grid_RA'>
         <div id='item_RA'>
           <p>Seleccionar rango de fecha del reporte:</p>
-          <select 
+          <select
             id='select_M_RA'
             onChange={handleMesI}
             value={mesI}
@@ -320,8 +370,8 @@ export default function Reporte_Asistencia_Tardia() {
           </select>
 
           <span style={{ marginLeft: "5px" }}></span>
-            
-          <select 
+
+          <select
             id='select_A_RA'
             onChange={handleAñoI}
             value={añoI}
@@ -336,7 +386,7 @@ export default function Reporte_Asistencia_Tardia() {
 
           <span style={{ marginLeft: "25px" }}></span>
 
-          <select 
+          <select
             id='select_M_RA'
             onChange={handleMesF}
             value={mesF}
@@ -358,7 +408,7 @@ export default function Reporte_Asistencia_Tardia() {
 
           <span style={{ marginLeft: "5px" }}></span>
 
-          <select 
+          <select
             id='select_A_RA'
             onChange={handleAñoF}
             value={añoF}
@@ -371,13 +421,13 @@ export default function Reporte_Asistencia_Tardia() {
             ))}
           </select>
           <button onClick={buscarFecha} id='button_RA'
-          style={{
-            width: "auto",
-            marginLeft: '0.5vw'
-          }}
+            style={{
+              width: "auto",
+              marginLeft: '0.5vw'
+            }}
           >
-          Buscar Fecha
-        </button>
+            Buscar Fecha
+          </button>
           <p>
             <span style={{ marginLeft: "0.5vw" }}>Desde: </span>
             <span style={{ marginLeft: "14.5vw" }} >Hasta: </span>
@@ -386,11 +436,21 @@ export default function Reporte_Asistencia_Tardia() {
         <div id='item_RA'>
           <p>Ingresar destinario (correo electrónico):</p>
 
-          <input id='input_RA'></input>
+          <input
+            id='input_RA'
+            onChange={handleCorreo}
+          >
+
+          </input>
 
           <span style={{ marginLeft: "5px" }}></span>
 
-          <button id='button_RA'>Enviar</button>
+          <button
+            id='button_RA'
+            onClick={send_email}
+          >
+            Enviar
+          </button>
         </div>
       </div>
 
@@ -399,9 +459,9 @@ export default function Reporte_Asistencia_Tardia() {
         style={{ width: '90vw', marginLeft: '4vw', marginTop: '2vh' }}
       >
         <p>
-        A continuación se presenta un reporte completo de las asistencias marcadas dentro de 
-        la aplicación por el equipo de “Los Amigos de la Municipalidad”, con un reporte completo
-        de datos personales y fechas de dichos marcajes entre el mes {mesI} y {mesF}.
+          A continuación se presenta un reporte completo de las asistencias marcadas dentro de
+          la aplicación por el equipo de “Los Amigos de la Municipalidad”, con un reporte completo
+          de datos personales y fechas de dichos marcajes entre el mes {mesI} y {mesF}.
         </p>
       </div>
 

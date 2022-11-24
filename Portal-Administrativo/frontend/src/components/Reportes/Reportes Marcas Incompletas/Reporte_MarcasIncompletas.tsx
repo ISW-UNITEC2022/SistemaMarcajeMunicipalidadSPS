@@ -8,12 +8,17 @@ import DownloadIcon from '@mui/icons-material/Download';
 import axios from 'axios';
 
 import MaterialTable from 'material-table'
-import {pdf} from "@react-pdf/renderer";
+import { pdf } from "@react-pdf/renderer";
 import { saveAs } from 'file-saver';
-import {Reporte_MarcasIncompletas_D} from './Reporte_MarcasIncompletas_D'
+import { Reporte_MarcasIncompletas_D } from './Reporte_MarcasIncompletas_D'
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Reporte_Asistencia_Tardia() {
   const url = "https://proyecto-isw-dev.herokuapp.com/api/reportes/disponibles";
+  const url_emails = "";
+
   const [Tasks, setTasks] = useState([])
   const [dataT, setdataT] = useState([])
   const [correo, setCorreo] = useState("");
@@ -46,90 +51,132 @@ export default function Reporte_Asistencia_Tardia() {
   };
 
   const loadTasks = async (mI, mF, yearI, yearF) => {
-    
-    if(mI.length===0){
-      mI='Enero';
+
+    if (mI.length === 0) {
+      mI = 'Enero';
       setMesI(mI);
     }
 
-    if(mF.length===0){
-      mF='Enero';
+    if (mF.length === 0) {
+      mF = 'Enero';
       setMesF(mF);
     }
 
     const response = await fetch(
-      'https://proyecto-isw-dev.herokuapp.com/api/reportes/incompleto',{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      'https://proyecto-isw-dev.herokuapp.com/api/reportes/incompleto', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "mesInicial": {
+          "month": getMes(mI),
+          "year": 2022
         },
-        body: JSON.stringify({
-          "mesInicial": {
-            "month": getMes(mI),
-            "year": 2022
-          },
-          "mesFinal": {
-            "month":  getMes(mF),
-            "year": 2022
-          }
-        }),
-      }
+        "mesFinal": {
+          "month": getMes(mF),
+          "year": 2022
+        }
+      }),
+    }
     )
     const data1 = await response.json()
     setTasks(data1)
 
     let data = []
 
-  for (let i = 0; i < data1.length; i++) {
-    data[i] = {
-      counter: i + 1,
-      idempleado: data1[i].idempleado,
-      nombre: data1[i].nombre + ' ' + data1[i].apellido,
-      departamento: data1[i].departamento,
-      distrito: data1[i].distrito,
-      fecha: data1[i].fecha,
-      latitud: data1[i].latitud,
-      longitud: data1[i].longitud,
-      entrada: data1[i].entrada,
-      salida: data1[i].salida,
+    for (let i = 0; i < data1.length; i++) {
+      data[i] = {
+        counter: i + 1,
+        idempleado: data1[i].idempleado,
+        nombre: data1[i].nombre + ' ' + data1[i].apellido,
+        departamento: data1[i].departamento,
+        distrito: data1[i].distrito,
+        fecha: data1[i].fecha,
+        latitud: data1[i].latitud,
+        longitud: data1[i].longitud,
+        entrada: data1[i].entrada,
+        salida: data1[i].salida,
+      }
     }
-  }
-  setdataT(data);
+    setdataT(data);
   }
 
-  const getMes=(mes)=>{
-    switch(mes){
+  function selectFile(contentType, multiple) {
+    return new Promise(resolve => {
+      let input = document.createElement('input');
+      input.type = 'file';
+      input.multiple = multiple;
+      input.accept = contentType;
+
+      input.onchange = _ => {
+        let files = Array.from(input.files);
+        if (multiple)
+          resolve(files);
+        else
+          resolve(files[0]);
+      };
+
+      input.click();
+    });
+  }
+
+  async function send_email(e) {
+    let files = await selectFile("pdf/*", false);
+
+    e.preventDefault();
+    axios
+      .post(url_emails, {
+        user: correo,
+        cc: "municipalidadspshn@gmail.com",
+        subject: "REPORTE DE ASISTENCIAS INCOMPLETAS",
+        message: "SE ADJUNTA EN ESTE CORREO EL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS INCOMPLETAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + "/" + añoI + " HASTA:" + mesF + "/" + añoF,
+        attachment_name: "reporte_asistencias_incompletas.pdf",
+        attachment_content: files
+      })
+      .then((res) => {
+        toast.success("¡REPORTE DE ASISTENCIAS INCOMPLETAS ENVIADO CON EXITO!");
+        console.log(res.data);
+      })
+      .catch((error) => {
+        toast.error("ERROR AL ENVIAR EL CORREO");
+        console.log(error.response);
+      });
+  }
+
+  const getMes = (mes) => {
+    switch (mes) {
       case 'Enero':
         return 1;
-        case 'Febrero':
-          return 2;
-        case 'Marzo':
-          return 3;
-        case 'Abril':
-          return 4;
-        case 'Mayo':
-          return 5;
-        case 'Junio':
-          return 6;
-        case 8:
-          return 7;
-        case 'Agosto':
-          return 8;
-        case 'Septiembre':
-          return 9;
-        case 'Octubre':
-          return 10;
-        case 'Noviembre':
-          return 11;
-        case 'Diciembre':
-          return 12;
+      case 'Febrero':
+        return 2;
+      case 'Marzo':
+        return 3;
+      case 'Abril':
+        return 4;
+      case 'Mayo':
+        return 5;
+      case 'Junio':
+        return 6;
+      case 8:
+        return 7;
+      case 'Agosto':
+        return 8;
+      case 'Septiembre':
+        return 9;
+      case 'Octubre':
+        return 10;
+      case 'Noviembre':
+        return 11;
+      case 'Diciembre':
+        return 12;
     }
   }
 
   useEffect(() => {
     loadTasks('Enero', 'Enero', 2022, 2022)
   }, [])
-  
+
   const columns = [
     {
       name: '#',
@@ -173,32 +220,32 @@ export default function Reporte_Asistencia_Tardia() {
     },
   ]
 
-  const generarD=()=>{
+  const generarD = () => {
 
-    let dataT=[];
-    dataT[0]=[
-    'No° Identidad',
-    'Nombre Completo', 
-    'Departamento',
-    'Distrito',
-    'Fecha',
-    'Entrada',
-    'Salida',
-    'Latitud',
-    'Longitud',
-  ]
+    let dataT = [];
+    dataT[0] = [
+      'No° Identidad',
+      'Nombre Completo',
+      'Departamento',
+      'Distrito',
+      'Fecha',
+      'Entrada',
+      'Salida',
+      'Latitud',
+      'Longitud',
+    ]
 
     for (let i = 1; i <= Tasks.length; i++) {
       dataT[i] = [
-        Tasks[i-1].idempleado,
-        Tasks[i-1].nombre + ' ' + Tasks[i-1].apellido,
-        Tasks[i-1].departamento,
-        Tasks[i-1].distrito,
-        Tasks[i-1].fecha,
-        Tasks[i-1].entrada,
-        Tasks[i-1].salida,
-        Tasks[i-1].latitud,
-        Tasks[i-1].longitud,
+        Tasks[i - 1].idempleado,
+        Tasks[i - 1].nombre + ' ' + Tasks[i - 1].apellido,
+        Tasks[i - 1].departamento,
+        Tasks[i - 1].distrito,
+        Tasks[i - 1].fecha,
+        Tasks[i - 1].entrada,
+        Tasks[i - 1].salida,
+        Tasks[i - 1].latitud,
+        Tasks[i - 1].longitud,
       ]
     }
 
@@ -206,7 +253,7 @@ export default function Reporte_Asistencia_Tardia() {
   }
 
 
-  const downloadR = ()=>{
+  const downloadR = () => {
     let data = generarD();
     pdf(
       <Reporte_MarcasIncompletas_D mesI={getMes(mesI)} mesF={getMes(mesF)} dataT={data}></Reporte_MarcasIncompletas_D>
@@ -229,7 +276,11 @@ export default function Reporte_Asistencia_Tardia() {
     setMesF(e.target.value);
   }
 
-  function buscarFecha(){
+  function handleCorreo(e) {
+    setCorreo(e.target.value);
+  }
+
+  function buscarFecha() {
     loadTasks(mesI, mesF, añoI, añoF);
   }
 
@@ -276,14 +327,14 @@ export default function Reporte_Asistencia_Tardia() {
             }}
           ></DownloadIcon>
         </span>
-        
+
         Descargar
       </button>
 
       <div id='grid_RMI'>
         <div id='item_RMI'>
           <p>Seleccionar rango de fecha del reporte:</p>
-          <select 
+          <select
             id='select_M_RMI'
             onChange={handleMesI}
             value={mesI}
@@ -304,7 +355,7 @@ export default function Reporte_Asistencia_Tardia() {
 
           <span style={{ marginLeft: "5px" }}></span>
 
-          <select 
+          <select
             id='select_A_RMI'
             onChange={handleAñoI}
             value={añoI}
@@ -319,7 +370,7 @@ export default function Reporte_Asistencia_Tardia() {
 
           <span style={{ marginLeft: "25px" }}></span>
 
-          <select 
+          <select
             id='select_M_RMI'
             onChange={handleMesF}
             value={mesF}
@@ -340,7 +391,7 @@ export default function Reporte_Asistencia_Tardia() {
 
           <span style={{ marginLeft: "5px" }}></span>
 
-          <select 
+          <select
             id='select_A_RMI'
             onChange={handleAñoF}
             value={añoF}
@@ -354,13 +405,13 @@ export default function Reporte_Asistencia_Tardia() {
           </select>
 
           <button onClick={buscarFecha} id='button_RA'
-          style={{
-            width: "auto",
-            marginLeft: '0.5vw'
-          }}
+            style={{
+              width: "auto",
+              marginLeft: '0.5vw'
+            }}
           >
-          Buscar Fecha
-        </button>
+            Buscar Fecha
+          </button>
 
           <p>
             <span style={{ marginLeft: "0.5vw" }}>Desde: </span>
@@ -370,11 +421,21 @@ export default function Reporte_Asistencia_Tardia() {
         <div id='item_RMI'>
           <p>Ingresar destinario (correo electrónico):</p>
 
-          <input id='input_RMI'></input>
+          <input
+            id='input_RMI'
+            onChange={handleCorreo}
+          >
+
+          </input>
 
           <span style={{ marginLeft: "5px" }}></span>
 
-          <button id='button_RMI'>Enviar</button>
+          <button
+            id='button_RMI'
+            onClick={send_email}
+          >
+            Enviar
+          </button>
         </div>
       </div>
 
@@ -383,7 +444,7 @@ export default function Reporte_Asistencia_Tardia() {
         style={{ width: '90vw', marginLeft: '4vw', marginTop: '2vh' }}
       >
         <p>
-          A continuación se presenta un reporte completo de las marcas 
+          A continuación se presenta un reporte completo de las marcas
           incompletas dentro de la aplicación por el equipo de “Los Amigos de la
           Municipalidad”, con un reporte completo de datos personales y fechas
           de dichos marcajes entre el mes {mesI} y {mesF}.
