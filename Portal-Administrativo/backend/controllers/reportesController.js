@@ -255,7 +255,7 @@ export const enviarCorreo = async (req, res, next) => {
         },
       ],
 
-      html: '<b>PROXIMAMENTE</b>',
+      html: '<b>' + message + '</b>',
     })
     res.json({
       enviado: true,
