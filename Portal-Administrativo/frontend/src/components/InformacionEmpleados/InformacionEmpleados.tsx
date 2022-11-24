@@ -4,7 +4,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Table from "react-bootstrap/Table";
 import Axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-import MenuUsuario from "../MenuUsuario";
+import MenuUsuario from "../Componentes UI/MenuUsuario";
 import BotonHome from "../Componentes UI/BotonHome";
 
 export default function FormularioBasico() {

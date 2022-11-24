@@ -1,41 +1,103 @@
 import { useEffect, useState } from 'react'
-import MaterialTable from 'material-table'
 import MenuUsuario from '../../Componentes UI/MenuUsuario'
 import BotonHome from '../../Componentes UI/BotonHome'
-import Logo from '../../../assets/Logo C3i Oficial.png'
+import Logo from '../../logo.png'
 import DataTable from 'react-data-table-component'
+import '../Reportes Asistencias/PantReportes_Asistencias.css'
+import DownloadIcon from '@mui/icons-material/Download';
+import axios from 'axios'
+import {Reporte_Asistencia_D} from './Reporte_Asistencias_D'
+import {pdf} from "@react-pdf/renderer";
+import { saveAs } from 'file-saver';
+
 
 export default function Reporte_Asistencia_Tardia() {
+  //https://proyecto-isw-dev.herokuapp.com/api/reportes/disponibles
+  const url = "https://proyecto-isw-dev.herokuapp.com/api/reportes/disponibles";
   const [Tasks, setTasks] = useState([])
+  const [dataT, setdataT] = useState([])
 
-  const loadTasks = async () => {
-    const response = await fetch(
-      'https://proyecto-isw-dev.herokuapp.com/api/reportes'
-    )
-    const data = await response.json()
-    setTasks(data)
-  }
+  const [correo, setCorreo] = useState("");
 
-  let dataT = []
+  const [mesI, setMesI] = useState("");
+  const [mesF, setMesF] = useState("");
+
+  const [añoI, setAñoI] = useState("");
+  const [añoF, setAñoF] = useState("");
+  const [años, setAños] = useState([
+    {
+      fecha: 0,
+    }
+  ]);
+
+  let firstem = años[0]?.fecha;
 
   useEffect(() => {
-    loadTasks()
-  }, [])
+    getAños();
+  }, []);
 
-  for (let i = 0; i < Tasks.length; i++) {
-    dataT[i] = {
-      counter: i + 1,
-      idempleado: Tasks[i].idempleado,
-      nombre: Tasks[i].nombre + ' ' + Tasks[i].apellido,
-      departamento: Tasks[i].departamento,
-      distrito: Tasks[i].distrito,
-      fecha: Tasks[i].fecha,
-      salida: Tasks[i].marcas.salida || 'N/A',
-      entrada: Tasks[i].marcas.entrada,
+  const getAños = () => {
+    axios
+      .get(url)
+      .then((response) => {
+        const años = response.data;
+        setAños(años);
+      })
+      .catch((error) => console.error(`Error: ${error}`));
+  };
+
+  const loadTasks = async (mI, mF, yearI, yearF) => {
+    if(mI.length===0){
+      mI='Enero';
+      setMesI(mI);
     }
+
+    if(mF.length===0){
+      mF='Enero';
+      setMesF(mF);
+    }
+      
+    const response = await fetch(
+      'https://proyecto-isw-dev.herokuapp.com/api/reportes',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "mesInicial": {
+            "month": getMes(mI),
+            "year": 2022
+          },
+          "mesFinal": {
+            "month":  getMes(mF),
+            "year": 2022
+          }
+        }),
+      }
+    )
+    const data1 = await response.json()
+    setTasks(data1)
+
+    let data=[];
+    for (let i = 0; i < data1.length; i++) {
+      data[i] = {
+        counter: i + 1,
+        idempleado: data1[i].idempleado,
+        nombre: data1[i].nombre + ' ' + data1[i].apellido,
+        departamento: data1[i].departamento,
+        distrito: data1[i].distrito,
+        fecha: data1[i].fecha,
+        latitud: data1[i].marcas.entrada.latitud,
+        longitud: data1[i].marcas.entrada.longitud,
+        hora: data1[i].marcas.entrada.hora,
+      }
+    }
+    setdataT(data);
   }
 
-  let mes = 'Octubre'
+  useEffect(() => {
+    loadTasks('Enero', 'Enero', 2022, 2022)
+  }, [])
 
   const columns = [
     {
@@ -63,25 +125,108 @@ export default function Reporte_Asistencia_Tardia() {
       selector: (row: any) => row.fecha,
     },
     {
-      name: 'Salida',
-      selector: (row: any) => row.salida,
+      name: 'Hora',
+      selector: (row: any) => row.hora,
     },
     {
-      name: 'Entrada',
-      selector: (row: any) => row.entrada,
+      name: 'Latitud',
+      selector: (row: any) => row.latitud,
+    },
+    {
+      name: 'Longitud',
+      selector: (row: any) => row.longitud,
     },
   ]
 
-  let columnas = [
-    { title: '#', field: 'num' },
-    { title: 'No° Identidad', field: 'idempleado' },
-    { title: 'Nombre Completo', field: 'nombre' },
-    { title: 'Departamento', field: 'departamento' },
-    { title: 'Distrito', field: 'distrito' },
-    { title: 'Fecha', field: 'fecha' },
-    { title: 'Hora Asignad', field: 'hora_asignada' },
-    { title: 'Hora entrada', field: 'hora_entrada' },
+
+  const getMes=(mes)=>{
+    switch(mes){
+      case 'Enero':
+        return 1;
+        case 'Febrero':
+          return 2;
+        case 'Marzo':
+          return 3;
+        case 'Abril':
+          return 4;
+        case 'Mayo':
+          return 5;
+        case 'Junio':
+          return 6;
+        case 8:
+          return 7;
+        case 'Agosto':
+          return 8;
+        case 'Septiembre':
+          return 9;
+        case 'Octubre':
+          return 10;
+        case 'Noviembre':
+          return 11;
+        case 'Diciembre':
+          return 12;
+    }
+  }
+
+  const generarD=()=>{
+
+    let dataT=[];
+    dataT[0]=[
+    'No° Identidad',
+    'Nombre Completo', 
+    'Departamento',
+    'Distrito',
+    'Fecha',
+    'Hora',
+    'Latitud',
+    'Longitud',
   ]
+
+    for (let i = 1; i <= Tasks.length; i++) {
+      dataT[i] = [
+        Tasks[i-1].idempleado,
+        Tasks[i-1].nombre + ' ' + Tasks[i-1].apellido,
+        Tasks[i-1].departamento,
+        Tasks[i-1].distrito,
+        Tasks[i-1].fecha,
+        Tasks[i-1].marcas.entrada.hora,
+        Tasks[i-1].marcas.entrada.latitud,
+        Tasks[i-1].marcas.entrada.longitud,
+      ]
+    }
+
+    return dataT;
+  }
+
+
+  const downloadR = ()=>{
+    let data = generarD();
+    
+    pdf(
+      <Reporte_Asistencia_D mesI={getMes(mesI)} mesF={getMes(mesF)} dataT={data}></Reporte_Asistencia_D>
+    ).toBlob().then(blob => saveAs(blob, 'Reporte_Entradas_Tardias.pdf'))
+  }
+
+
+  function handleAñoI(e) {
+    setAñoI(e.target.value);
+  }
+
+  function handleAñoF(e) {
+    setAñoF(e.target.value);
+  }
+
+  function handleMesI(e) {
+    setMesI(e.target.value);
+  }
+
+  function handleMesF(e) {
+    setMesF(e.target.value);
+  }
+
+  function buscarFecha(){
+    loadTasks(mesI, mesF, añoI, añoF);
+  }
 
   return (
     <div>
@@ -111,15 +256,134 @@ export default function Reporte_Asistencia_Tardia() {
       >
         <h5>Formato de Reportes de Asistencia</h5>
       </div>
+
+      <button onClick={buscarFecha} id='button_RA'
+        style={{
+          marginLeft: "71vw",
+          marginTop: "20px",
+          marginBottom: "20px"
+        }}
+      >
+        Buscar Fecha
+      </button>
+
+      <button onClick={downloadR} id='button_RA'
+        style={{
+          marginLeft: "71vw",
+          marginTop: "20px",
+          marginBottom: "20px"
+        }}
+      >
+        <span>
+          <DownloadIcon
+            style={{
+              fontSize: "22px"
+            }}
+          ></DownloadIcon>
+        </span>
+        
+        Descargar
+      </button>
+
+      <div id='grid_RA'>
+        <div id='item_RA'>
+          <p>Seleccionar rango de fecha del reporte:</p>
+          <select 
+            id='select_M_RA'
+            onChange={handleMesI}
+            value={mesI}
+          >
+
+            <option value={"Enero"}>Enero</option>
+            <option value={"Febrero"}>Febrero</option>
+            <option value={"Marzo"}>Marzo</option>
+            <option value={"Abril"}>Abril</option>
+            <option value={"Mayo"}>Mayo</option>
+            <option value={"Junio"}>Junio</option>
+            <option value={"Julio"}>Julio</option>
+            <option value={"Agosto"}>Agosto</option>
+            <option value={"Septiembre"}>Septiembre</option>
+            <option value={"Octubre"}>Octubre</option>
+            <option value={"Noviembre"}>Noviembre</option>
+            <option value={"Diciembre"}>Diciembre</option>
+          </select>
+
+          <span style={{ marginLeft: "5px" }}></span>
+
+          <select 
+            id='select_A_RA'
+            onChange={handleAñoI}
+            value={añoI}
+            defaultValue={firstem}
+          >
+            {años.map((a) => (
+              <option value={a.fecha} key={a.fecha}>
+                {a.fecha}
+              </option>
+            ))}
+          </select>
+
+          <span style={{ marginLeft: "25px" }}></span>
+
+          <select 
+            id='select_M_RA'
+            onChange={handleMesF}
+            value={mesF}
+          >
+
+            <option value={"Enero"}>Enero</option>
+            <option value={"Febrero"}>Febrero</option>
+            <option value={"Marzo"}>Marzo</option>
+            <option value={"Abril"}>Abril</option>
+            <option value={"Mayo"}>Mayo</option>
+            <option value={"Junio"}>Junio</option>
+            <option value={"Julio"}>Julio</option>
+            <option value={"Agosto"}>Agosto</option>
+            <option value={"Septiembre"}>Septiembre</option>
+            <option value={"Octubre"}>Octubre</option>
+            <option value={"Noviembre"}>Noviembre</option>
+            <option value={"Diciembre"}>Diciembre</option>
+          </select>
+
+          <span style={{ marginLeft: "5px" }}></span>
+
+          <select 
+            id='select_A_RA'
+            onChange={handleAñoF}
+            value={añoF}
+            defaultValue={firstem}
+          >
+            {años.map((a) => (
+              <option value={a.fecha} key={a.fecha}>
+                {a.fecha}
+              </option>
+            ))}
+          </select>
+
+          <p>
+            <span style={{ marginLeft: "0.5vw" }}>Desde: </span>
+            <span style={{ marginLeft: "14.5vw" }} >Hasta: </span>
+          </p>
+        </div>
+        <div id='item_RA'>
+          <p>Ingresar destinario (correo electrónico):</p>
+
+          <input id='input_RA'></input>
+
+          <span style={{ marginLeft: "5px" }}></span>
+
+          <button id='button_RA'>Enviar</button>
+        </div>
+      </div>
+
       <div
         id='contenedorR'
         style={{ width: '90vw', marginLeft: '4vw', marginTop: '2vh' }}
       >
         <p>
-          A continuación se presenta un reporte completo de las asistencias
-          marcadas dentro de la aplicación por el equipo de “Los Amigos de la
-          Municipalidad”, con un reporte completo de datos personales y fechas
-          de dichos marcajes en el mes de {mes}.
+        A continuación se presenta un reporte completo de las asistencias marcadas dentro de 
+        la aplicación por el equipo de “Los Amigos de la Municipalidad”, con un reporte completo
+        de datos personales y fechas de dichos marcajes entre el mes {mesI} y {mesF}.
         </p>
       </div>
 
