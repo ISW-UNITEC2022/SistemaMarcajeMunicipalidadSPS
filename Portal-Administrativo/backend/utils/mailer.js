@@ -1,5 +1,4 @@
 import nodemailer from 'nodemailer'
-
 /* 
     Declaracion del transportador el cual utiliza los datos de autenticacion y la
     libreria con smtp para conectarse con el servidor de correo y hacer el puente

@@ -220,9 +220,13 @@ export const obtenerFechasDisponible = async (_req, res, next) => {
 
 //Ruta /api/reportes/correo
 //Descripcion Envia un correo con el reporte
+
+import fs from 'fs'
+
 export const enviarCorreo = async (req, res, next) => {
   try {
-    let { user, cc, subject, message, attachment_name, attachment_path } =
+    
+    let { user, cc, subject, message, attachment_name, attachment_content } =
       req.body
     let info = await transporter.sendMail({
       //Direccion de quien envia el Correo:
@@ -242,16 +246,10 @@ export const enviarCorreo = async (req, res, next) => {
 
       //Archivos adjuntos en el formato:
       attachments: [
-        //Archivo en formato URL directo
+        //Archivo en formato STEAM de lectura
         {
           filename: attachment_name,
-          path: attachment_path,
-        },
-
-        //Archivo en formato LOCAL
-        {
-          filename: attachment_name,
-          path: attachment_path,
+          content: fs.createReadStream(attachment_content),
         },
       ],
 
