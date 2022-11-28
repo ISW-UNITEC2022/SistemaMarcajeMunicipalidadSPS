@@ -17,6 +17,13 @@ export const marcarEmpleado = async (req, res, next) => {
   let transaction = await db.transaction()
   try {
     let { idempleado, lat, lon, tipo, fecha: fechaOffline } = req.body
+    console.log(
+      '🚀 ~ file: marcajeController.js ~ line 20 ~ marcarEmpleado ~ idempleado',
+      idempleado
+    )
+    if (!idempleado) {
+      throw new CustomError('El empleado no puede ser nulo', 404)
+    }
     tipo = tipo ? 'entrada' : 'salida'
     //El rango de tiempo para validar si ya se marco, desde 'hoy' en la mañana hasta la noche
     let [fecha, fechaInicio, fechaFinal] = fechaOffline
