@@ -7,6 +7,7 @@ import {
   toFormat12h,
 } from '../utils/convertTime.js'
 import { hashPassword, validarPassword } from '../utils/crypt.js'
+import knex from 'knex'
 
 //Ruta /api/empleados GET
 //Descripcion Devuelve la informacion de todos los empleados
@@ -470,6 +471,29 @@ export const obtenerHistorialDeMarca = async (req, res, next) => {
     }
     transaction.commit()
     res.json(historial)
+  } catch (error) {
+    transaction.rollback()
+    next(error)
+  }
+}
+
+//Ruta api/empleados?empleado= DELETE
+//Descripcion Elimina un empleado
+export const borrarEmpleado = async (req, res, next) => {
+  let transaction = await db.transaction()
+  try {
+    let { empleado } = req.query
+    let borrados = await db('empleados')
+      .delete()
+      .where({ idempleado: empleado })
+    console.log(
+      '🚀 ~ file: empleadosControllers.js ~ line 487 ~ borrarEmpleado ~ borrados',
+      borrados
+    )
+    transaction.commit()
+    res.json({
+      empleadosBorrados: borrados,
+    })
   } catch (error) {
     transaction.rollback()
     next(error)

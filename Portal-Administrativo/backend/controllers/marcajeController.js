@@ -17,10 +17,6 @@ export const marcarEmpleado = async (req, res, next) => {
   let transaction = await db.transaction()
   try {
     let { idempleado, lat, lon, tipo, fecha: fechaOffline } = req.body
-    console.log(
-      '🚀 ~ file: marcajeController.js ~ line 20 ~ marcarEmpleado ~ idempleado',
-      idempleado
-    )
     if (!idempleado) {
       throw new CustomError('El empleado no puede ser nulo', 404)
     }
