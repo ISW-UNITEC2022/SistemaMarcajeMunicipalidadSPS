@@ -6,7 +6,7 @@ import DataTable from 'react-data-table-component'
 import '../Reportes Asistencias/PantReportes_Asistencias.css'
 import DownloadIcon from '@mui/icons-material/Download';
 import axios from 'axios'
-import { Reporte_Asistencia_D } from './Reporte_Asistencias_D';
+import { Reporte_Asistencia_PDF, Reporte_Asistencia_D } from './Reporte_Asistencias_D';
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from 'file-saver';
 
@@ -276,6 +276,11 @@ export default function Reporte_Asistencia_Tardia() {
     ).toBlob().then(blob => saveAs(blob, 'Reporte_Entradas_Tardias.pdf'))
   }
 
+  const enviarPDF = () => {
+    let data = generarD();
+
+     return <Reporte_Asistencia_PDF mesI={getMes(mesI)} mesF={getMes(mesF)} dataT={data}></Reporte_Asistencia_PDF>;
+  }
 
   function handleAñoI(e) {
     setAñoI(e.target.value);
@@ -303,6 +308,7 @@ export default function Reporte_Asistencia_Tardia() {
 
   return (
     <div>
+      
       <MenuUsuario></MenuUsuario>
       <BotonHome></BotonHome>
       <div>
