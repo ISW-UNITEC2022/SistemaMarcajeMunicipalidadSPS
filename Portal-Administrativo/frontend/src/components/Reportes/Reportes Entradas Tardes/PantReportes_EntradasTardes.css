@@ -1,96 +1,69 @@
-/**/
-#Box_RT {
-	width: 660px;
-	border: 2px solid #02732A;
-	border-radius: 10px;
+#grid_RT {
+    display: grid;
+    grid-template-columns: auto auto;
+    width: 90vw;
+    margin: auto;
 
-	position: fixed;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-	
+    border: 2px solid #02732A;
+    border-radius: 10px;
+    padding: 10px;
 }
 
-#Box1_RT {
-	display: flex;
-	justify-content: center;
-	align-content: center;
-
-	margin-top: 3vw;
-	margin-left: 2vw;
-    margin-right: 1vw;
-	margin-bottom: 1vw;
+#item_RT {
+    /*border: 1px solid #F2668B;*/
+    font-size: 16px;
+    text-align: left;
 }
 
-#Box2_RT {
-	display: flex;
-	justify-content:flex-start;
-	align-content: flex-start;
+#select_M_RT {
+    background-color: #f2f2f2;
+    border: 1.5px solid #02732A;
+    border-radius: 5px;
+    width: 10vw;
+    height: 35px;
 
-    margin-left: 2vw;
+    font-size: 15px;
 }
 
-#Box3_RT {
-	display: flex;
-	justify-content: center;
-	align-content: center;
-	
-	margin-left: 2vw;
-	margin-right: 2vw;
-	margin-bottom: 1vw;
+#select_A_RT {
+    background-color: #f2f2f2;
+    border: 1.5px solid #02732A;
+    border-radius: 5px;
+    width: 6vw;
+    height: 35px;
+
+    font-size: 15px;
 }
 
-#Box4_RT {
-	display: flex;
-	justify-content: flex-start;
-	align-content: flex-start;
+#input_RT {
+    background-color: #f2f2f2;
+    border: 1.5px solid #02732A;
+    border-radius: 5px;
 
-    margin-left: 2vw;
+    width: 20vw;
+    height: 35px;
+    font-size: 15px;
 }
 
-#Box5_RT {
-	display: flex;
-	justify-content: center;
-	align-content: center;
-
-	margin-bottom: 3vw;
+#input_RT:hover {
+    background-color: #f2f2f2;
+    border: 2px solid #02732A;
 }
 
-#asterisco_RT {
-	font-size: 20px;
-	color: #BF0404;
-	font-weight: bold;
+#button_RT {
+    background-color: #02732A;
+    border: 1.5px solid #02732A;
+    color: #f2f2f2;
+
+    border-radius: 5px;
+    width: 12vw;
+    height: 35px;
+
+    font-size: 18px;
 }
 
-#body_RT {
-	background-color: #f2f2f2;
-}  
-
-#Boton_RT {
-	background-color: #02732A;
-	color: #f2f2f2;
-
-	border-radius: 5px;
-	border-color: #02732A;
-
-	font-size: 18px;
-
-	height: 55px;
-}
-
-#Boton_RT:hover {
-	background-color: #80E673;
-	border-color: #80E673;
-	color: #1F3821;
-}
-
-#empleadoss {
-	background-color: #f2f2f2;
-	border: 1.5px solid #02732A;
-	border-radius: 5px;
-	width: 520px;
-	height: 50px;
-
-	font-size: 15px;
+#button_RT:hover {
+    background-color: #80E673;
+    border-color: #80E673;
+    color: #1F3821;
 }
