@@ -96,13 +96,6 @@ const SplitButton = () => {
                   display: 'flex',
                 }}
               >
-                <BotonV input={"Configurar Perfil"} width={ '33.3vw'} type={"confi"}></BotonV>
-              </div>
-              <div
-                sx={{
-                  display: 'flex',
-                }}
-              >
                 <BotonV input={"Cerrar Sesión"} width={ '33.3vw'} type={"logout"}></BotonV>
               </div>
 

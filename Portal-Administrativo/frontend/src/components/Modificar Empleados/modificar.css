@@ -12,6 +12,26 @@
   margin-bottom: 10px;
 }
 
+.grid-container {
+  display: grid;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  width: 500px;
+  grid-template-columns: auto auto;
+  padding: 10px;
+}
+.grid-item {
+  padding: 10px;
+  font-size: 30px;
+  text-align: flex-start;
+
+  margin-bottom: -10px;
+  color: #757575;
+  font-size: 16.5px;
+}
+
 #horaentrada:hover {
   border: 2px solid #02732A;
 }
@@ -87,13 +107,6 @@
   background-color: #80E673;
   border-color: #80E673;
   color: #1F3821;
-}
-
-.horaText {
-  margin-bottom: -10px;
-  margin-top: -2px;
-  color: #757575;
-  font-size: 16.5px;
 }
 
 #empleadoss {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import "./modificar.css";
-import TextBox from "../Componentes UI/TextBox";
-import PasswordBox from "../Componentes UI/PasswordBox";
+import TextBox from "../Modificar Empleados/MTextBox";
+import PasswordBox from "../Modificar Empleados/MPasswordBox";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -286,24 +286,19 @@ function Modificar() {
                     "&.Mui-focused": {
                       color: "#02732A",
                     },
-                    ".MuiInputLabel-asterisk": {
-                      color: "red",
-                    },
                   },
                 }}
-                required
                 id="demo-simple-select-autowidth-label"
               >
                 Distrito:  {infoEmpleado.distrito}
               </InputLabel>
               <Select
-                required
                 labelId="demo-simple-select-autowidth-label"
                 id="demo-simple-select-autowidth"
                 value={dis}
                 onChange={handleChangeDis}
                 autoWidth
-                label="Distrito"
+                label="Distrito___"
                 variant="outlined"
                 sx={{
                   marginRight: "12px",
@@ -357,24 +352,19 @@ function Modificar() {
                     "&.Mui-focused": {
                       color: "#02732A",
                     },
-                    ".MuiInputLabel-asterisk": {
-                      color: "red",
-                    },
                   },
                 }}
-                required
                 id="demo-simple-select-autowidth-label"
               >
                 Departamento: {infoEmpleado.departamento}
               </InputLabel>
               <Select
-                required
                 labelId="demo-simple-select-autowidth-label"
                 id="demo-simple-select-autowidth"
                 value={dep}
                 onChange={handleChangeDep}
                 autoWidth
-                label="Departamento"
+                label="Departamento_______"
                 variant="outlined"
                 sx={{
                   height: 55,
@@ -418,13 +408,16 @@ function Modificar() {
               _asterisk={"red"}
             ></TextBox>
           </div>
-          <div id="fila">
-            <p className="horaText">
-              Hora Entrada <span id="_asterisco">* {infoEmpleado.horaentrada}</span>
+          <div className="grid-container">
+            <p className="grid-item">
+              Hora Entrada {infoEmpleado.horaentrada}
             </p>
-            <p className="horaText">
-              Hora Salida <span id="_asterisco">* {infoEmpleado.horasalida}</span>
+            <p className="grid-item">
+              Hora Salida {infoEmpleado.horasalida}
             </p>
+          </div>
+          <div id="fila" style={{ marginBottom: "20px" }}>
+
           </div>
           <div id="fila">
             <input
@@ -433,7 +426,6 @@ function Modificar() {
               value={infoEmpleado.horaentrada}
               placeholder="Hora de Entrada"
               type="time"
-              required
               className="horaentrada"
             />
 
@@ -443,7 +435,6 @@ function Modificar() {
               value={infoEmpleado.horasalida}
               placeholder="Hora de Salida"
               type="time"
-              required
               className="horasalida"
             />
           </div>

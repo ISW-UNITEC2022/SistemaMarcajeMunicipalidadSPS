@@ -1,5 +1,8 @@
 ._fila {
   display: flex;
+  align-items: center;
+  justify-content: center;
+
   margin-left: 30px;
   margin-bottom: 10px;
 }
@@ -25,8 +28,9 @@
   outline: none;
 }
 
-#body {
-  background-color: #f2f2f2;
+body {
+  background: #f2f2f2 !important;
+  background-color: #f2f2f2 !important;
 }
 
 

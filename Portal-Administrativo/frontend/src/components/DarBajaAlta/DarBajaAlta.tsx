@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Textbox from "../Componentes UI/TextBox";
 import "../DarBajaAlta/DarBajaAlta.css";
 import { toast } from "react-toastify";
-import MenuUsuario from "../MenuUsuario";
+import MenuUsuario from "../Componentes UI/MenuUsuario";
 import BotonHome from "../Componentes UI/BotonHome";
 
 function FormularioSupervisor() {
