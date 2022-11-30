@@ -18,7 +18,7 @@ export const marcarEmpleado = async (req, res, next) => {
   try {
     let { idempleado, lat, lon, tipo, fecha: fechaOffline } = req.body
     if (!idempleado) {
-      throw new CustomError('El empleado no puede ser nulo', 404)
+      throw new CustomError('El empleado no puede ser nulo', 403)
     }
     tipo = tipo ? 'entrada' : 'salida'
     //El rango de tiempo para validar si ya se marco, desde 'hoy' en la mañana hasta la noche
@@ -38,27 +38,16 @@ export const marcarEmpleado = async (req, res, next) => {
     } else if (marcas.length <= 0 && tipo === 'salida') {
       throw new CustomError(`Aun no ha marcado entrada`, 401)
     }
-    let [marcaje] = await db('marcaje')
-      .transacting(transaction)
-      .insert(
-        {
-          idempleado,
-          fecha,
-          tipo,
-          latitud: lat,
-          longitud: lon,
-          google_url: `https://www.google.com/maps/place/15%C2%B031'37.5%22N+87%C2%B059'17.7%22W/@${lat},${lon}z`,
-        },
-        [
-          'idmarca',
-          'idempleado',
-          'fecha',
-          'tipo',
-          'latitud',
-          'longitud',
-          'google_url',
-        ]
-      )
+    let [marcaje] = await db('marcaje').transacting(transaction).insert(
+      {
+        idempleado,
+        fecha,
+        tipo,
+        latitud: lat,
+        longitud: lon,
+      },
+      ['idmarca', 'idempleado', 'fecha', 'tipo', 'latitud', 'longitud']
+    )
     marcaje = {
       ...marcaje,
       fecha: toLocale(marcaje.fecha),
