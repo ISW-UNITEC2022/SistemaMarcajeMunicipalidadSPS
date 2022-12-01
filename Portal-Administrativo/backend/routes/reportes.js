@@ -9,6 +9,8 @@ import {
 
 const router = Router()
 
+//Rutas de reportes
+//Ruta base: /api/reportes
 router.post('/', obtenerReportesAsistencias)
 router.post('/correo', enviarCorreo)
 router.get('/disponibles', obtenerFechasDisponible)

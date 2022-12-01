@@ -6,6 +6,8 @@ import {
 
 const router = Router()
 
+//Rutas de marcas
+//Ruta base: /api/marcaje
 router.route('/').post(marcarEmpleado)
 router.route('/:correo').get(validarMarca)
 

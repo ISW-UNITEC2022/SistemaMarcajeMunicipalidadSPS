@@ -13,6 +13,8 @@ import {
 
 const router = Router()
 
+//Rutas de empleados
+//Ruta base: /api/empleados
 router
   .route('/')
   .get(obtenerEmpleados)
