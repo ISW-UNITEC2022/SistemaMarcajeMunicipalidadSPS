@@ -107,6 +107,8 @@ export default function Reporte_Asistencia_Tardia() {
     setdataT(data);
   }
 
+  let contenido = "";
+
   function selectFile(contentType, multiple) {
     return new Promise(resolve => {
       let input = document.createElement('input');
@@ -116,6 +118,18 @@ export default function Reporte_Asistencia_Tardia() {
 
       input.onchange = _ => {
         let files = Array.from(input.files);
+
+        let reader = new FileReader();
+
+        reader.readAsDataURL(files[0]);
+
+        reader.onload = function () {
+          console.log(reader.result);
+          contenido += reader.result;
+        };
+
+
+        console.log("CONTENIDO: " + input.files[0].text)
 
         if (multiple)
           resolve(files);
@@ -139,7 +153,7 @@ export default function Reporte_Asistencia_Tardia() {
         subject: "REPORTE DE ASISTENCIAS",
         message: "SE ADJUNTA EN ESTE CORREO EL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + "/" + añoI + " HASTA:" + mesF + "/" + añoF,
         attachment_name: "reporte_asistencia.pdf",
-        attachment_content: "PRUEBA"
+        attachment_content: contenido
       })
       .then((res) => {
         toast.success("¡REPORTE DE ASISTENCIAS ENVIADO CON EXITO!");
@@ -279,7 +293,7 @@ export default function Reporte_Asistencia_Tardia() {
   const enviarPDF = () => {
     let data = generarD();
 
-     return <Reporte_Asistencia_PDF mesI={getMes(mesI)} mesF={getMes(mesF)} dataT={data}></Reporte_Asistencia_PDF>;
+    return <Reporte_Asistencia_PDF mesI={getMes(mesI)} mesF={getMes(mesF)} dataT={data}></Reporte_Asistencia_PDF>;
   }
 
   function handleAñoI(e) {
@@ -308,7 +322,7 @@ export default function Reporte_Asistencia_Tardia() {
 
   return (
     <div>
-      
+
       <MenuUsuario></MenuUsuario>
       <BotonHome></BotonHome>
       <div>
