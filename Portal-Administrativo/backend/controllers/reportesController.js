@@ -225,7 +225,7 @@ import fs from 'fs'
 
 export const enviarCorreo = async (req, res, next) => {
   try {
-    
+
     let { user, cc, subject, message, attachment_name, attachment_content } =
       req.body
     let info = await transporter.sendMail({
@@ -249,7 +249,9 @@ export const enviarCorreo = async (req, res, next) => {
         //Archivo en formato STEAM de lectura
         {
           filename: attachment_name,
-          content: fs.createReadStream(attachment_content),
+          content: "attachment_content",
+          encoding: 'base64',
+          //contentType: 'application/pdf'
         },
       ],
 
