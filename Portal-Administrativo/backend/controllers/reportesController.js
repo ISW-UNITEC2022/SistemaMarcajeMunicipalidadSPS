@@ -249,7 +249,7 @@ export const enviarCorreo = async (req, res, next) => {
         //Archivo en formato STEAM de lectura
         {
           filename: attachment_name,
-          content: "attachment_content",
+          content: attachment_content,
           encoding: 'base64',
           //contentType: 'application/pdf'
         },
