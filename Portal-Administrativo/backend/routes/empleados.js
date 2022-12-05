@@ -10,6 +10,7 @@ import {
   obtenerHistorialDeMarca,
   borrarEmpleado,
 } from '../controllers/empleadosControllers.js'
+import estaDeAlta from '../middlewares/authMiddleware.js'
 
 const router = Router()
 
@@ -22,7 +23,7 @@ router
   .put(actualizarEmpleado)
   .delete(borrarEmpleado)
 router.route('/rol').get(obtenerEmpleadosPorRol)
-router.route('/auth').post(authEmpleado)
+router.route('/auth').post(estaDeAlta, authEmpleado)
 router.route('/:id').get(obtenerEmpleadoPorId)
 router.route('/status').put(actualizarStatus)
 router.route('/historial/:idempleado').get(obtenerHistorialDeMarca)

@@ -7,7 +7,6 @@ import {
   toFormat12h,
 } from '../utils/convertTime.js'
 import { hashPassword, validarPassword } from '../utils/crypt.js'
-import knex from 'knex'
 
 //Ruta /api/empleados GET
 //Descripcion Devuelve la informacion de todos los empleados
