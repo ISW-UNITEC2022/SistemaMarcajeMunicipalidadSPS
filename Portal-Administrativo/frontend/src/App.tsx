@@ -12,6 +12,9 @@ import "react-toastify/dist/ReactToastify.css";
 import DarBajaAlta from "./components/DarBajaAlta/DarBajaAlta";
 import Reporte_Asistencia_Tardia from "./components/Reportes/Reportes Entradas Tardes/Reporte_EntradasTardes";
 import Reporte_Asistencia from "./components/Reportes/Reportes Asistencias/Reporte_Asistencias";
+import { Reporte_Asistencia_PDF} from"./components/Reportes/Reportes Asistencias/Reporte_Asistencias_D";
+import { Reporte_MarcasIncompletas_PDF} from"./components/Reportes/Reportes Marcas Incompletas/Reporte_MarcasIncompletas_D";
+import { Reporte_Asistencia_Tardia_PDF} from"./components/Reportes/Reportes Entradas Tardes/Reporte_EntradasTardes_D";
 import Reporte_Marcas_Incompletas from "./components/Reportes/Reportes Marcas Incompletas/Reporte_MarcasIncompletas";
 
 
@@ -44,10 +47,19 @@ function App() {
           path="/reporte_entradas_tardes"
           element={<Reporte_Asistencia_Tardia />}
         />
+        <Route
+          path="/reporte_entradas_tardes_pdf"
+          element={<Reporte_Asistencia_Tardia_PDF />}
+        />
         <Route path="/reporte_asistencias" element={<Reporte_Asistencia />} />
+        <Route path="/reporte_asistencias_pdf" element={<Reporte_Asistencia_PDF />} />
         <Route
           path="/reporte_marcas_incompletas"
           element={<Reporte_Marcas_Incompletas />}
+        />
+        <Route
+          path="/reporte_marcas_incompletas_pdf"
+          element={<Reporte_MarcasIncompletas_PDF />}
         />
         <Route path="/" element={<HomePage />} />
       </Routes>
