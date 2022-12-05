@@ -138,7 +138,7 @@ export default function Reporte_Asistencia_Tardia() {
     axios
       .post(url_emails, {
         user: correo,
-        cc: "municipalidadspshn@gmail.com",
+        cc: "",
         subject: "REPORTE DE ASISTENCIAS INCOMPLETAS",
         message: window.location.href+"_pdf?"+getMes(mesIn)+"&"+getMes(mesFin),
         attachment_content: '1111'
