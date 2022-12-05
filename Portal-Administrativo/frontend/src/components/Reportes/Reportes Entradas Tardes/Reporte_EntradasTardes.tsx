@@ -14,8 +14,6 @@ import { saveAs } from 'file-saver';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import fs from 'fs';
-
 export default function Reporte_Asistencia_Tardia() {
   const url = "https://proyecto-isw-dev.herokuapp.com/api/reportes/disponibles";
   const url_emails = "https://proyecto-isw-dev.herokuapp.com/api/reportes/correo";
@@ -123,20 +121,30 @@ export default function Reporte_Asistencia_Tardia() {
   }
 
   async function send_email(e) {
-    let files = await selectFile("pdf/*", false);
 
+    let mesIn=mesI;
+    let mesFin=mesF;
+    if(!mesI){
+      setMesI('Enero')
+      mesIn='Enero';
+    }
+
+    if(!mesF){
+      setMesF('Enero')
+      mesFin='Enero';
+    }
     e.preventDefault();
+
     axios
       .post(url_emails, {
         user: correo,
         cc: "municipalidadspshn@gmail.com",
         subject: "REPORTE DE ASISTENCIAS TARDIAS",
-        message: "SE ADJUNTA EN ESTE CORREO EL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS TARDIAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + "/" + añoI + " HASTA:" + mesF + "/" + añoF,
-        attachment_name: "reporte_asistencias_tardias.pdf",
-        attachment_content: "PRUEBA"
+        message: window.location.href+"_pdf?"+getMes(mesIn)+"&"+getMes(mesFin),
+        attachment_content: '1111'
       })
       .then((res) => {
-        toast.success("¡REPORTE DE ASISTENCIAS TARDIAS ENVIADO CON EXITO!");
+        toast.success("¡REPORTE DE ASISTENCIAS ENVIADO CON EXITO!");
         console.log(res.data);
       })
       .catch((error) => {

@@ -122,20 +122,29 @@ export default function Reporte_Asistencia_Tardia() {
   }
 
   async function send_email(e) {
-    let files = await selectFile("pdf/*", false);
+    let mesIn=mesI;
+    let mesFin=mesF;
+    if(!mesI){
+      setMesI('Enero')
+      mesIn='Enero';
+    }
 
+    if(!mesF){
+      setMesF('Enero')
+      mesFin='Enero';
+    }
     e.preventDefault();
+
     axios
       .post(url_emails, {
         user: correo,
         cc: "municipalidadspshn@gmail.com",
         subject: "REPORTE DE ASISTENCIAS INCOMPLETAS",
-        message: "SE ADJUNTA EN ESTE CORREO EL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS INCOMPLETAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + "/" + añoI + " HASTA:" + mesF + "/" + añoF,
-        attachment_name: "reporte_asistencias_incompletas.pdf",
-        attachment_content: "PRUEBA"
+        message: window.location.href+"_pdf?"+getMes(mesIn)+"&"+getMes(mesFin),
+        attachment_content: '1111'
       })
       .then((res) => {
-        toast.success("¡REPORTE DE ASISTENCIAS INCOMPLETAS ENVIADO CON EXITO!");
+        toast.success("¡REPORTE DE ASISTENCIAS ENVIADO CON EXITO!");
         console.log(res.data);
       })
       .catch((error) => {

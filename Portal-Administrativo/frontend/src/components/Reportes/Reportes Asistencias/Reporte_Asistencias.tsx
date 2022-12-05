@@ -6,7 +6,7 @@ import DataTable from 'react-data-table-component'
 import '../Reportes Asistencias/PantReportes_Asistencias.css'
 import DownloadIcon from '@mui/icons-material/Download';
 import axios from 'axios'
-import { Reporte_Asistencia_PDF, Reporte_Asistencia_D } from './Reporte_Asistencias_D';
+import {Reporte_Asistencia_D } from './Reporte_Asistencias_D';
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from 'file-saver';
 
@@ -142,18 +142,26 @@ export default function Reporte_Asistencia_Tardia() {
   }
 
   async function send_email(e) {
-    let files = await selectFile("pdf/*", false);
-    console.log(files);
+    let mesIn=mesI;
+    let mesFin=mesF;
+    if(!mesI){
+      setMesI('Enero')
+      mesIn='Enero';
+    }
 
+    if(!mesF){
+      setMesF('Enero')
+      mesFin='Enero';
+    }
     e.preventDefault();
+
     axios
       .post(url_emails, {
         user: correo,
         cc: "municipalidadspshn@gmail.com",
         subject: "REPORTE DE ASISTENCIAS",
-        message: "SE ADJUNTA EN ESTE CORREO EL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + "/" + añoI + " HASTA:" + mesF + "/" + añoF,
-        attachment_name: "reporte_asistencia.pdf",
-        attachment_content: contenido
+        message: window.location.href+"_pdf?"+getMes(mesIn)+"&"+getMes(mesFin),
+        attachment_content: '1111'
       })
       .then((res) => {
         toast.success("¡REPORTE DE ASISTENCIAS ENVIADO CON EXITO!");
@@ -288,12 +296,6 @@ export default function Reporte_Asistencia_Tardia() {
     pdf(
       <Reporte_Asistencia_D mesI={getMes(mesI)} mesF={getMes(mesF)} dataT={data}></Reporte_Asistencia_D>
     ).toBlob().then(blob => saveAs(blob, 'Reporte_Entradas_Tardias.pdf'))
-  }
-
-  const enviarPDF = () => {
-    let data = generarD();
-
-    return <Reporte_Asistencia_PDF mesI={getMes(mesI)} mesF={getMes(mesF)} dataT={data}></Reporte_Asistencia_PDF>;
   }
 
   function handleAñoI(e) {

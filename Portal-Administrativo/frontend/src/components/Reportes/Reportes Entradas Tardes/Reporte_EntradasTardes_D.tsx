@@ -105,7 +105,7 @@ const Reporte_AsistenciaT_D = ({mesI, mesF, dataT}) =>(
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-            <Text>Formato de Reportes de Asistencia</Text>
+            <Text>Formato de Reportes de Tardias</Text>
           </View>
 
           <View id='contenedorR' style={{width: '90vw', marginLeft: '4vw', marginTop: '2vh'}}>
@@ -123,49 +123,121 @@ const Reporte_AsistenciaT_D = ({mesI, mesF, dataT}) =>(
   
 )
 
-const Reporte_Asistencia_Tardia_PDF = (mesI, mesF, dataT) =>{
+const Reporte_Asistencia_Tardia_PDF = () =>{
 
-  return(
-    <PDFViewer style={{width: "100%", height: "90vh"}}>
-      <Document>
-        <Page size="A2">
-          <Image src={Logo} style={{ height: '10vh', width: '20vw', marginLeft: '4vw' }} />
+  let data =  window.location.search.substring(1); 
+    let split = data.split('&');
+    let mesI = split[0];
+    let mesF = split[1];
 
-          <View>
-          
-            <View style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-              <Text>Dirección C3i Municipalidad de San Pedro Sula</Text>
-            </View>
+    if(mesI.length===0)
+      mesI='1';
 
-          </View>
+    if(mesF.length===0)
+      mesF='1';
 
-          <View style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            <Text>Formato de Reportes de Asistencia</Text>
-          </View>
+    const [Tasks, setTasks] = useState([])
 
-          <View id='contenedorR' style={{width: '90vw', marginLeft: '4vw', marginTop: '2vh'}}>
-            <Text>
-              A continuación se presenta un reporte completo de las asistencias marcadas dentro de 
-              la aplicación por el equipo de “Los Amigos de la Municipalidad”, con un reporte completo
-              de datos personales y fechas de dichos marcajes marcajes entre el mes {getMes(mesI)} y {getMes(mesF)}.
-            </Text>
-          </View>
-            
-          <View style={{alignItems: 'center', fontSize: '12px'}}><Table th children={dataT} /></View>
-
-        </Page>
-    </Document>
-  </PDFViewer>
-  )
-  
+    const loadTasks = async () => {
+      const response = await fetch(
+        'https://proyecto-isw-dev.herokuapp.com/api/reportes/tarde',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              "mesInicial": {
+              "month": mesI,
+              "year": 2022
+            },
+              "mesFinal": {
+              "month": mesF,
+              "year": 2022
+            }
+          }),
+        }
+      )
+    const data = await response.json()
+    setTasks(data)
   }
+
+  useEffect(() => {
+    loadTasks()
+  }, [])
+
+  const generarD = () => {
+
+    let dataT = [];
+    dataT[0] = [
+      'No° Identidad',
+      'Nombre Completo',
+      'Departamento',
+      'Distrito',
+      'Fecha',
+      'Hora Asignada',
+      'Hora entrada',
+      'Latitud',
+      'Longitud',
+    ]
+
+    for (let i = 1; i <= Tasks.length; i++) {
+      dataT[i] = [
+        Tasks[i - 1].idempleado,
+        Tasks[i - 1].nombre + ' ' + Tasks[i - 1].apellido,
+        Tasks[i - 1].departamento,
+        Tasks[i - 1].distrito,
+        Tasks[i - 1].fecha,
+        Tasks[i - 1].hora_asignada,
+        Tasks[i - 1].hora_entrada,
+        Tasks[i - 1].latitud,
+        Tasks[i - 1].longitud,
+      ]
+    }
+
+    return dataT;
+  }
+
+  let dataT=generarD();
+
+    return (
+      <div>
+          <PDFViewer style={{width: "100%", height: "90vh"}}>
+          <Document>
+    <Page size="A2">
+    <Image src={Logo} style={{ height: '10vh', width: '20vw', marginLeft: '4vw' }} />
+    <View>
+    
+    <View style={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    }}><Text>Dirección C3i Municipalidad de San Pedro Sula</Text>
+    </View>
+    </View>
+    <View style={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    }}><Text>Formato de Reportes de Tardias</Text>
+    </View>
+
+    <View id='contenedorR' style={{width: 'auto', marginLeft: '4vw', marginTop: '2vh'}}>
+      <Text>
+      A continuación se presenta un reporte completo de las asistencias marcadas dentro de 
+      la aplicación por el equipo de “Los Amigos de la Municipalidad”, con un reporte completo
+      de datos personales y fechas de dichos marcajes entre el mes {getMes(parseInt(mesI,10))} y {getMes(parseInt(mesF,10))}.
+      </Text>
+    </View>
+      
+    <View style={{alignItems: 'center', fontSize: '12px'}}><Table th children={dataT} /></View>
+
+    </Page>
+  </Document>
+          </PDFViewer>
+        
+      </div>
+    )
+  }
+
 
 export {Reporte_AsistenciaT_D, Reporte_Asistencia_Tardia_PDF};

@@ -2,9 +2,6 @@
 import { useEffect, useState } from 'react'
 import Logo from '../../../assets/Logo C3i Oficial.png'
 import {Document, Page, View, Text, Image, PDFViewer, StyleSheet} from "@react-pdf/renderer";
-import { faPersonMilitaryRifle } from '@fortawesome/free-solid-svg-icons';
-import { borderRight } from '@mui/system';
-
 
 const getMes=(mes)=>{
   switch(mes){
@@ -121,11 +118,94 @@ const Reporte_Asistencia_D = ({mesI, mesF, dataT}) =>(
   
 )
 
-const Reporte_Asistencia_PDF = (mesI, mesF, dataT) =>{
 
-  return(
-    <PDFViewer style={{width: "100%", height: "90vh"}}>
-      <Document>
+  const Reporte_Asistencia_PDF = ()=> {
+
+    let data =  window.location.search.substring(1); 
+    let split = data.split('&');
+    let mesI = split[0];
+    let mesF = split[1];
+
+    if(mesI.length===0)
+      mesI='1';
+
+    if(mesF.length===0)
+      mesF='1';
+
+    const [Tasks, setTasks] = useState([])
+
+    const loadTasks = async () => {
+      const response = await fetch(
+        'https://proyecto-isw-dev.herokuapp.com/api/reportes',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              "mesInicial": {
+              "month": mesI,
+              "year": 2022
+            },
+              "mesFinal": {
+              "month": mesF,
+              "year": 2022
+            }
+          }),
+        }
+      )
+    const data = await response.json()
+    setTasks(data)
+  }
+
+  useEffect(() => {
+    loadTasks()
+  }, [])
+
+  const generarD = () => {
+
+    let dataT = [];
+    dataT[0] = [
+      'No° Identidad',
+      'Nombre Completo',
+      'Departamento',
+      'Distrito',
+      'Fecha',
+      'Hora Entrada',
+      'Hora Salida',
+      'Latitud',
+      'Longitud',
+    ]
+
+    for (let i = 1; i <= Tasks.length; i++) {
+      let salida;
+
+      if (Tasks[i - 1].marcas.salida)
+        salida = Tasks[i - 1].marcas.salida.hora;
+      else
+        salida = 'N/A';
+
+      dataT[i] = [
+        Tasks[i - 1].idempleado,
+        Tasks[i - 1].nombre + ' ' + Tasks[i - 1].apellido,
+        Tasks[i - 1].departamento,
+        Tasks[i - 1].distrito,
+        Tasks[i - 1].fecha,
+        Tasks[i - 1].marcas.entrada.hora,
+        salida,
+        Tasks[i - 1].marcas.entrada.latitud,
+        Tasks[i - 1].marcas.entrada.longitud,
+      ]
+    }
+
+    return dataT;
+  }
+
+  let dataT=generarD();
+
+    return (
+      <div>
+          <PDFViewer style={{width: "100%", height: "90vh"}}>
+          <Document>
     <Page size="A2">
     <Image src={Logo} style={{ height: '10vh', width: '20vw', marginLeft: '4vw' }} />
     <View>
@@ -148,7 +228,7 @@ const Reporte_Asistencia_PDF = (mesI, mesF, dataT) =>{
       <Text>
       A continuación se presenta un reporte completo de las asistencias marcadas dentro de 
       la aplicación por el equipo de “Los Amigos de la Municipalidad”, con un reporte completo
-      de datos personales y fechas de dichos marcajes entre el mes {getMes(mesI)} y {getMes(mesF)}.
+      de datos personales y fechas de dichos marcajes entre el mes {getMes(parseInt(mesI,10))} y {getMes(parseInt(mesF,10))}.
       </Text>
     </View>
       
@@ -156,9 +236,10 @@ const Reporte_Asistencia_PDF = (mesI, mesF, dataT) =>{
 
     </Page>
   </Document>
-  </PDFViewer>
-  )
-  
+          </PDFViewer>
+        
+      </div>
+    )
   }
 
 export {Reporte_Asistencia_D, Reporte_Asistencia_PDF};
