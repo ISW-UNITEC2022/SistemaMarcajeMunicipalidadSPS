@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Menu from "../screens/Menu";
 import Login from "../screens/Login";
 import Historial from "../screens/Historial";
+import MenuOffline from "../screens/MenuOffline";
 const Stack = createNativeStackNavigator();
 
 const MyStack = () => {
@@ -26,6 +27,7 @@ const MyStack = () => {
         <Stack.Screen  name="Login" component={Login}/>
         <Stack.Screen options={{headerShown: false}}  name="Menu" component={Menu}/>
         <Stack.Screen  name="Historial" component={Historial}/>
+        <Stack.Screen name="MenuOffline" component={MenuOffline}/>
         </Stack.Navigator>
     </NavigationContainer>
   );

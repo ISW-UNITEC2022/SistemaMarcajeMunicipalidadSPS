@@ -4,6 +4,8 @@ import { StyleSheet, ScrollView,Text, View, TouchableOpacity,Pressable,Touchable
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import axios from "axios";
+import { LoginSinConexion } from './Login';
+import {useNetInfo} from "@react-native-community/netinfo";
 
 export class TuplaMarca extends React.Component {
 
@@ -25,7 +27,7 @@ export class TuplaMarca extends React.Component {
         <Text style={{color:this.s_color}}>{this.state.fecha}</Text>
         <Text>        |      </Text>
         <Text style={{color:this.s_color}}>{this.state.h_entrada}</Text>
-        <Text>        |         </Text>
+        <Text>        |      </Text>
         <Text style={{color:this.s_color}}>{this.state.h_salida}</Text>
       </TouchableOpacity>
     </View>
@@ -37,7 +39,7 @@ const Historial = ({route,navigation}) => {
 
   const idEmpleado=route.params.id;
   const horario=route.params.data;
-
+  const netInfo=useNetInfo();
 
   const widthArr = [110, 110, 110,];
   const x={h_entrada:"7:00",h_salida:"17:00",fecha:"15/9/2022"};
@@ -45,8 +47,9 @@ const Historial = ({route,navigation}) => {
       if(d.horaentrada==null){d.horaentrada=" N/A        ";};
       if(d.horasalida==null){d.horasalida=" N/A        ";};
   });
-    const data = horario
-    console.log(horario)
+    
+    var data = horario;
+    console.log(data);
 
 
 	  const cerrarsesion = () =>{Alert.alert(	
@@ -61,7 +64,7 @@ const Historial = ({route,navigation}) => {
     ]	
     );	
   }
-  return(
+  return(netInfo.isConnected?
     <View style={[styles.container]}>
       <View style={styles.container}>
       <Text>
@@ -78,13 +81,14 @@ const Historial = ({route,navigation}) => {
         </TouchableOpacity>
       <ScrollView style={styles.dataWrapper} horizontal={false}>
                 {
-                  data.map((d) => (
+                  data.reverse().map((d) => (
                     <TuplaMarca h_entrada={d.horaentrada} h_salida={d.horasalida} fecha={d.fecha}></TuplaMarca>
                   ))
                 }
       </ScrollView>
       </View>
-    </View>
+    </View>:
+    <LoginSinConexion></LoginSinConexion>
   )
 };
 

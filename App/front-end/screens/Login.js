@@ -1,16 +1,88 @@
+
+
 import { StatusBar } from 'expo-status-bar';
+import {useNetInfo} from "@react-native-community/netinfo";
 import React, {Component, useState} from 'react';
 import { StyleSheet, Text, AppRegistry ,View,Button,FlatListItemSeparator,Dimensions,FlatList,Image,TextInput,TouchableOpacity, Alert } from 'react-native';
 import axios from "axios";
+import { element } from 'prop-types';
+import { json, useNavigate } from 'react-router-dom';
+import MenuOffline from './MenuOffline';
+import { CheckBox } from 'react-native-elements';
+import { AsyncStorage } from 'react-native';
+
+
+export class LoginSinConexion extends React.Component{
+  //Ir al menu fuera de conexión
+
+  goToOfflineMenu = () => {
+    console.log(value)
+    this.props.navigate.navigate('MenuOffline')
+  }
+
+   getUsuario = async () =>{ 
+    try {
+      const valor = await AsyncStorage.getItem('usuarioguardado')
+      
+      if(valor !== null){
+        let parse = JSON.parse(valor)
+        console.log(parse.nombre)
+        this.props.navigate.navigate('MenuOffline',{correo:parse.nombre,nombre:parse.nombre,id:parse.id,hora_entrada:parse.horaentrada,hora_salida:parse.horasalida,apellido:parse.apellido})
+      }
+    }catch(e){
+
+    }
+
+
+  }  
+
+  render(){
+    return(
+      <View style={[styles.container]}>
+        <Image source={require('../assets/sin_conexion.png')} style={styles.warning_img}>
+ 
+        </Image>
+          <TouchableOpacity disabled={true} style={styles.warning}>
+              <Text style={styles.warning_txt}>
+                No hay una conexión disponible. Intente conectarse o realice su marca de manera offline. 
+              </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.offline_btn} onPress={()=>this.getUsuario()}>
+            <Text style={styles.textbutton}>Hacer marcas fuera de línea</Text>
+          </TouchableOpacity>
+      </View>
+    );
+  }
+}
 
 const Login = ({navigation}) => {
+
+const navigate=navigation;
+const netInfo = useNetInfo();
 const[correo,setCorreo]=useState();
 const[password,setPassword]=useState();
+const[usuariopred,setUsuario]=useState(true);
+const[value,setValue]=useState('');
+
 const Auth= (Correo,Contraseña) =>{
 axios.post('https://proyecto-isw1.herokuapp.com/api/empleados/auth', {
   correo: Correo,
   password: Contraseña,
 }).then(response => {
+  if(usuariopred){
+    let usuario_objecto = { 
+      nombre:response.data.nombre,
+      id:response.data.idempleado,
+      hora_entrada:response.data.horaentrada,
+      hora_salida:response.data.horasalida,
+      apellido:response.data.apellido
+    }
+
+    AsyncStorage.setItem('usuarioguardado',JSON.stringify(usuario_objecto),() =>{AsyncStorage.getItem('usuarioguardado',(err,result) => {console.log(result)})})
+    
+  
+  }
+
   Alert.alert(
     "Bienvenido",
     'Bienvenido ' +response.data.nombre + " " + response.data.apellido ,[{text: "OK"}])
@@ -26,9 +98,15 @@ axios.post('https://proyecto-isw1.herokuapp.com/api/empleados/auth', {
   "Correo o contraseña incorrecta",
   "Verifica los datos ingresados incorrectamente",[{text: "OK"}])
 }) 
+
+
+
 }
 
+
+
   return (
+   netInfo.isConnected?
     <View style={styles.container}> 
     <View style={styles.shape_conatiner}>
      <View style={[styles.square,{
@@ -49,17 +127,24 @@ axios.post('https://proyecto-isw1.herokuapp.com/api/empleados/auth', {
             
             <TextInput  style={styles.input}
             placeholder='Correo electrónico' placeholderTextColor={"#fff"} onChangeText={(val)=>setCorreo(val)}></TextInput>
-              <TextInput secureTextEntry={true}  style={styles.input}
+            <TextInput secureTextEntry={true}  style={styles.input}
             placeholder='Contraseña'  placeholderTextColor={"#fff"} onChangeText={(val)=>setPassword(val)} ></TextInput>
-
+            
             <TouchableOpacity style={styles.buttonContainer} onPress={() => Auth(correo,password)} >
               <Text style={styles.textbutton}> Ingresar </Text>
-              </TouchableOpacity>
+            </TouchableOpacity>
+            
 
       </View> 
-    </View>
+      <CheckBox  style={styles.checkbutton} 
+            title="Usuario Predeterminado"
+            checked={usuariopred}
+            onPress={()=>setUsuario(!usuariopred)}
+            />
+    </View>:<LoginSinConexion navigate={navigate}></LoginSinConexion>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -76,9 +161,15 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'flex-start',
   },
-  square:{
-    height: 20,
-    width: 125,
+  warning:{
+    
+    height: 180,
+    width: 290,
+    backgroundColor: '#BF0404',
+    flexDirection: 'row',
+    justifyContent:'center',
+    flex:-1,
+    borderRadius:5,
   },
   logo:{
   resizeMode: 'contain',
@@ -137,8 +228,41 @@ const styles = StyleSheet.create({
     color:'#F2F2F2',
     textAlign:'center',
     fontWeight:'bold'
-  }
-  
+  },
+  checkbutton:{
+  height: 125,
+  width: 125,
+  left: 0,  
+  top: 100,
+  backgroundcolor:'#02732A'
+  },
+  warning_txt:{
+    fontSize:20,
+    top:0,
+    color:'#F2F2F2',
+    textAlign:'center',
+    fontWeight:'normal',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlignVertical: 'center',
+    alignContent: 'center',
+  },
+  warning_img:{
+  height: 125,
+  width: 125,
+  left: 0,  
+  top: 0,
+  },
+  offline_btn:{
+    top:100,
+    backgroundColor:'#02732A',
+    width:270,
+    height:100,
+    marginTop:30,
+    borderRadius:10,
+    textAlign:'center',
+  },
 
 });
 export default Login;

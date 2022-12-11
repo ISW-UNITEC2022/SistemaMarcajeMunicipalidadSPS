@@ -1,9 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {Component, useState} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity,Pressable,TouchableHighlight,Button,Alert,Image} from 'react-native';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import axios from "axios";
+import {useNetInfo} from "@react-native-community/netinfo";
+import LoginSinConexion from './Login';
+import { AsyncStorage } from 'react-native';
 
 export class BotonMarca extends React.Component {
 
@@ -34,6 +37,7 @@ export class BotonMarca extends React.Component {
   enviarMarca=async()=>{
     console.log("Marcaje:");
     const location=await this._getLocation();
+
     console.log(location);
     axios.post('https://proyecto-isw1.herokuapp.com/api/marcaje', {
       lat:location.latitud,
@@ -143,6 +147,7 @@ export class BotonMarca extends React.Component {
   }
       <StatusBar style="auto" />
     </View>
+    
    );
   }
 }
@@ -272,15 +277,15 @@ export class BotonMarca1 extends React.Component {
   }
 }
 
-
-
-
 const Menu = ({route,navigation}) => {
 
+  const netInfo=useNetInfo();
   const {correo,nombre,id,hora_entrada,hora_salida,apellido} =route.params;
   var hora_entrada2=hora_entrada.slice(0,5);
   var hora_salida2=hora_salida.slice(0,5);
 
+ 
+ 
 
 	const cerrarsesion = () =>{Alert.alert(	
     "",	
@@ -294,6 +299,7 @@ const Menu = ({route,navigation}) => {
     ]	
     );	
   }
+
   const historial = () =>{  
     
     var dataH=[]
@@ -313,7 +319,26 @@ const Menu = ({route,navigation}) => {
     
     }
 
+
+    const getUsuario = async () =>{ 
+      try {
+        const value = await AsyncStorage.getItem('usuarioguardado')
+        console.log(value)
+        if( value !== null){
+          let parse = JSON.parse(value).
+          console.log(parse)
+
+        }
+      }catch(e){
+  
+      }
+  
+  
+    }  
+    
+
   return (
+    netInfo.isConnected?
   <View style={styles.container}> 
     <View style={styles.shape_conatiner}>
      <View style={[styles.square,{
@@ -338,13 +363,10 @@ const Menu = ({route,navigation}) => {
     <Image source={require('../assets/logo.png')} style={styles.logo} />
     <BotonMarca1 correo={correo} idEmpleado={id}></BotonMarca1>  
     <BotonMarca correo={correo} idEmpleado={id}></BotonMarca>
-    <TouchableOpacity disabled={true} style={styles.horario}>
-      <Text style={[styles.textStyle,{fontSize:20}]}A>Horario de Trabajo</Text>
-      <Text style={[styles.textStyle,{fontSize:22}]}A>{nombre} {apellido}</Text>
-      <Text style={[styles.textStyle,{fontSize:24}]}>{hora_entrada2} - {hora_salida2}</Text>
-    </TouchableOpacity>
+  
   </View>
-  </View>
+  </View>:
+  <LoginSinConexion></LoginSinConexion>
   )
 };
 
