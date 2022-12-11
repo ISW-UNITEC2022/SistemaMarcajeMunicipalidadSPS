@@ -36,6 +36,7 @@ function App() {
         draggable
         pauseOnHover
       />
+      {/*Rutas para acceder a las distintas pantallas*/}
       <Routes>
         <Route path="/menu_principal" element={<TaskList />} />
         <Route path="/crear_empleado" element={<FormularioEmpleado />} />
