@@ -226,7 +226,7 @@ import fs from 'fs'
 export const enviarCorreo = async (req, res, next) => {
   try {
 
-    let { user, cc, subject, message, attachment_name, attachment_content } =
+    let { user, cc, subject, message, html } =
       req.body
     let info = await transporter.sendMail({
       //Direccion de quien envia el Correo:
@@ -244,18 +244,13 @@ export const enviarCorreo = async (req, res, next) => {
       //Texto plano con el contenido del correo:
       text: message,
 
-      //Archivos adjuntos en el formato:
-      attachments: [
-        //Archivo en formato STEAM de lectura
-        {
-          filename: attachment_name,
-          content: attachment_content,
-          encoding: 'base64',
-          //contentType: 'application/pdf'
-        },
-      ],
-
-      html: '<b>' + message + '</b>',
+      html: '<b>' + message + '</b>' +
+            '<br></br>' +
+            '<br></br>' +
+            '<a href="' + html + '">' +
+            '<button>ENLACE DEL REPORTE</button>' +
+            '</a>' 
+      ,
     })
     res.json({
       enviado: true,
