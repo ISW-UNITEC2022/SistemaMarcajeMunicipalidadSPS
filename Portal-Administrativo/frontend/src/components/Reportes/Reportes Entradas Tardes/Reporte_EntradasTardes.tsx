@@ -140,8 +140,8 @@ export default function Reporte_Asistencia_Tardia() {
         user: correo,
         cc: "",
         subject: "REPORTE DE ASISTENCIAS TARDIAS",
-        message: "SE ADJUNTA EN ESTE CORREO EL ENLACE AL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + " / " + añoI + " HASTA: " + mesF + " / " + añoF +  window.location.href+"_pdf?"+getMes(mesIn)+"&"+getMes(mesFin),
-        attachment_content: '1111'
+        message: "SE ADJUNTA EN ESTE CORREO EL ENLACE AL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + " HASTA: " + mesF,
+        html: window.location.href+"_pdf?"+getMes(mesIn)+"&"+getMes(mesFin)
       })
       .then((res) => {
         toast.success("¡REPORTE DE ASISTENCIAS ENVIADO CON EXITO!");
