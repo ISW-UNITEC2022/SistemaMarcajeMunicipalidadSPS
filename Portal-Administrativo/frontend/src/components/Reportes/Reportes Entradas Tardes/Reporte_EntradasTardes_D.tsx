@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import Logo from '../../../assets/Logo C3i Oficial.png'
 import {Document, Page, View, Text, Image, PDFViewer, StyleSheet} from "@react-pdf/renderer";
 
-{/*Se obtiene el mes.*/}
 const getMes=(mes)=>{
   switch(mes){
     case 1:
