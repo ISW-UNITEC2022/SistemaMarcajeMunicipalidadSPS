@@ -1,7 +1,7 @@
 import { db } from '../db/db.js'
 import { CustomError } from '../utils/CustomError.js'
 
-const estaDeAlta = async (req, res, next) => {
+const estaDeAlta = async (req, _res, next) => {
   let transaction = await db.transaction()
   try {
     let { correo } = req.body
@@ -9,7 +9,6 @@ const estaDeAlta = async (req, res, next) => {
     if (!empleado) {
       throw new CustomError('El correo no esta asignado a ningun empleado', 404)
     }
-    console.log(empleado)
     if (empleado.status === 'alta') {
       transaction.commit()
       next()
