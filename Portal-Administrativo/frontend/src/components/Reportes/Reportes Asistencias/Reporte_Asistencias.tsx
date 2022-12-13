@@ -6,7 +6,7 @@ import DataTable from 'react-data-table-component'
 import '../Reportes Asistencias/PantReportes_Asistencias.css'
 import DownloadIcon from '@mui/icons-material/Download';
 import axios from 'axios'
-import {Reporte_Asistencia_D } from './Reporte_Asistencias_D';
+import { Reporte_Asistencia_D } from './Reporte_Asistencias_D';
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from 'file-saver';
 
@@ -142,16 +142,16 @@ export default function Reporte_Asistencia_Tardia() {
   }
 
   async function send_email(e) {
-    let mesIn=mesI;
-    let mesFin=mesF;
-    if(!mesI){
+    let mesIn = mesI;
+    let mesFin = mesF;
+    if (!mesI) {
       setMesI('Enero')
-      mesIn='Enero';
+      mesIn = 'Enero';
     }
 
-    if(!mesF){
+    if (!mesF) {
       setMesF('Enero')
-      mesFin='Enero';
+      mesFin = 'Enero';
     }
     e.preventDefault();
 
@@ -160,8 +160,8 @@ export default function Reporte_Asistencia_Tardia() {
         user: correo,
         cc: "",
         subject: "REPORTE DE ASISTENCIAS",
-        message: "SE ADJUNTA EN ESTE CORREO EL ENLACE AL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + " / " + añoI + " HASTA: " + mesF + " / " + añoF + "" + window.location.href+"_pdf?"+getMes(mesIn)+"&"+getMes(mesFin),
-        attachment_content: '1111'
+        message: "SE ADJUNTA EN ESTE CORREO EL ENLACE AL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + " HASTA: " + mesF + "",
+        html: window.location.href + "_pdf?" + getMes(mesIn) + "&" + getMes(mesFin)
       })
       .then((res) => {
         toast.success("¡REPORTE DE ASISTENCIAS ENVIADO CON EXITO!");
@@ -172,6 +172,7 @@ export default function Reporte_Asistencia_Tardia() {
         console.log(error.response);
       });
   }
+
 
   useEffect(() => {
     loadTasks('Enero', 'Enero', 2022, 2022)
