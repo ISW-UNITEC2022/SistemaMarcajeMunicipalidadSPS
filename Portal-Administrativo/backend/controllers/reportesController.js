@@ -1,8 +1,5 @@
 import { db } from '../db/db.js'
 import transporter from '../utils/mailer.js'
-import { Buffer } from 'node:buffer'
-import fs from 'fs'
-
 //import { CustomError } from '../utils/CustomError.js'
 import {
   dateToTimeString,
@@ -224,10 +221,11 @@ export const obtenerFechasDisponible = async (_req, res, next) => {
 //Ruta /api/reportes/correo
 //Descripcion Envia un correo con el reporte
 
+import fs from 'fs'
+
 export const enviarCorreo = async (req, res, next) => {
   try {
-    let { user, cc, subject, message, attachment_name, attachment_content } =
-      req.body
+    let { user, cc, subject, message, html } = req.body
     let info = await transporter.sendMail({
       //Direccion de quien envia el Correo:
       from: '"DIRECCION C3i MUNICIPALIDAD DE SPS" <municipalidadspshn@gmail.com>',
@@ -244,16 +242,17 @@ export const enviarCorreo = async (req, res, next) => {
       //Texto plano con el contenido del correo:
       text: message,
 
-      //Archivos adjuntos en el formato:
-      attachments: [
-        //Archivo en formato STEAM de lectura
-        {
-          filename: attachment_name,
-          content: Buffer(attachment_content, 'utf-8'),
-        },
-      ],
-
-      html: '<b>' + message + '</b>',
+      html:
+        '<b>' +
+        message +
+        '</b>' +
+        '<br></br>' +
+        '<br></br>' +
+        '<a href="' +
+        html +
+        '">' +
+        '<button>ENLACE DEL REPORTE</button>' +
+        '</a>',
     })
     res.json({
       enviado: true,

@@ -28,4 +28,4 @@ transporter.verify().then(() => {
   console.log('Configuracion del transportador diseñada con exito.')
 })
 
-export default transporter;
+export default transporter
