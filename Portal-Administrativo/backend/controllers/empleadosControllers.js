@@ -187,13 +187,13 @@ export const crearEmpleado = async (req, res, next) => {
   } catch (error) {
     transaction.rollback()
     if (error.constraint === 'correo_unico')
-      next(new CustomError('El correo ya esta en uso'))
+      next(new CustomError('El correo ya esta en uso', 400))
     else if (error.constraint === 'empleados_pkey')
-      next(new CustomError('La identidad del empleado ya esta en uso'))
+      next(new CustomError('La identidad del empleado ya esta en uso', 400))
     else if (error.constraint == 'empleados_departamento_check')
-      next(new CustomError('El departamento no es valido'))
+      next(new CustomError('El departamento no es valido', 400))
     else if (error.constraint == 'empleados_distrito_check')
-      next(new CustomError('El distrito no es valido'))
+      next(new CustomError('El distrito no es valido', 400))
 
     next(error)
   }
@@ -378,13 +378,13 @@ export const actualizarEmpleado = async (req, res, next) => {
   } catch (error) {
     transaction.rollback()
     if (error.constraint === 'correo_unico')
-      next(new CustomError('El correo ya esta en uso'))
+      next(new CustomError('El correo ya esta en uso'), 400)
     else if (error.constraint == 'empleados_departamento_check')
-      next(new CustomError('El departamento no es valido'))
+      next(new CustomError('El departamento no es valido'), 400)
     else if (error.constraint == 'empleados_distrito_check')
-      next(new CustomError('El distrito no es valido'))
+      next(new CustomError('El distrito no es valido'), 400)
     else if (error.constraint == 'empleados_status_check')
-      next(new CustomError('El status no es valido'))
+      next(new CustomError('El status no es valido'), 400)
 
     next(error)
   }
