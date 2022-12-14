@@ -16,9 +16,8 @@ const esAdmin = async()=>{
 
     const response = await fetch(url)
     const data = await response.json()
-    console.log(data)
 
-    if(data.idempleado)
+    if(data.idempleado==='1234-5678-91011')
         setS(true)
     else
         setS(false)
