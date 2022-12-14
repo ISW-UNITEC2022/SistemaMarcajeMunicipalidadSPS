@@ -6,7 +6,7 @@ import DataTable from 'react-data-table-component'
 import '../Reportes Marcas Incompletas/PantReportes_MarcasIncompletas.css'
 import DownloadIcon from '@mui/icons-material/Download';
 import axios from 'axios';
-
+import { useAuth0 } from '@auth0/auth0-react'
 import MaterialTable from 'material-table'
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from 'file-saver';
@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Reporte_Asistencia_Tardia() {
+  const {user} = useAuth0();
   const url = "https://proyecto-isw-dev.herokuapp.com/api/reportes/disponibles";
   const url_emails = "https://proyecto-isw-dev.herokuapp.com/api/reportes/correo";
 
@@ -71,8 +72,17 @@ export default function Reporte_Asistencia_Tardia() {
       setAñoF(yearF)
     }
 
+    const response2 = await fetch("https://proyecto-isw1.herokuapp.com/api/supervisores/"+user.sub);
+    const idS = await response2.json()
+
+    let u;
+    if(idS.idempleado)
+      u='https://proyecto-isw-dev.herokuapp.com/api/reportes/incompleto?'+idS.idempleado;
+    else
+    u='https://proyecto-isw-dev.herokuapp.com/api/reportes/incompleto';
+
     const response = await fetch(
-      'https://proyecto-isw-dev.herokuapp.com/api/reportes/incompleto', {
+      u, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

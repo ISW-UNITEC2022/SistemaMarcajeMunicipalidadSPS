@@ -9,11 +9,13 @@ import axios from 'axios'
 import {Reporte_Asistencia_D } from './Reporte_Asistencias_D';
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from 'file-saver';
-
+import { useAuth0 } from '@auth0/auth0-react'
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Reporte_Asistencia_Tardia() {
+  const {user} = useAuth0();
+
   //https://proyecto-isw-dev.herokuapp.com/api/reportes/disponibles
   const url = "https://proyecto-isw-dev.herokuapp.com/api/reportes/disponibles";
   const url_emails = "https://proyecto-isw-dev.herokuapp.com/api/reportes/correo";
@@ -70,8 +72,17 @@ export default function Reporte_Asistencia_Tardia() {
       setAñoF(yearF)
     }
 
+    const response2 = await fetch("https://proyecto-isw1.herokuapp.com/api/supervisores/"+user.sub);
+    const idS = await response2.json()
+
+    let u;
+    if(idS.idempleado)
+      u='https://proyecto-isw-dev.herokuapp.com/api/reportes?'+idS.idempleado;
+    else
+    u='https://proyecto-isw-dev.herokuapp.com/api/reportes';
+
     const response = await fetch(
-      'https://proyecto-isw-dev.herokuapp.com/api/reportes', {
+      u, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

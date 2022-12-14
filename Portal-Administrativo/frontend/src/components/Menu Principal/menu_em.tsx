@@ -6,7 +6,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 
 function DropdownM(props){
 
-const {user } = useAuth0();
+const {user} = useAuth0();
 
 const url = "https://proyecto-isw1.herokuapp.com/api/supervisores/"+user.sub;
 
