@@ -93,7 +93,7 @@ export default function TaskList() {
   return (
     (isAuthenticated || isLoading)
       ?
-      (empleado.status == "alta")
+      (empleado.status === "alta")
         ?
         <div>
           <MenuUsuario></MenuUsuario>
@@ -143,7 +143,7 @@ export default function TaskList() {
           </div>
         </div>
         :
-        ((idSuper == "Error de Autenticacion" && !isLoading) || (empleado.status == "baja"))
+        ((idSuper === "Error de Autenticacion" && !isLoading) || (empleado.status == "baja"))
           ?
           <>
             {logout()}
