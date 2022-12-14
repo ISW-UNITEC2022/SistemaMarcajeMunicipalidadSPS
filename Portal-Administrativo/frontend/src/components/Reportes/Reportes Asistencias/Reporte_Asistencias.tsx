@@ -72,15 +72,8 @@ export default function Reporte_Asistencia_Tardia() {
       setAñoF(yearF)
     }
 
-    const response2 = await fetch("https://proyecto-isw1.herokuapp.com/api/supervisores/"+user.sub);
-    const idS = await response2.json()
-
-    let u;
-    if(idS.idempleado)
-      u='https://proyecto-isw-dev.herokuapp.com/api/reportes?'+idS.idempleado;
-    else
-    u='https://proyecto-isw-dev.herokuapp.com/api/reportes';
-
+    let u='https://proyecto-isw-dev.herokuapp.com/api/reportes';
+    
     const response = await fetch(
       u, {
       method: 'POST',

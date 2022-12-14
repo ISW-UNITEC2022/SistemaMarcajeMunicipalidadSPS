@@ -77,7 +77,7 @@ export default function Reporte_Asistencia_Tardia() {
 
     let u;
     if(idS.idempleado)
-      u='https://proyecto-isw-dev.herokuapp.com/api/reportes/incompleto?'+idS.idempleado;
+      u='https://proyecto-isw-dev.herokuapp.com/api/reportes/incompleto?supervisor='+idS.idempleado;
     else
     u='https://proyecto-isw-dev.herokuapp.com/api/reportes/incompleto';
 
