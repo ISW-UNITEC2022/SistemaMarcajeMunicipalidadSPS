@@ -8,14 +8,15 @@ import {useNetInfo} from "@react-native-community/netinfo";
 import LoginSinConexion from './Login';
 import { AsyncStorage } from 'react-native';
 
+//Boton para almacenar la marca de salida
 export class BotonMarca2 extends React.Component {
 
   state={
-    entrada:true,
+    entrada:false,
     pressed:false,
     id:this.props.idEmpleado,
   }
-
+//Obtiene las coordenadas con Location
   _getLocation = async() =>{
     const {status} = await Permissions.askAsync(Permissions.LOCATION)
     if(status!=='granted'){
@@ -42,23 +43,23 @@ export class BotonMarca2 extends React.Component {
     //Almacenar la salida
     let today = new Date()
     let marca = {
-      latitud:location.latitud,
-      longitud:location.longitud,
+      lat:location.latitud,
+      lon:location.longitud,
       idempleado:this.state.id,
       tipo:false,
       date:today
     }
 
-    AsyncStorage.setItem('salidaoffline',JSON.stringify(marca),() =>{AsyncStorage.getItem('salidaoffline',(err,result) => {console.log(result)})})
-    
-
+    await AsyncStorage.setItem('salidaoffline',JSON.stringify(marca),() =>{AsyncStorage.getItem('salidaoffline',(err,result) => {console.log(result)})})
+    console.log("Se acaba de marcar la salida.");
+    this.setState({pressed:true,});
 
   }
   
   marcar = () =>{
     Alert.alert(
       "",
-      "Desea su marcar su salida dentro del sistema?",
+      "Desea guardar su marca de salida dentro de su dispositivo? Tendrá que enviarla desde el menú online más tarde.",
       [
         {
           text: "Sí",
@@ -75,9 +76,9 @@ export class BotonMarca2 extends React.Component {
 
     getMarca = async () =>{ 
       try {
-        const value = await AsyncStorage.getItem('entradaoffline')
+        const value = await AsyncStorage.getItem('salidaoffline')
         if( value !== null){
-          //si hay marca entonces se desabilita el boton
+          //si hay marca de salida entonces se deshabilita el boton
           this.setState({
             pressed:true,
           });
@@ -85,12 +86,9 @@ export class BotonMarca2 extends React.Component {
       }catch(e){
   
       }
-  
-    }  
-
-
+    } 
     getMarca()
-    //Aquí hay que verificar si hay marcas de salida de hoy en el almacenamiento local
+    //Aquí hay que verificar si hay marcas de entrada de hoy en el almacenamiento local
     //Si es así, pasar el boton a deshabilitado.
   }
   render(){
@@ -116,15 +114,15 @@ export class BotonMarca2 extends React.Component {
   }
 }
 
+//Boton para almacenar la marca de entrada
 export class BotonMarca3 extends React.Component {
 
-  
   state={
     entrada:true,
     pressed:false,
     id:this.props.idEmpleado,
   }
-
+//Obtiene las coordenadas con Location
   _getLocation = async() =>{
     const {status} = await Permissions.askAsync(Permissions.LOCATION)
     if(status!=='granted'){
@@ -153,18 +151,19 @@ export class BotonMarca3 extends React.Component {
       lat:location.latitud,
       lon:location.longitud,
       idempleado:this.state.id,
-      tipo:false,
+      tipo:true,
       date:today
     }
 
-    AsyncStorage.setItem('entradaoffline',JSON.stringify(marca),() =>{AsyncStorage.getItem('entradaoffline',(err,result) => {console.log(result)})})
-    
+    await AsyncStorage.setItem('entradaoffline',JSON.stringify(marca),() =>{AsyncStorage.getItem('entradaoffline',(err,result) => {console.log(result)})})
+    console.log("Se acaba de marcar la entrada.");
+    this.setState({pressed:true,});
   }
   
   marcar = () =>{
     Alert.alert(
       "",
-      "Desea su marcar su entrada dentro del sistema?",
+      "Desea guardar su marca de salida dentro de su dispositivo? Tendrá que enviarla desde el menú online más tarde.",
       [
         {
           text: "Sí",
@@ -182,7 +181,7 @@ export class BotonMarca3 extends React.Component {
       try {
         const value = await AsyncStorage.getItem('entradaoffline')
         if( value !== null){
-          //si hay marca entonces se desabilita el boton
+          //si hay marca de entrada entonces se deshabilita el boton
           this.setState({
             pressed:true,
           });
@@ -222,24 +221,11 @@ export class BotonMarca3 extends React.Component {
 }
 
 
-class Usuario extends React.Component {
- 
-
-  constructor(props){
-    super(props);
-    this.getUsuario();
-  }
-  
- 
-
-}
 
 const MenuOffline = ({route,navigation}) => {
 
   const netInfo=useNetInfo();
   const {correo,nombre,id,hora_entrada,hora_salida,apellido} =route.params
-
-
   
 	const cerrarsesion = () =>{Alert.alert(	
     "",	
@@ -253,6 +239,22 @@ const MenuOffline = ({route,navigation}) => {
     ]	
     );	
   }
+
+  borrarMarca = () =>{
+    console.log("borrarMarca()");
+    borrarMarcaOffline('salidaoffline');
+  }
+
+  const borrarMarcaOffline = async(key) => {
+    console.log('borrarMarcaOffline('+'\''+key+'\')')
+    try{
+        AsyncStorage.removeItem('entradaoffline');
+        AsyncStorage.removeItem('salidaoffline');
+    }
+    catch(error){
+        console.log(error)
+    }
+};
 
 
   const getmarcae = async () =>{ 
@@ -294,7 +296,7 @@ const MenuOffline = ({route,navigation}) => {
 
     <BotonMarca3 idEmpleado={id}></BotonMarca3>
     <BotonMarca2 idEmpleado={id}></BotonMarca2>
-    <TouchableOpacity disabled={true} style={styles.horario}>
+    <TouchableOpacity disabled={false} style={styles.horario} onPress={()=>this.borrarMarca()}>
       <Text style={[styles.textStyle,{fontSize:20}]}A>{nombre} {apellido}</Text>
       <Text style={[styles.textStyle,{fontSize:20}]}>{id}</Text>
     </TouchableOpacity>

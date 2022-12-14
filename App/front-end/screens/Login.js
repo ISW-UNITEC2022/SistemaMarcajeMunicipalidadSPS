@@ -1,5 +1,3 @@
-
-
 import { StatusBar } from 'expo-status-bar';
 import {useNetInfo} from "@react-native-community/netinfo";
 import React, {Component, useState} from 'react';
@@ -10,6 +8,7 @@ import { json, useNavigate } from 'react-router-dom';
 import MenuOffline from './MenuOffline';
 import { CheckBox } from 'react-native-elements';
 import { AsyncStorage } from 'react-native';
+import { color } from 'react-native-elements/dist/helpers';
 
 
 export class LoginSinConexion extends React.Component{
@@ -75,12 +74,10 @@ axios.post('https://proyecto-isw1.herokuapp.com/api/empleados/auth', {
       id:response.data.idempleado,
       hora_entrada:response.data.horaentrada,
       hora_salida:response.data.horasalida,
-      apellido:response.data.apellido
+      apellido:response.data.apellido,
     }
-
     AsyncStorage.setItem('usuarioguardado',JSON.stringify(usuario_objecto),() =>{AsyncStorage.getItem('usuarioguardado',(err,result) => {console.log(result)})})
-    
-  
+
   }
 
   Alert.alert(
@@ -107,7 +104,7 @@ axios.post('https://proyecto-isw1.herokuapp.com/api/empleados/auth', {
 
   return (
    netInfo.isConnected?
-    <View style={styles.container}> 
+<View style={styles.container}> 
     <View style={styles.shape_conatiner}>
      <View style={[styles.square,{
       backgroundColor: '#02732A'
@@ -136,7 +133,7 @@ axios.post('https://proyecto-isw1.herokuapp.com/api/empleados/auth', {
             
 
       </View> 
-      <CheckBox  style={styles.checkbutton} 
+      <CheckBox  containerStyle={styles.checkbutton} checkedColor={"#02732A"}
             title="Usuario Predeterminado"
             checked={usuariopred}
             onPress={()=>setUsuario(!usuariopred)}
@@ -153,6 +150,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+ 
   shape_conatiner:{
     height: 20,
     width: 125,
@@ -162,7 +160,6 @@ const styles = StyleSheet.create({
     alignItems:'flex-start',
   },
   warning:{
-    
     height: 180,
     width: 290,
     backgroundColor: '#BF0404',
@@ -170,6 +167,10 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     flex:-1,
     borderRadius:5,
+  },
+  square:{
+    height: 20,
+    width: 125,
   },
   logo:{
   resizeMode: 'contain',
@@ -230,11 +231,9 @@ const styles = StyleSheet.create({
     fontWeight:'bold'
   },
   checkbutton:{
-  height: 125,
-  width: 125,
-  left: 0,  
-  top: 100,
-  backgroundcolor:'#02732A'
+    borderWidth: 1,        
+    backgroundColor: '#f2f2f2', 
+    borderColor: '#f2f2f2',   
   },
   warning_txt:{
     fontSize:20,
@@ -254,6 +253,7 @@ const styles = StyleSheet.create({
   left: 0,  
   top: 0,
   },
+
   offline_btn:{
     top:100,
     backgroundColor:'#02732A',

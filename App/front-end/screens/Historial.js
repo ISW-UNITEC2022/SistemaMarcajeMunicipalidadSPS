@@ -7,6 +7,7 @@ import axios from "axios";
 import { LoginSinConexion } from './Login';
 import {useNetInfo} from "@react-native-community/netinfo";
 
+//El objeto que representa cada dia{Fecha, H. Entrada, H. salida,}
 export class TuplaMarca extends React.Component {
 
   s_color="#202020";
@@ -39,10 +40,7 @@ const Historial = ({route,navigation}) => {
 
   const idEmpleado=route.params.id;
   const horario=route.params.data;
-  const netInfo=useNetInfo();
 
-  const widthArr = [110, 110, 110,];
-  const x={h_entrada:"7:00",h_salida:"17:00",fecha:"15/9/2022"};
   horario.map((d)=>{
       if(d.horaentrada==null){d.horaentrada=" N/A        ";};
       if(d.horasalida==null){d.horasalida=" N/A        ";};
@@ -51,20 +49,7 @@ const Historial = ({route,navigation}) => {
     var data = horario;
     console.log(data);
 
-
-	  const cerrarsesion = () =>{Alert.alert(	
-    "",	
-    "Desea cerrar sesión?",	
-    [	
-      {	
-        text: "Sí",	
-        onPress: () =>  navigation.navigate('Login'),	
-      },	
-      { text: "No", onPress: () => console.log("OK Pressed") }	
-    ]	
-    );	
-  }
-  return(netInfo.isConnected?
+  return(
     <View style={[styles.container]}>
       <View style={styles.container}>
       <Text>
@@ -87,8 +72,7 @@ const Historial = ({route,navigation}) => {
                 }
       </ScrollView>
       </View>
-    </View>:
-    <LoginSinConexion></LoginSinConexion>
+    </View>
   )
 };
 

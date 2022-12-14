@@ -8,6 +8,7 @@ import {useNetInfo} from "@react-native-community/netinfo";
 import LoginSinConexion from './Login';
 import { AsyncStorage } from 'react-native';
 
+//Boton Salida
 export class BotonMarca extends React.Component {
 
   state={
@@ -152,8 +153,8 @@ export class BotonMarca extends React.Component {
   }
 }
 
+//Boton Entrada
 export class BotonMarca1 extends React.Component {
-
   
   state={
     entrada:true,
@@ -277,6 +278,137 @@ export class BotonMarca1 extends React.Component {
   }
 }
 
+export class EnviarMarcasOfflineBtn extends React.Component{
+
+  
+  state={
+    active:true,
+    
+  }
+
+  enviarMarca=async(marca)=>{
+    let parse=JSON.parse(marca);
+    console.log("Props:"+marca);
+    console.log("Objeto:"+parse);
+    console.log("ID:"+parse.idempleado);
+    console.log("lat:"+parse.latitud);
+    console.log("lon:"+parse.longitud);
+    console.log("date:"+parse.date);
+    console.log("Tipo:"+parse.tipo);
+    axios.post('https://proyecto-isw1.herokuapp.com/api/marcaje', {
+      lat:parse.lat,
+      lon:parse.lon,
+      idempleado:parse.idempleado,
+      tipo:parse.tipo,
+      fecha:parse.date,
+    }).then(response => {
+      console.log(response.status);
+      Alert.alert(
+        "",
+        "Se ha enviado su marca con éxito.",
+        [
+          { text: "Ok", onPress: () => console.log("OK Pressed") }
+        ]
+      );
+      //Borrar la marca después de enviarla
+      !parse.tipo?this.borrarMarcaOffline('salidaoffline'):this.borrarMarcaOffline('entradaoffline');
+      ///////////////////////////////////////
+    }).catch(error => {
+      console.log("Error:"+error)
+      console.log(error.response.data);
+      if(error.response.data.status==409){
+        Alert.alert(
+          "",
+          "Ya marcó su salida hoy.",
+          [
+            { text: "Ok", onPress: () => console.log("OK Pressed") }
+          ]
+        );
+        if(error.response.data.status==401){
+          Alert.alert(
+            "",
+            "No ha marcado su entrada el dia de hoy.",
+            [
+              { text: "Ok", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+        }
+      }
+    });
+  }
+
+  evaluarEntrada(marcaEntrada){
+  }
+
+  evaluarSalida(marcaSalida){
+
+  }
+
+  leerMarcas = async () => {
+    console.log("leerMarcas!")
+    try {
+      const marcaEntrada= await AsyncStorage.getItem('entradaoffline');
+      const marcaE=marcaEntrada;
+      const marcaSalida= await AsyncStorage.getItem('salidaoffline');
+      const marcaS=marcaSalida;
+      if (marcaEntrada !== null) {
+        // Hay una marca de entrada
+        console.log(marcaE);
+        await this.enviarMarca(marcaE);
+      }
+      if (marcaSalida !== null) {
+        // Hay una marca de salida
+        console.log(marcaSalida);
+        await this.enviarMarca(marcaS);
+      }
+      if (marcaSalida == null && marcaEntrada == null) {
+        Alert.alert(
+          "",
+          "No tiene marcas pendientes.",
+          [
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+          ]
+        );
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log(error);
+    }
+    //BORRAR LAS MARCAS DESPUES DE QUE HAN SIDO ENVIADAS
+
+  };
+
+  componentDidMount(){
+   //this.evaluarEntrada(marcaEntrada);
+  //this.evaluarSalida(marcaSalida);
+  }
+
+  borrarMarca = (llave) =>{
+    console.log("borrarMarca()");
+    borrarMarcaOffline(llave);
+  }
+
+  borrarMarcaOffline = async(key) => {
+    console.log('borrarMarcaOffline('+'\''+key+'\')')
+    try{
+        await AsyncStorage.removeItem(key);
+    }
+    catch(error){
+        console.log(error)
+    }
+};
+
+  render(){
+    return(
+    <TouchableOpacity style={[styles.imgbutton]} onPress={()=>this.leerMarcas()}>
+      
+      <Image source={require('../assets/enviarMarca.png')}  style={styles.enviar} />
+       
+    </TouchableOpacity>
+    );
+  }
+}
+
 const Menu = ({route,navigation}) => {
 
   const netInfo=useNetInfo();
@@ -284,8 +416,6 @@ const Menu = ({route,navigation}) => {
   var hora_entrada2=hora_entrada.slice(0,5);
   var hora_salida2=hora_salida.slice(0,5);
 
- 
- 
 
 	const cerrarsesion = () =>{Alert.alert(	
     "",	
@@ -304,10 +434,11 @@ const Menu = ({route,navigation}) => {
     
     var dataH=[]
     
+    //Obtiene un arreglo de las marcas de los últimos 30 dias
     axios.get('https://proyecto-isw1.herokuapp.com/api/empleados/historial/'+id,{
     }).then(response => {
     dataH=response.data
-    
+    //El arreglo anterior es enviado a la pantalla Historial junto con la ID del usuario
       navigation.navigate('Historial',{
         id:id,
         data:dataH})
@@ -361,12 +492,45 @@ const Menu = ({route,navigation}) => {
     </View>
   <View style={styles.container}>
     <Image source={require('../assets/logo.png')} style={styles.logo} />
+    
     <BotonMarca1 correo={correo} idEmpleado={id}></BotonMarca1>  
     <BotonMarca correo={correo} idEmpleado={id}></BotonMarca>
-  
+    <EnviarMarcasOfflineBtn active={false}></EnviarMarcasOfflineBtn>
+    <TouchableOpacity disabled={true} style={styles.horario}>
+      <Text style={[styles.textStyle,{fontSize:20}]}A>Horario de Trabajo</Text>
+      <Text style={[styles.textStyle,{fontSize:22}]}A>{nombre} {apellido}</Text>
+      <Text style={[styles.textStyle,{fontSize:24}]}>{hora_entrada2} - {hora_salida2}</Text>
+    </TouchableOpacity>
   </View>
   </View>:
-  <LoginSinConexion></LoginSinConexion>
+  <View>
+    <View style={styles.containerbut}>
+   <View style={styles.shape_conatiner}>
+     <View style={[styles.square,{
+      backgroundColor: '#02732A'
+     }]}/>
+     <View style={[styles.square,{
+      backgroundColor: '#F2B705'
+     }]}/>
+     <View style={[styles.square,{
+      backgroundColor: '#BF0404'
+     }]}/>
+     </View>
+     </View>
+  <View style={[styles.container,styles.offlinegap]}>
+    <Image source={require('../assets/sin_conexion.png')} style={styles.warning_img}></Image>
+    <TouchableOpacity disabled={true} style={[styles.small_warning]}>
+      
+      <Text style={[styles.warning_txt]}>No hay una conexión disponible.</Text>
+       
+    </TouchableOpacity>
+    <TouchableOpacity style={[styles.buttonOffline]} onPress={()=>cerrarsesion()}>
+      
+      <Text style={[styles.active,styles.marcasOfflineTxtActive]}>Regresar a Iniciar Sesión</Text>
+       
+    </TouchableOpacity>
+  </View>
+  </View>
   )
 };
 
@@ -376,6 +540,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2F2F2',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  offlinegap:{
+    marginTop:300,
   },
   containerbut: {
     flexDirection: 'row',
@@ -425,6 +592,14 @@ const styles = StyleSheet.create({
     color:"#F2B705",
     left:-130,	
     top:-30,	
+  },
+  enviar:{
+    height:40,
+    width:40,
+    resizeMode:"contain",
+    color:"#F2B705",
+    left:155,	
+    top:-470,	
   },
   historial:{
     height:40,
@@ -517,7 +692,57 @@ const styles = StyleSheet.create({
   gray:{
     backgroundColor:'#757575',
     fontSize:'30px'
-  }
+  },
+  marcasOfflineTxtActive:{
+    textDecorationLine:'underline',
+    fontSize:15,
+    color:'#3f8c3f'
+  },
+  marcasOfflineTxtInactive:{
+    textDecorationLine:'underline',
+    fontSize:15,
+    color:'#778c72'
+  },
+  active:{
+    borderColor:'#3f8c3f',
+    borderWidth:1,
+    borderRadius:5,
+    height:30,
+    justifyContent:'center'
+  },
+  buttonOffline:{
+    alignItems:'center',
+    height: 60,
+    width:255,
+    justifyContent: 'center',
+    borderRadius:5,
+    marginTop:0,
+  },
+  warning_img:{
+    height: 125,
+    width: 125,
+    left: 0,  
+    top: 0,
+    },
+    warning_txt:{
+      fontSize:20,
+      top:0,
+      color:'#F2F2F2',
+      textAlign:'center',
+      fontWeight:'normal',
+      alignSelf: 'center',
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlignVertical: 'center',
+      alignContent: 'center',},
+      small_warning:{
+        height: 60,
+        width: 290,
+        backgroundColor: '#BF0404',
+        flexDirection: 'row',
+        justifyContent:'center',
+        borderRadius:5,
+      },
 
 });
 
