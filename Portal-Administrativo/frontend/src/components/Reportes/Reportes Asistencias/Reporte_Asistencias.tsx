@@ -18,7 +18,7 @@ export default function Reporte_Asistencia_Tardia() {
 
   //https://proyecto-isw-dev.herokuapp.com/api/reportes/disponibles
   const url = "https://proyecto-isw-dev.herokuapp.com/api/reportes/disponibles";
-  const url_emails = "https://proyecto-isw-dev.herokuapp.com/api/reportes/correo";
+  const url_emails = "https://proyecto-isw1.herokuapp.com/api/reportes/correo";
 
   const [Tasks, setTasks] = useState([])
   const [dataT, setdataT] = useState([])
