@@ -6,7 +6,7 @@ import DataTable from 'react-data-table-component'
 import '../Reportes Marcas Incompletas/PantReportes_MarcasIncompletas.css'
 import DownloadIcon from '@mui/icons-material/Download';
 import axios from 'axios';
-
+import { useAuth0 } from '@auth0/auth0-react'
 import MaterialTable from 'material-table'
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from 'file-saver';
@@ -15,11 +15,9 @@ import { Reporte_MarcasIncompletas_D } from './Reporte_MarcasIncompletas_D'
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { useAuth0 } from '@auth0/auth0-react';
-import { Navigate } from "react-router-dom";
-
 export default function Reporte_Asistencia_Tardia() {
-  const url = "https://proyecto-isw-dev.herokuapp.com/api/reportes/disponibles";
+  const {user} = useAuth0();
+  const url = "https://proyecto-isw1.herokuapp.com/api/reportes/disponibles";
   const url_emails = "https://proyecto-isw1.herokuapp.com/api/reportes/correo";
 
   const [Tasks, setTasks] = useState([])
@@ -54,7 +52,6 @@ export default function Reporte_Asistencia_Tardia() {
   };
 
   const loadTasks = async (mI, mF, yearI, yearF) => {
-
     if (mI.length === 0) {
       mI = 'Enero';
       setMesI(mI);
@@ -65,8 +62,28 @@ export default function Reporte_Asistencia_Tardia() {
       setMesF(mF);
     }
 
+    if (yearI.length === 0) {
+      yearI = 2022;
+      setAñoI(yearI)
+    }
+
+    if (yearF.length === 0) {
+      yearF = 2022;
+      setAñoF(yearF)
+    }
+
+    const response2 = await fetch("https://proyecto-isw1.herokuapp.com/api/supervisores/"+user.sub);
+    const idS = await response2.json()
+    console.log(user.sub)
+    let u;
+    if(user.sub==="auth0|62f3ecea26ef957bf8d3b45d")
+      u='https://proyecto-isw1.herokuapp.com/api/reportes/incompleto';
+    else
+      u='https://proyecto-isw1.herokuapp.com/api/reportes/incompleto?supervisor='+idS.idempleado;
+    
+    console.log(u);
     const response = await fetch(
-      'https://proyecto-isw-dev.herokuapp.com/api/reportes/incompleto', {
+      u, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -74,11 +91,11 @@ export default function Reporte_Asistencia_Tardia() {
       body: JSON.stringify({
         "mesInicial": {
           "month": getMes(mI),
-          "year": 2022
+          "year": yearI
         },
         "mesFinal": {
           "month": getMes(mF),
-          "year": 2022
+          "year": yearF
         }
       }),
     }
@@ -125,16 +142,16 @@ export default function Reporte_Asistencia_Tardia() {
   }
 
   async function send_email(e) {
-    let mesIn = mesI;
-    let mesFin = mesF;
-    if (!mesI) {
+    let mesIn=mesI;
+    let mesFin=mesF;
+    if(!mesI){
       setMesI('Enero')
-      mesIn = 'Enero';
+      mesIn='Enero';
     }
 
-    if (!mesF) {
+    if(!mesF){
       setMesF('Enero')
-      mesFin = 'Enero';
+      mesFin='Enero';
     }
     e.preventDefault();
 
@@ -144,7 +161,7 @@ export default function Reporte_Asistencia_Tardia() {
         cc: "",
         subject: "REPORTE DE ASISTENCIAS INCOMPLETAS",
         message: "SE ADJUNTA EN ESTE CORREO EL ENLACE AL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + " HASTA: " + mesF,
-        html: window.location.href + "_pdf?" + getMes(mesIn) + "&" + getMes(mesFin)
+        html: window.location.href+"_pdf?"+getMes(mesIn)+"&"+getMes(mesFin)+"&"+añoI+"&"+añoF
       })
       .then((res) => {
         toast.success("¡REPORTE DE ASISTENCIAS ENVIADO CON EXITO!");
@@ -296,37 +313,15 @@ export default function Reporte_Asistencia_Tardia() {
     loadTasks(mesI, mesF, añoI, añoF);
   }
 
-  const { user, isAuthenticated, isLoading } = useAuth0();
-
-  const usuario_id = () => {
-    if (isAuthenticated) return user.sub
-    else if (isLoading) return ""
-    else return 'Error de Autenticacion'
-  }
-
-  const idSuper = usuario_id();
-
   return (
-    (isAuthenticated || idSuper === "")
-      ?
+    <div>
+      <MenuUsuario></MenuUsuario>
+      <BotonHome></BotonHome>
       <div>
-        <MenuUsuario></MenuUsuario>
-        <BotonHome></BotonHome>
-        <div>
-          <img
-            src={Logo}
-            style={{ height: '10vw', width: 'auto', marginLeft: '4vw' }}
-          />
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <h3>Dirección C3i Municipalidad de San Pedro Sula</h3>
-          </div>
-        </div>
+        <img
+          src={Logo}
+          style={{ height: '10vw', width: 'auto', marginLeft: '4vw' }}
+        />
         <div
           style={{
             display: 'flex',
@@ -334,159 +329,163 @@ export default function Reporte_Asistencia_Tardia() {
             justifyContent: 'center',
           }}
         >
-          <h5>Formato de Reportes de Marcas Incompletas</h5>
-        </div>
-
-        <button onClick={downloadR} id='button_RMI'
-          style={{
-            marginLeft: "83vw",
-            marginTop: "20px",
-            marginBottom: "20px"
-          }}
-        >
-          <span>
-            <DownloadIcon
-              style={{
-                fontSize: "22px"
-              }}
-            ></DownloadIcon>
-          </span>
-
-          Descargar
-        </button>
-
-        <div id='grid_RMI'>
-          <div id='item_RMI'>
-            <p>Seleccionar rango de fecha del reporte:</p>
-            <select
-              id='select_M_RMI'
-              onChange={handleMesI}
-              value={mesI}
-            >
-              <option value={"Enero"}>Enero</option>
-              <option value={"Febrero"}>Febrero</option>
-              <option value={"Marzo"}>Marzo</option>
-              <option value={"Abril"}>Abril</option>
-              <option value={"Mayo"}>Mayo</option>
-              <option value={"Junio"}>Junio</option>
-              <option value={"Julio"}>Julio</option>
-              <option value={"Agosto"}>Agosto</option>
-              <option value={"Septiembre"}>Septiembre</option>
-              <option value={"Octubre"}>Octubre</option>
-              <option value={"Noviembre"}>Noviembre</option>
-              <option value={"Diciembre"}>Diciembre</option>
-            </select>
-
-            <span style={{ marginLeft: "5px" }}></span>
-
-            <select
-              id='select_A_RMI'
-              onChange={handleAñoI}
-              value={añoI}
-              defaultValue={firstem}
-            >
-              {años.map((a) => (
-                <option value={a.fecha} key={a.fecha}>
-                  {a.fecha}
-                </option>
-              ))}
-            </select>
-
-            <span style={{ marginLeft: "25px" }}></span>
-
-            <select
-              id='select_M_RMI'
-              onChange={handleMesF}
-              value={mesF}
-            >
-              <option value={"Enero"}>Enero</option>
-              <option value={"Febrero"}>Febrero</option>
-              <option value={"Marzo"}>Marzo</option>
-              <option value={"Abril"}>Abril</option>
-              <option value={"Mayo"}>Mayo</option>
-              <option value={"Junio"}>Junio</option>
-              <option value={"Julio"}>Julio</option>
-              <option value={"Agosto"}>Agosto</option>
-              <option value={"Septiembre"}>Septiembre</option>
-              <option value={"Octubre"}>Octubre</option>
-              <option value={"Noviembre"}>Noviembre</option>
-              <option value={"Diciembre"}>Diciembre</option>
-            </select>
-
-            <span style={{ marginLeft: "5px" }}></span>
-
-            <select
-              id='select_A_RMI'
-              onChange={handleAñoF}
-              value={añoF}
-              defaultValue={firstem}
-            >
-              {años.map((a) => (
-                <option value={a.fecha} key={a.fecha}>
-                  {a.fecha}
-                </option>
-              ))}
-            </select>
-
-            <button onClick={buscarFecha} id='button_RA'
-              style={{
-                width: "auto",
-                marginLeft: '0.5vw'
-              }}
-            >
-              Buscar Fecha
-            </button>
-
-            <p>
-              <span style={{ marginLeft: "0.5vw" }}>Desde: </span>
-              <span style={{ marginLeft: "14.5vw" }} >Hasta: </span>
-            </p>
-          </div>
-          <div id='item_RMI'>
-            <p>Ingresar destinario (correo electrónico):</p>
-
-            <input
-              id='input_RMI'
-              onChange={handleCorreo}
-            >
-
-            </input>
-
-            <span style={{ marginLeft: "5px" }}></span>
-
-            <button
-              id='button_RMI'
-              onClick={send_email}
-            >
-              Enviar
-            </button>
-          </div>
-        </div>
-
-        <div
-          id='contenedorR'
-          style={{ width: '90vw', marginLeft: '4vw', marginTop: '2vh' }}
-        >
-          <p>
-            A continuación se presenta un reporte completo de las marcas
-            incompletas dentro de la aplicación por el equipo de “Los Amigos de la
-            Municipalidad”, con un reporte completo de datos personales y fechas
-            de dichos marcajes entre el mes {mesI} y {mesF}.
-          </p>
-        </div>
-
-        <div
-          id='contenedorR'
-          style={{ width: '90vw', marginLeft: '4vw', marginTop: '2vh' }}
-        >
-          <DataTable noDataComponent="Sin registros que mostrar" columns={columns} data={dataT} />
+          <h3>Dirección C3i Municipalidad de San Pedro Sula</h3>
         </div>
       </div>
-      :
-      (idSuper === "Error de Autenticacion")
-        ?
-        <Navigate to="/" replace={true} />
-        :
-        <></>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <h5>Formato de Reportes de Marcas Incompletas</h5>
+      </div>
+
+      <button onClick={downloadR} id='button_RMI'
+        style={{
+          marginLeft: "83vw",
+          marginTop: "20px",
+          marginBottom: "20px"
+        }}
+      >
+        <span>
+          <DownloadIcon
+            style={{
+              fontSize: "22px"
+            }}
+          ></DownloadIcon>
+        </span>
+
+        Descargar
+      </button>
+
+      <div id='grid_RMI'>
+        <div id='item_RMI'>
+          <p>Seleccionar rango de fecha del reporte:</p>
+          <select
+            id='select_M_RMI'
+            onChange={handleMesI}
+            value={mesI}
+          >
+            <option value={"Enero"}>Enero</option>
+            <option value={"Febrero"}>Febrero</option>
+            <option value={"Marzo"}>Marzo</option>
+            <option value={"Abril"}>Abril</option>
+            <option value={"Mayo"}>Mayo</option>
+            <option value={"Junio"}>Junio</option>
+            <option value={"Julio"}>Julio</option>
+            <option value={"Agosto"}>Agosto</option>
+            <option value={"Septiembre"}>Septiembre</option>
+            <option value={"Octubre"}>Octubre</option>
+            <option value={"Noviembre"}>Noviembre</option>
+            <option value={"Diciembre"}>Diciembre</option>
+          </select>
+
+          <span style={{ marginLeft: "5px" }}></span>
+
+          <select
+            id='select_A_RMI'
+            onChange={handleAñoI}
+            value={añoI}
+            defaultValue={firstem}
+          >
+            {años.map((a) => (
+              <option value={a.fecha} key={a.fecha}>
+                {a.fecha}
+              </option>
+            ))}
+          </select>
+
+          <span style={{ marginLeft: "25px" }}></span>
+
+          <select
+            id='select_M_RMI'
+            onChange={handleMesF}
+            value={mesF}
+          >
+            <option value={"Enero"}>Enero</option>
+            <option value={"Febrero"}>Febrero</option>
+            <option value={"Marzo"}>Marzo</option>
+            <option value={"Abril"}>Abril</option>
+            <option value={"Mayo"}>Mayo</option>
+            <option value={"Junio"}>Junio</option>
+            <option value={"Julio"}>Julio</option>
+            <option value={"Agosto"}>Agosto</option>
+            <option value={"Septiembre"}>Septiembre</option>
+            <option value={"Octubre"}>Octubre</option>
+            <option value={"Noviembre"}>Noviembre</option>
+            <option value={"Diciembre"}>Diciembre</option>
+          </select>
+
+          <span style={{ marginLeft: "5px" }}></span>
+
+          <select
+            id='select_A_RMI'
+            onChange={handleAñoF}
+            value={añoF}
+            defaultValue={firstem}
+          >
+            {años.map((a) => (
+              <option value={a.fecha} key={a.fecha}>
+                {a.fecha}
+              </option>
+            ))}
+          </select>
+
+          <button onClick={buscarFecha} id='button_RA'
+            style={{
+              width: "auto",
+              marginLeft: '0.5vw'
+            }}
+          >
+            Buscar Fecha
+          </button>
+
+          <p>
+            <span style={{ marginLeft: "0.5vw" }}>Desde: </span>
+            <span style={{ marginLeft: "14.5vw" }} >Hasta: </span>
+          </p>
+        </div>
+        <div id='item_RMI'>
+          <p>Ingresar destinario (correo electrónico):</p>
+
+          <input
+            id='input_RMI'
+            onChange={handleCorreo}
+          >
+
+          </input>
+
+          <span style={{ marginLeft: "5px" }}></span>
+
+          <button
+            id='button_RMI'
+            onClick={send_email}
+          >
+            Enviar
+          </button>
+        </div>
+      </div>
+
+      <div
+        id='contenedorR'
+        style={{ width: '90vw', marginLeft: '4vw', marginTop: '2vh' }}
+      >
+        <p>
+          A continuación se presenta un reporte completo de las marcas
+          incompletas dentro de la aplicación por el equipo de “Los Amigos de la
+          Municipalidad”, con un reporte completo de datos personales y fechas
+          de dichos marcajes entre el mes {mesI} y {mesF}.
+        </p>
+      </div>
+
+      <div
+        id='contenedorR'
+        style={{ width: '90vw', marginLeft: '4vw', marginTop: '2vh' }}
+      >
+        <DataTable noDataComponent="Sin registros que mostrar" columns={columns} data={dataT} />
+      </div>
+    </div>
   )
 }
