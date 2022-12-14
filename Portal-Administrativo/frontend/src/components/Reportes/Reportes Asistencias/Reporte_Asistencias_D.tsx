@@ -125,12 +125,20 @@ const Reporte_Asistencia_D = ({mesI, mesF, dataT}) =>(
     let split = data.split('&');
     let mesI = split[0];
     let mesF = split[1];
+    let yearI = split[2];
+    let yearF = split[3];
 
     if(mesI.length===0)
       mesI='1';
 
     if(mesF.length===0)
       mesF='1';
+
+    if(yearI.length===0)
+      yearI='2022';
+
+    if(yearF.length===0)
+      yearF='2022';
 
     const [Tasks, setTasks] = useState([])
 
@@ -144,11 +152,11 @@ const Reporte_Asistencia_D = ({mesI, mesF, dataT}) =>(
           body: JSON.stringify({
               "mesInicial": {
               "month": mesI,
-              "year": 2022
+              "year": yearI
             },
               "mesFinal": {
               "month": mesF,
-              "year": 2022
+              "year": yearF
             }
           }),
         }

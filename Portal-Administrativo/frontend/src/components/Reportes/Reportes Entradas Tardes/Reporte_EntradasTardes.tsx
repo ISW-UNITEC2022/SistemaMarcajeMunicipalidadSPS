@@ -61,6 +61,16 @@ export default function Reporte_Asistencia_Tardia() {
       setMesF(mF);
     }
 
+    if (yearI.length === 0) {
+      yearI = 2022;
+      setAñoI(yearI)
+    }
+
+    if (yearF.length === 0) {
+      yearF = 2022;
+      setAñoF(yearF)
+    }
+
     const response = await fetch(
       'https://proyecto-isw-dev.herokuapp.com/api/reportes/tarde', {
       method: 'POST',
@@ -70,11 +80,11 @@ export default function Reporte_Asistencia_Tardia() {
       body: JSON.stringify({
         "mesInicial": {
           "month": getMes(mI),
-          "year": 2022
+          "year": yearI
         },
         "mesFinal": {
           "month": getMes(mF),
-          "year": 2022
+          "year": yearF
         }
       }),
     }
@@ -141,7 +151,7 @@ export default function Reporte_Asistencia_Tardia() {
         cc: "",
         subject: "REPORTE DE ASISTENCIAS TARDIAS",
         message: "SE ADJUNTA EN ESTE CORREO EL ENLACE AL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + " HASTA: " + mesF,
-        html: window.location.href+"_pdf?"+getMes(mesIn)+"&"+getMes(mesFin)
+        html: window.location.href+"_pdf?"+getMes(mesIn)+"&"+getMes(mesFin)+"&"+añoI+"&"+añoF
       })
       .then((res) => {
         toast.success("¡REPORTE DE ASISTENCIAS ENVIADO CON EXITO!");
