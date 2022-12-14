@@ -8,6 +8,9 @@ import BotonHome from "../Componentes UI/BotonHome";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { useAuth0 } from '@auth0/auth0-react';
+import { Navigate } from "react-router-dom";
+
 function FormularioSupervisor() {
   const url = "https://proyecto-isw1.herokuapp.com/api/empleados/rol";
   const url2 = "https://proyecto-isw1.herokuapp.com/api/supervisores";
@@ -71,72 +74,90 @@ function FormularioSupervisor() {
     window.open(url, '_blank', 'noreferrer');
   };
 
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+  const usuario_id = () => {
+    if (isAuthenticated) return user.sub
+    else if (isLoading) return ""
+    else return 'Error de Autenticacion'
+  }
+
+  const idSuper = usuario_id();
+
   return (
-    <>
-      <MenuUsuario></MenuUsuario>
-      <BotonHome></BotonHome>
-      <body>
-        <div id="Box_AS">
-          <div id="Box1">
-            <p>
-              Seleccione al empleado al cual desea asignar el rol de
-              supervisor.
-            </p>
-          </div>
-          <div id="Box2">
-            <select
-              name="empleadoss"
-              id="empleadoss"
-              onChange={handle}
-              value={supervisor}
-            >
-              <option value="" key="">
-                Desplegar empleados
-              </option>
-              {empleados.map((emp) => (
-                <option value={emp.idempleado} key={emp.idempleado}>
-                  NOMBRE: {emp.nombre} {emp.apellido} | CORREO: {emp.correo}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div id="Box3">
-            <p>
-              <span id="asterisco">*</span> Para que el supervisor
-              pueda tener acceso al portal, se debe registrar en la plataforma
-              auth0, para luego, ingresar el código de identificación de auth0
-              del usuario creado.
-            </p>
-          </div>
-
-          <div id="Box4">
-            <Textbox
-              _width={"250px"}
-              _onChange={(e) => handleChange(e)}
-              _id={"idauth0"}
-              _value={data.idauth0}
-              _type={"text"}
-              _label={"ID de Auth0"}
-              _habilitar={undefined}
-              _asterisk={"red"}
-            ></Textbox>
-
-            <button id="Boton" onClick={() => openInNewTab('https://manage.auth0.com/dashboard/us/dev-am-lc7yg/users')}
-              style={{ width: "250px" }}>
-              Registrar en Auth0
-            </button>
-          </div>
-
-          <form onSubmit={submit}>
-            <div id="Box5">
-              <button id="Boton" style={{ width: "285px" }}>Asignar Supervisor</button>
+    (isAuthenticated || idSuper === "")
+      ?
+      <>
+        <MenuUsuario></MenuUsuario>
+        <BotonHome></BotonHome>
+        <body>
+          <div id="Box_AS">
+            <div id="Box1">
+              <p>
+                Seleccione al empleado al cual desea asignar el rol de
+                supervisor.
+              </p>
             </div>
-          </form>
-        </div>
-      </body>
+            <div id="Box2">
+              <select
+                name="empleadoss"
+                id="empleadoss"
+                onChange={handle}
+                value={supervisor}
+              >
+                <option value="" key="">
+                  Desplegar empleados
+                </option>
+                {empleados.map((emp) => (
+                  <option value={emp.idempleado} key={emp.idempleado}>
+                    NOMBRE: {emp.nombre} {emp.apellido} | CORREO: {emp.correo}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-    </>
+            <div id="Box3">
+              <p>
+                <span id="asterisco">*</span> Para que el supervisor
+                pueda tener acceso al portal, se debe registrar en la plataforma
+                auth0, para luego, ingresar el código de identificación de auth0
+                del usuario creado.
+              </p>
+            </div>
+
+            <div id="Box4">
+              <Textbox
+                _width={"250px"}
+                _onChange={(e) => handleChange(e)}
+                _id={"idauth0"}
+                _value={data.idauth0}
+                _type={"text"}
+                _label={"ID de Auth0"}
+                _habilitar={undefined}
+                _asterisk={"red"}
+              ></Textbox>
+
+              <button id="Boton" onClick={() => openInNewTab('https://manage.auth0.com/dashboard/us/dev-am-lc7yg/users')}
+                style={{ width: "250px" }}>
+                Registrar en Auth0
+              </button>
+            </div>
+
+            <form onSubmit={submit}>
+              <div id="Box5">
+                <button id="Boton" style={{ width: "285px" }}>Asignar Supervisor</button>
+              </div>
+            </form>
+          </div>
+        </body>
+
+      </>
+      :
+      (idSuper === "Error de Autenticacion")
+        ?
+        <Navigate to="/" replace={true} />
+        :
+        <></>
   );
 }
 
