@@ -77,11 +77,11 @@ export default function Reporte_Asistencia_Tardia() {
     console.log(user.sub)
     let u;
     if(user.sub==="auth0|62f3ecea26ef957bf8d3b45d")
-      u='https://proyecto-isw-dev.herokuapp.com/api/reportes/incompleto';
+      u='https://proyecto-isw1.herokuapp.com/api/reportes/incompleto';
     else
-      u='https://proyecto-isw-dev.herokuapp.com/api/reportes/incompleto?supervisor='+idS.idempleado;
+      u='https://proyecto-isw1.herokuapp.com/api/reportes/incompleto?supervisor='+idS.idempleado;
     
-
+    console.log(u);
     const response = await fetch(
       u, {
       method: 'POST',
