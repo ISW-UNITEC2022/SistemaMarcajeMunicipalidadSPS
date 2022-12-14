@@ -74,9 +74,9 @@ export default function Reporte_Asistencia_Tardia() {
 
     const response2 = await fetch("https://proyecto-isw1.herokuapp.com/api/supervisores/"+user.sub);
     const idS = await response2.json()
-
+    console.log(user.sub)
     let u;
-    if(idS.idempleado)
+    if(user.sub==="auth0|62f3ecea26ef957bf8d3b45d")
       u='https://proyecto-isw-dev.herokuapp.com/api/reportes/incompleto?supervisor='+idS.idempleado;
     else
     u='https://proyecto-isw-dev.herokuapp.com/api/reportes/incompleto';
