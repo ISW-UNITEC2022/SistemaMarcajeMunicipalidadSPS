@@ -8,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import axios from "axios";
 import BotonHome from "../Componentes UI/BotonHome";
+import CajaTitulo from "../Componentes UI/CajaTitulo";
 import MenuUsuario from "../Componentes UI/MenuUsuario";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -206,6 +207,7 @@ function Modificar() {
         <div>
           <form onSubmit={(e) => submit(e)}>
             <MenuUsuario></MenuUsuario>
+            <CajaTitulo _input={"Modificar Empleado"}></CajaTitulo>
             <BotonHome></BotonHome>
             <div id="cabeza">
               <select

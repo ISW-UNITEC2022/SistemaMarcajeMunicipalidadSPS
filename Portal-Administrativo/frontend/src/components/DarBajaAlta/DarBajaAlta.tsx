@@ -5,6 +5,7 @@ import Textbox from "../Componentes UI/TextBox";
 import "../DarBajaAlta/DarBajaAlta.css";
 import { toast } from "react-toastify";
 import MenuUsuario from "../Componentes UI/MenuUsuario";
+import CajaTitulo from "../Componentes UI/CajaTitulo";
 import BotonHome from "../Componentes UI/BotonHome";
 
 import { useAuth0 } from '@auth0/auth0-react';
@@ -93,12 +94,12 @@ function FormularioSupervisor() {
       ?
       <div>
         <MenuUsuario></MenuUsuario>
+        <CajaTitulo _input={"Estado de Empleados"}></CajaTitulo>
         <BotonHome></BotonHome>
         <div className="BoxDBA">
-
           <form onSubmit={submit}>
             <div className="_filaDBA">
-              <p>
+              <p style={{marginTop:"20px"}}>
                 Seleccione el empleado y el status que desea cambiar a dicho
                 empleado.
               </p>
@@ -125,6 +126,7 @@ function FormularioSupervisor() {
               <select
                 name="statuss"
                 id="statuss"
+                className="select_DBA"
                 onChange={handleChangeStatus}
                 value={status}
                 defaultValue="baja"
@@ -134,7 +136,7 @@ function FormularioSupervisor() {
               </select>
             </div>
             <div className="_filaDBA">
-              <button id="botonDBA">Modificar Estado del Empleado</button>
+              <button className="botonDBA">Modificar Estado del Empleado</button>
             </div>
           </form>
         </div>

@@ -35,7 +35,6 @@ function FormularioReporteAsistencias() {
     <>
       <MenuUsuario></MenuUsuario>
       <BotonHome></BotonHome>
-      <CajaTitulo input={"Reporte Asistencias"}></CajaTitulo>
       <body>
         <div id="Box_RT">
           <div id="Box1_RT">

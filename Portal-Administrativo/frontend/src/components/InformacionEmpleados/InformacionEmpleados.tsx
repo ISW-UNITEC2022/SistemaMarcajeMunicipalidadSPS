@@ -6,6 +6,7 @@ import Axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
 import MenuUsuario from "../Componentes UI/MenuUsuario";
+import CajaTitulo from "../Componentes UI/CajaTitulo";
 import BotonHome from "../Componentes UI/BotonHome";
 
 export default function FormularioBasico() {
@@ -41,6 +42,7 @@ export default function FormularioBasico() {
       ?
       <div>
         <MenuUsuario></MenuUsuario>
+        <CajaTitulo _input={"Información de Empleados"}></CajaTitulo>
         <BotonHome></BotonHome>
         <div className="_filaInfo">
           <div className="_tableBox">

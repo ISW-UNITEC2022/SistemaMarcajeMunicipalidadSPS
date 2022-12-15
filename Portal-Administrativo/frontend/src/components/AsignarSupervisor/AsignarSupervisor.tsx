@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Link } from 'react-router-dom';
 import Textbox from "../Componentes UI/TextBox";
 import "../AsignarSupervisor/Estilos/AsignarSupervisor.css";
 import MenuUsuario from "../Componentes UI/MenuUsuario";
+import CajaTitulo from "../Componentes UI/CajaTitulo";
 import BotonHome from "../Componentes UI/BotonHome";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -89,6 +90,7 @@ function FormularioSupervisor() {
       ?
       <>
         <MenuUsuario></MenuUsuario>
+        <CajaTitulo _input={"Asignar Supervisor"}></CajaTitulo>
         <BotonHome></BotonHome>
         <body>
           <div id="Box_AS">

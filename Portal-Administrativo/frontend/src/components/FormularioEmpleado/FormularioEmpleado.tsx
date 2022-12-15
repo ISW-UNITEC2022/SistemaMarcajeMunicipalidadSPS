@@ -9,6 +9,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Axios from 'axios'
 import { useAuth0 } from '@auth0/auth0-react'
 import MenuUsuario from '../Componentes UI/MenuUsuario'
+import CajaTitulo from '../Componentes UI/CajaTitulo'
 import BotonHome from '../Componentes UI/BotonHome'
 import axios from 'axios'
 import { toast } from 'react-toastify'
@@ -137,8 +138,11 @@ export default function FormularioBasico() {
       ?
       <body>
         <form onSubmit={(e) => submit(e)}>
-          <MenuUsuario></MenuUsuario>
-          <BotonHome></BotonHome>
+          <div>
+            <MenuUsuario></MenuUsuario>
+            <CajaTitulo _input={"Crear Empleado"}></CajaTitulo>
+            <BotonHome></BotonHome>
+          </div>
           <div className='_fila'>
             <p className='instruccion'>
               Ingrese los datos correspondientes a las siguientes casillas.

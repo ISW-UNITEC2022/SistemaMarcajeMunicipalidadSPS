@@ -32,7 +32,6 @@ function FormularioReporteMarcasIncompletas() {
     <>
       <MenuUsuario></MenuUsuario>
       <BotonHome></BotonHome>
-      <CajaTitulo input={"Reporte Marcas Incompletas"}></CajaTitulo>
       <body>
         <div id="Box_RT">
           <div id="Box1_RT">

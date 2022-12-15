@@ -16,7 +16,7 @@
     border-radius: 10px;
 }
 
-#botonDBA {
+.botonDBA {
     background-color: #02732A;
     color: #f2f2f2;
 
@@ -24,28 +24,29 @@
     border-color: #02732A;
     border-width: 1px;
     
-    width: 500px;
+    width: 520px;
+    height: 45px;
 
     font-size: 18px;
 
-    margin-top: 30px;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
-#botonDBA:hover {
+.botonDBA:hover {
     background-color: #80E673;
     border-color: #80E673;
     color: #1F3821;
 }
 
-select {
+.select_DBA {
     background-color: #f2f2f2;
     border: 1.5px solid #02732A;
     border-radius: 5px;
-    width: 500px;
-    height: 45px;
+    width: 520px;
+    height: 50px;
 
     font-size: 15px;
 
-    margin-top: 25px;
+    margin-top: 10px;
 }

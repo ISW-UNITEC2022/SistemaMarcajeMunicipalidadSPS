@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import MenuUsuario from '../../Componentes UI/MenuUsuario'
-import BotonHome from '../../Componentes UI/BotonHome'
+import MenuUsuario from '../../Componentes UI/MenuUsuario';
+import CajaTitulo from '../../Componentes UI/CajaTitulo';
+import BotonHome from '../../Componentes UI/BotonHome';
 import Logo from '../../logo.png'
 import DataTable from 'react-data-table-component'
 import '../Reportes Marcas Incompletas/PantReportes_MarcasIncompletas.css'
@@ -12,11 +13,13 @@ import { pdf } from "@react-pdf/renderer";
 import { saveAs } from 'file-saver';
 import { Reporte_MarcasIncompletas_D } from './Reporte_MarcasIncompletas_D'
 
+import BotonV from '../../Componentes UI/BotonV'
+
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Reporte_Asistencia_Tardia() {
-  const {user} = useAuth0();
+  const { user } = useAuth0();
   const url = "https://proyecto-isw1.herokuapp.com/api/reportes/disponibles";
   const url_emails = "https://proyecto-isw1.herokuapp.com/api/reportes/correo";
 
@@ -72,15 +75,15 @@ export default function Reporte_Asistencia_Tardia() {
       setAñoF(yearF)
     }
 
-    const response2 = await fetch("https://proyecto-isw1.herokuapp.com/api/supervisores/"+user.sub);
+    const response2 = await fetch("https://proyecto-isw1.herokuapp.com/api/supervisores/" + user.sub);
     const idS = await response2.json()
     console.log(user.sub)
     let u;
-    if(user.sub==="auth0|62f3ecea26ef957bf8d3b45d")
-      u='https://proyecto-isw1.herokuapp.com/api/reportes/incompleto';
+    if (user.sub === "auth0|62f3ecea26ef957bf8d3b45d")
+      u = 'https://proyecto-isw1.herokuapp.com/api/reportes/incompleto';
     else
-      u='https://proyecto-isw1.herokuapp.com/api/reportes/incompleto?supervisor='+idS.idempleado;
-    
+      u = 'https://proyecto-isw1.herokuapp.com/api/reportes/incompleto?supervisor=' + idS.idempleado;
+
     console.log(u);
     const response = await fetch(
       u, {
@@ -142,16 +145,16 @@ export default function Reporte_Asistencia_Tardia() {
   }
 
   async function send_email(e) {
-    let mesIn=mesI;
-    let mesFin=mesF;
-    if(!mesI){
+    let mesIn = mesI;
+    let mesFin = mesF;
+    if (!mesI) {
       setMesI('Enero')
-      mesIn='Enero';
+      mesIn = 'Enero';
     }
 
-    if(!mesF){
+    if (!mesF) {
       setMesF('Enero')
-      mesFin='Enero';
+      mesFin = 'Enero';
     }
     e.preventDefault();
 
@@ -161,7 +164,7 @@ export default function Reporte_Asistencia_Tardia() {
         cc: "",
         subject: "REPORTE DE ASISTENCIAS INCOMPLETAS",
         message: "SE ADJUNTA EN ESTE CORREO EL ENLACE AL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + " HASTA: " + mesF,
-        html: window.location.href+"_pdf?"+getMes(mesIn)+"&"+getMes(mesFin)+"&"+añoI+"&"+añoF
+        html: window.location.href + "_pdf?" + getMes(mesIn) + "&" + getMes(mesFin) + "&" + añoI + "&" + añoF
       })
       .then((res) => {
         toast.success("¡REPORTE DE ASISTENCIAS ENVIADO CON EXITO!");
@@ -316,6 +319,7 @@ export default function Reporte_Asistencia_Tardia() {
   return (
     <div>
       <MenuUsuario></MenuUsuario>
+      <CajaTitulo _input={"Reportes de Marcas Incompletas"}></CajaTitulo>
       <BotonHome></BotonHome>
       <div>
         <img

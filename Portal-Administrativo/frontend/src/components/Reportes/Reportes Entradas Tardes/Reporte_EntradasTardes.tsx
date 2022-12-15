@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { useAuth0 } from '@auth0/auth0-react';
 import { Navigate } from "react-router-dom";
+import CajaTitulo from '../../Componentes UI/CajaTitulo'
 
 export default function Reporte_Asistencia_Tardia() {
   const url = "https://proyecto-isw-dev.herokuapp.com/api/reportes/disponibles";
@@ -314,6 +315,7 @@ export default function Reporte_Asistencia_Tardia() {
       ?
       <div>
         <MenuUsuario></MenuUsuario>
+        <CajaTitulo _input={"Reportes de Tardias"}></CajaTitulo>
         <BotonHome></BotonHome>
         <div>
           <img

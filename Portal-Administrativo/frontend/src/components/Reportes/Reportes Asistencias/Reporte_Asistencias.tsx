@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import MenuUsuario from '../../Componentes UI/MenuUsuario'
+import CajaTitulo from '../../Componentes UI/CajaTitulo'
 import BotonHome from '../../Componentes UI/BotonHome'
 import Logo from '../../logo.png'
 import DataTable from 'react-data-table-component'
@@ -342,6 +343,7 @@ export default function Reporte_Asistencia_Tardia() {
       <div>
 
         <MenuUsuario></MenuUsuario>
+        <CajaTitulo _input={"Reportes de Asistencias"}></CajaTitulo>
         <BotonHome></BotonHome>
         <div>
           <img
