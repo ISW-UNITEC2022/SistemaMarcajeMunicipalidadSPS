@@ -237,7 +237,9 @@ function Modificar() {
             <MenuUsuario></MenuUsuario>
             <CajaTitulo _input={"Modificar Empleado"}></CajaTitulo>
             <BotonHome></BotonHome>
-            <div id="cabeza">
+            <div 
+              style={{marginTop: "30px"}}
+              id="cabeza">
               <select
                 name="empleadoss"
                 id="empleadoss"

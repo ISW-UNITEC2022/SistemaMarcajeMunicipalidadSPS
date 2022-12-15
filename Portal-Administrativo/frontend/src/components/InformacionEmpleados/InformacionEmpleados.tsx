@@ -72,7 +72,11 @@ export default function FormularioBasico() {
         <MenuUsuario></MenuUsuario>
         <CajaTitulo _input={"Información de Empleados"}></CajaTitulo>
         <BotonHome></BotonHome>
-        <div className="_filaInfo">
+
+        
+        <div 
+          style={{marginTop: "20px"}}
+          className="_filaInfo">
           <div className="_tableBox">
             <Table
               responsive

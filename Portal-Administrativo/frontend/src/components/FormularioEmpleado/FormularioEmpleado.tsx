@@ -143,7 +143,9 @@ export default function FormularioBasico() {
             <CajaTitulo _input={"Crear Empleado"}></CajaTitulo>
             <BotonHome></BotonHome>
           </div>
-          <div className='_fila'>
+          <div 
+            style={{marginTop: "30px"}}
+            className='_fila'>
             <p className='instruccion'>
               Ingrese los datos correspondientes a las siguientes casillas.
             </p>
