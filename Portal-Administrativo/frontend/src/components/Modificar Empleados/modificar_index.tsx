@@ -20,6 +20,8 @@ import { Navigate } from "react-router-dom";
 function Modificar() {
   const url = "https://proyecto-isw1.herokuapp.com/api/empleados";
   const url2 = "https://proyecto-isw1.herokuapp.com/api/empleados/";
+  const url3 = 'https://proyecto-isw1.herokuapp.com/api/supervisores/';
+
   const [empleados, setEmpleados] = useState([]);
   const [idEmpleado, setIdEmpleado] = useState("");
 
@@ -39,14 +41,40 @@ function Modificar() {
     zona: "",
   });
 
+  const [dataSupervisor, setDataSupervisor] = useState({
+    idempleado: '',
+  })
+
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+  const usuario_id = () => {
+    if (isAuthenticated) return user.sub
+    else if (isLoading) return ""
+    else return 'Error de Autenticacion'
+  }
+
+  const idSuper = usuario_id();
+
   useEffect(() => {
     getEmpleados();
     getEmpleados2();
-  }, [idEmpleado]);
+    getSupervisor();
+  }, [idEmpleado, idSuper, dataSupervisor.idempleado]);
 
   const getEmpleados = () => {
+    console.log('El id de emp es: ' + dataSupervisor.idempleado);
+    let _url = "";
+    let _id = dataSupervisor.idempleado;
+
+    if (idSuper === "auth0|62f3ecea26ef957bf8d3b45d") {
+      _url = url;
+    }
+    else {
+      _url = url3 + _id + "/empleados";
+    }
+
     axios
-      .get(url)
+      .get(_url)
       .then((response) => {
         const empleados = response.data;
         setEmpleados(empleados);
@@ -66,6 +94,17 @@ function Modificar() {
     setDep(infoEmpleado.departamento);
     setDis(infoEmpleado.distrito + "");
   };
+
+  const getSupervisor = () => {
+    console.log('El id auth0 ' + idSuper)
+    axios
+      .get(url3 + idSuper)
+      .then((response: any) => {
+        const info = response.data
+        setDataSupervisor(info)
+      })
+      .catch((err: any) => console.log(err))
+  }
 
   const [data, setData] = useState({
     idempleado: "",
@@ -188,17 +227,6 @@ function Modificar() {
     setDep(infoEmpleado.departamento);
     setDis(infoEmpleado.distrito + "");
   }
-
-
-  const { user, isAuthenticated, isLoading } = useAuth0();
-
-  const usuario_id = () => {
-    if (isAuthenticated) return user.sub
-    else if (isLoading) return ""
-    else return 'Error de Autenticacion'
-  }
-
-  const idSuper = usuario_id();
 
   return (
     (isAuthenticated || idSuper === "")

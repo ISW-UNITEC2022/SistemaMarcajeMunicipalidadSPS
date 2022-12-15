@@ -11,20 +11,11 @@ import BotonHome from "../Componentes UI/BotonHome";
 
 export default function FormularioBasico() {
   const url = "https://proyecto-isw1.herokuapp.com/api/empleados";
+  const url2 = 'https://proyecto-isw1.herokuapp.com/api/supervisores/';
   const [empleados, setEmpleados] = useState([]);
-
-  useEffect(() => {
-    getEmpleados();
-  }, []);
-
-  const getEmpleados = () => {
-    Axios.get(url)
-      .then((response) => {
-        const empleados = response.data;
-        setEmpleados(empleados);
-      })
-      .catch((error) => console.error(`Error: ${error}`));
-  };
+  const [dataSupervisor, setDataSupervisor] = useState({
+    idempleado: '',
+  })
 
   const { user, isAuthenticated, isLoading } = useAuth0();
 
@@ -35,6 +26,43 @@ export default function FormularioBasico() {
   }
 
   const idSuper = usuario_id();
+
+  useEffect(() => {
+    getEmpleados();
+    getSupervisor();
+  }, [idSuper, dataSupervisor.idempleado]);
+
+  const getSupervisor = () => {
+    console.log('El id auth0 ' + idSuper)
+    Axios
+      .get(url2 + idSuper)
+      .then((response: any) => {
+        const info = response.data
+        setDataSupervisor(info)
+      })
+      .catch((err: any) => console.log(err))
+  }
+
+  const getEmpleados = () => {
+    console.log('El id de emp es: ' + dataSupervisor.idempleado);
+    let _url = "";
+    let _id = dataSupervisor.idempleado;
+
+    if (idSuper === "auth0|62f3ecea26ef957bf8d3b45d") {
+      _url = url;
+    }
+    else {
+      _url = url2 + _id + "/empleados";
+    }
+
+    Axios
+      .get(_url)
+      .then((response) => {
+        const empleados = response.data;
+        setEmpleados(empleados);
+      })
+      .catch((error) => console.error(`Error: ${error}`));
+  };
 
 
   return (

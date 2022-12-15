@@ -21,6 +21,7 @@ import CajaTitulo from '../../Componentes UI/CajaTitulo'
 export default function Reporte_Asistencia_Tardia() {
   const url = "https://proyecto-isw-dev.herokuapp.com/api/reportes/disponibles";
   const url_emails = "https://proyecto-isw1.herokuapp.com/api/reportes/correo";
+  const url2 = 'https://proyecto-isw1.herokuapp.com/api/supervisores/';
 
   const [Tasks, setTasks] = useState([])
   const [dataT, setdataT] = useState([])
@@ -37,11 +38,37 @@ export default function Reporte_Asistencia_Tardia() {
     }
   ]);
 
+  const [dataSupervisor, setDataSupervisor] = useState({
+    idempleado: '',
+  })
+
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+  const usuario_id = () => {
+    if (isAuthenticated) return user.sub
+    else if (isLoading) return ""
+    else return 'Error de Autenticacion'
+  }
+
+  const idSuper = usuario_id();
+
+  const getSupervisor = () => {
+    console.log('El id auth0 ' + idSuper)
+    axios
+      .get(url2 + idSuper)
+      .then((response: any) => {
+        const info = response.data
+        setDataSupervisor(info)
+      })
+      .catch((err: any) => console.log(err))
+  }
+
   let firstem = años[0]?.fecha;
 
   useEffect(() => {
     getAños();
-  }, []);
+    getSupervisor();
+  }, [idSuper, dataSupervisor.idempleado]);
 
   const getAños = () => {
     axios
@@ -54,6 +81,8 @@ export default function Reporte_Asistencia_Tardia() {
   };
 
   const loadTasks = async (mI, mF, yearI, yearF) => {
+    let _url = "";
+    let _id = dataSupervisor.idempleado;
 
     if (mI.length === 0) {
       mI = 'Enero';
@@ -65,8 +94,18 @@ export default function Reporte_Asistencia_Tardia() {
       setMesF(mF);
     }
 
+    if (idSuper === "auth0|62f3ecea26ef957bf8d3b45d") {
+      //https://proyecto-isw1.herokuapp.com/api
+      _url = "https://proyecto-isw1.herokuapp.com/api/reportes/tarde";
+    }
+    else {
+      ///api/reportes?supervisor=idSupervisor
+      console.log(_id);
+      _url = "https://proyecto-isw1.herokuapp.com/api/reportes/tarde?supervisor=" + _id;
+    }
+
     const response = await fetch(
-      'https://proyecto-isw-dev.herokuapp.com/api/reportes/tarde', {
+      _url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -299,16 +338,6 @@ export default function Reporte_Asistencia_Tardia() {
   function buscarFecha() {
     loadTasks(mesI, mesF, añoI, añoF);
   }
-
-  const { user, isAuthenticated, isLoading } = useAuth0();
-
-  const usuario_id = () => {
-    if (isAuthenticated) return user.sub
-    else if (isLoading) return ""
-    else return 'Error de Autenticacion'
-  }
-
-  const idSuper = usuario_id();
 
   return (
     (isAuthenticated || idSuper === "")
