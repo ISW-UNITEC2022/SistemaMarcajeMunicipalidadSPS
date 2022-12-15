@@ -127,6 +127,13 @@ export default function FormularioBasico() {
                       borderLeft: "1px solid #969696",
                     }}
                   >
+                    Estado Empleado
+                  </th>
+                  <th
+                    style={{
+                      borderLeft: "1px solid #969696",
+                    }}
+                  >
                     Hora Entrada
                   </th>
                   <th
@@ -191,6 +198,13 @@ export default function FormularioBasico() {
                       }}
                     >
                       {emp.distrito}
+                    </td>
+                    <td
+                      style={{
+                        borderLeft: "1px solid #969696",
+                      }}
+                    >
+                      {emp.estado}
                     </td>
                     <td
                       style={{
