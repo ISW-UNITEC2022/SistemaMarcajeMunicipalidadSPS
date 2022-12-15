@@ -96,7 +96,8 @@ export const obtenerIdEmpleado = async (req, res, next) => {
       .where({ idsupervisor: idauth0 })
     if (!idempleado) {
       throw new CustomError(
-        `No se encontro ningun supervisor con id ${idauth0}`
+        `No se encontro ningun supervisor con id ${idauth0}`,
+        404
       )
     }
     transaction.commit()
@@ -123,7 +124,7 @@ export const obtenerEmpleadosPorSupervisor = async (req, res, next) => {
     if (!supervisor) {
       throw new CustomError(
         'El supervisor no existe o no ha sido asignado como supervisor',
-        501
+        404
       )
     }
     let empleados = await db('empleados')
