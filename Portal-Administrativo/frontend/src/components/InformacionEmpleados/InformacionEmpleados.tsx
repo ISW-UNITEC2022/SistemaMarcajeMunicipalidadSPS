@@ -204,7 +204,7 @@ export default function FormularioBasico() {
                         borderLeft: "1px solid #969696",
                       }}
                     >
-                      {emp.estado}
+                      {emp.status}
                     </td>
                     <td
                       style={{
