@@ -539,7 +539,7 @@ export default function Reporte_Asistencia_Tardia() {
 
         <div
           id='contenedorR'
-          style={{ width: '90vw', marginLeft: '4vw', marginTop: '2vh' }}
+          style={{ width: '90vw', marginLeft: '4vw', marginTop: '2vh', marginBottom: '4vh'}}
         >
           <DataTable noDataComponent="Sin registros que mostrar" columns={columns} data={dataT} />
         </div>
