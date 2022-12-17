@@ -190,6 +190,7 @@ export default function Reporte_Asistencia_Tardia() {
 
     const response2 = await fetch("https://proyecto-isw1.herokuapp.com/api/supervisores/" + user.sub);
     const idS = await response2.json()
+    console.log(idS.idempleado)
 
     if (!mesI) {
       setMesI('Enero')
