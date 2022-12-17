@@ -209,7 +209,7 @@ export default function Reporte_Asistencia_Tardia() {
         cc: "",
         subject: "REPORTE DE ASISTENCIAS",
         message: "SE ADJUNTA EN ESTE CORREO EL ENLACE AL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + " HASTA: " + mesF + "",
-        html: window.location.href + "_pdf?" + getMes(mesIn) + "&" + getMes(mesFin + "&" + idS.idempleado) 
+        html: window.location.href + "_pdf?" + getMes(mesIn) + "&" + getMes(mesFin) + "&" + idS.idempleado 
       })
       .then((res) => {
         toast.success("¡REPORTE DE ASISTENCIAS ENVIADO CON EXITO!");
