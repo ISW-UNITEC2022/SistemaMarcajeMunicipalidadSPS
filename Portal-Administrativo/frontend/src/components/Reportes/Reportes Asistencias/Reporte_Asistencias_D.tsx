@@ -125,6 +125,8 @@ const Reporte_Asistencia_D = ({mesI, mesF, dataT}) =>(
     let split = data.split('&');
     let mesI = split[0];
     let mesF = split[1];
+    let idE = split[2];
+    console.log(idE)
 
     if(mesI.length===0)
       mesI='1';
