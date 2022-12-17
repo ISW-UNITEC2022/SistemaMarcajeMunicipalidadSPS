@@ -51,7 +51,6 @@ function FormularioSupervisor() {
   }, [idSuper, dataSupervisor.idempleado]);
 
   const getSupervisor = () => {
-    console.log('El id auth0 ' + idSuper)
     axios
       .get(url3 + idSuper)
       .then((response: any) => {
@@ -62,7 +61,6 @@ function FormularioSupervisor() {
   };
 
   const getEmpleados = () => {
-    console.log('El id de emp es: ' + dataSupervisor.idempleado);
     let _url = "";
     let _id = dataSupervisor.idempleado;
 
@@ -86,8 +84,6 @@ function FormularioSupervisor() {
 
   function submit(e) {
     e.preventDefault();
-    console.log(empleado);
-    console.log(status);
     axios
       .put(url2, {
         idempleado: empleado,
@@ -95,7 +91,6 @@ function FormularioSupervisor() {
       })
       .then((res) => {
         toast.success("¡Estado de empleado cambiado éxitosamente!");
-        console.log(res.data);
       })
       .catch((error) => {
         toast.error(error.response.data.message);
@@ -105,12 +100,10 @@ function FormularioSupervisor() {
 
   function handle(e) {
     setEmpleado(e.target.value);
-    console.log(empleado);
   }
 
   function handleChangeStatus(e) {
     setStatus(e.target.value);
-    console.log(status);
   }
 
 

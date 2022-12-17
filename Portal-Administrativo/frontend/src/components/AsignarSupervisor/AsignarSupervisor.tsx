@@ -37,7 +37,6 @@ function FormularioSupervisor() {
   };
 
   function submit(e) {
-    console.log(supervisor);
     e.preventDefault();
     axios
       .post(url2, {
@@ -46,7 +45,6 @@ function FormularioSupervisor() {
       })
       .then((res) => {
         toast.success("¡Supervisor asignado éxitosamente!");
-        console.log(res.data);
       })
       .catch((error) => {
         toast.error("Error al asignar supervisor");
@@ -61,14 +59,12 @@ function FormularioSupervisor() {
 
   function handle(e) {
     setSupervisor(e.target.value);
-    console.log(supervisor);
   }
 
   function handleChange(e) {
     const newdata = { ...data };
     newdata[e.target.id] = e.target.value;
     setData(newdata);
-    console.log(newdata);
   }
 
   const openInNewTab = url => {

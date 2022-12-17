@@ -62,7 +62,6 @@ function Modificar() {
   }, [idEmpleado, idSuper, dataSupervisor.idempleado]);
 
   const getEmpleados = () => {
-    console.log('El id de emp es: ' + dataSupervisor.idempleado);
     let _url = "";
     let _id = dataSupervisor.idempleado;
 
@@ -96,7 +95,6 @@ function Modificar() {
   };
 
   const getSupervisor = () => {
-    console.log('El id auth0 ' + idSuper)
     axios
       .get(url3 + idSuper)
       .then((response: any) => {
@@ -124,25 +122,19 @@ function Modificar() {
   const [dis, setDis] = React.useState("");
 
   const handleChangeDis = (event: SelectChangeEvent) => {
-    console.log(dis);
     setDis(event.target.value);
-    console.log(dis);
   };
 
   const [dep, setDep] = React.useState("");
 
   const handleChangeDep = (event: SelectChangeEvent) => {
-    console.log(dep);
     setDep(event.target.value);
-    console.log(dep);
   };
 
   const [pass, setPass] = React.useState("");
 
   const handleChangePass = (event: SelectChangeEvent) => {
-    console.log(pass);
     setPass(event.target.value);
-    console.log(pass);
   };
 
   function refreshPage() {
@@ -165,7 +157,6 @@ function Modificar() {
       })
       .then((res) => {
         toast.success("¡Empleado modificado éxitosamente!");
-        console.log(res.data);
       }).catch((error) => {
         toast.error("Error al modificar empleado");
         console.log(error.response);
@@ -193,12 +184,10 @@ function Modificar() {
     const newdata = { ...infoEmpleado };
     newdata[e.target.id] = e.target.value;
     setInfoEmpleado(newdata);
-    console.log(newdata);
   }
 
   function handleSelect(e) {
     setIdEmpleado(e.target.value);
-    console.log(idEmpleado);
   }
 
   function print() {
@@ -216,10 +205,7 @@ function Modificar() {
       horaentrada: infoEmpleado.horaentrada,
       horasalida: infoEmpleado.horasalida,
     });
-    //setDep(infoEmpleado.departamento);
-    //setDis(infoEmpleado.distrito + "");
     setPass("");
-    console.log(infoEmpleado.correo);
   }
 
   function desplegarInfo() {

@@ -53,7 +53,6 @@ export default function Reporte_Asistencia_Tardia() {
   const idSuper = usuario_id();
 
   const getSupervisor = () => {
-    console.log('El id auth0 ' + idSuper)
     axios
       .get(url2 + idSuper)
       .then((response: any) => {
@@ -100,7 +99,6 @@ export default function Reporte_Asistencia_Tardia() {
     }
     else {
       ///api/reportes?supervisor=idSupervisor
-      console.log(_id);
       _url = "https://proyecto-isw1.herokuapp.com/api/reportes/tarde?supervisor=" + _id;
     }
 
@@ -190,7 +188,6 @@ export default function Reporte_Asistencia_Tardia() {
       })
       .then((res) => {
         toast.success("¡REPORTE DE ASISTENCIAS ENVIADO CON EXITO!");
-        console.log(res.data);
       })
       .catch((error) => {
         toast.error("ERROR AL ENVIAR EL CORREO");

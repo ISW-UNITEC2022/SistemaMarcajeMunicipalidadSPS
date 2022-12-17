@@ -7,7 +7,7 @@ import { Navigate } from "react-router-dom";
 
 function HomePage() {
     const { isAuthenticated } = useAuth0();
-  
+
     return (
         <div>
             <Pantalla_Bienvenida />

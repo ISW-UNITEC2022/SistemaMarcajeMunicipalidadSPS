@@ -39,17 +39,13 @@ export default function FormularioBasico() {
   const [dis, setDis] = React.useState('')
 
   const handleChangeDis = (event: SelectChangeEvent) => {
-    console.log(dis)
     setDis(event.target.value)
-    console.log(dis)
   }
 
   const [dep, setDep] = React.useState('')
 
   const handleChangeDep = (event: SelectChangeEvent) => {
-    console.log(dep)
     setDep(event.target.value)
-    console.log(dep)
   }
 
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -67,7 +63,6 @@ export default function FormularioBasico() {
   }, [idSuper])
 
   const getSupervisor = () => {
-    console.log('El id auth0 ' + idSuper)
     axios
       .get(url2 + idSuper)
       .then((response: any) => {
@@ -80,15 +75,12 @@ export default function FormularioBasico() {
   function obtenerSupervisor() {
     getSupervisor()
     setDataSupervisor((state) => {
-      console.log(state.idempleado)
       return state
     })
-    console.log('El id del supervisor es ' + dataSupervisor.idempleado)
   }
   function submit(e) {
     e.preventDefault()
     obtenerSupervisor()
-    console.log('El id del supervisor es ' + dataSupervisor.idempleado)
     Axios.post(url, {
       idempleado: data.idempleado,
       idsupervisor: dataSupervisor.idempleado,
@@ -104,7 +96,6 @@ export default function FormularioBasico() {
     })
       .then((res) => {
         toast.success('¡Empleado creado éxitosamente!')
-        console.log(res.data)
         setData({
           idempleado: '',
           idsupervisor: null,
@@ -143,7 +134,7 @@ export default function FormularioBasico() {
             <CajaTitulo _input={"Crear Empleado"}></CajaTitulo>
             <BotonHome></BotonHome>
           </div>
-          <div 
+          <div
             style={{marginTop: "30px"}}
             className='_fila'>
             <p className='instruccion'>

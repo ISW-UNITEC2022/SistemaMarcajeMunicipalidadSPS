@@ -33,7 +33,6 @@ export default function FormularioBasico() {
   }, [idSuper, dataSupervisor.idempleado]);
 
   const getSupervisor = () => {
-    console.log('El id auth0 ' + idSuper)
     Axios
       .get(url2 + idSuper)
       .then((response: any) => {
@@ -44,7 +43,6 @@ export default function FormularioBasico() {
   }
 
   const getEmpleados = () => {
-    console.log('El id de emp es: ' + dataSupervisor.idempleado);
     let _url = "";
     let _id = dataSupervisor.idempleado;
 
@@ -73,8 +71,8 @@ export default function FormularioBasico() {
         <CajaTitulo _input={"Información de Empleados"}></CajaTitulo>
         <BotonHome></BotonHome>
 
-        
-        <div 
+
+        <div
           style={{marginTop: "20px"}}
           className="_filaInfo">
           <div className="_tableBox">

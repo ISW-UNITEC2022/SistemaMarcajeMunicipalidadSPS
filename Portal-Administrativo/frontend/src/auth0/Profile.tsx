@@ -11,7 +11,7 @@ const Profile = () => {
                     Perfil
                 </h3>
 
-               
+
                 <img src={user?.picture} alt="" />
 
 
