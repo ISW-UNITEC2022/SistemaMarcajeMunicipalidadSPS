@@ -129,6 +129,7 @@ const Reporte_Asistencia_Tardia_PDF = () =>{
     let split = data.split('&');
     let mesI = split[0];
     let mesF = split[1];
+    let idE = split[2];
 
     if(mesI.length===0)
       mesI='1';
@@ -140,7 +141,7 @@ const Reporte_Asistencia_Tardia_PDF = () =>{
 
     const loadTasks = async () => {
       const response = await fetch(
-        'https://proyecto-isw-dev.herokuapp.com/api/reportes/tarde',{
+        'https://proyecto-isw-dev.herokuapp.com/api/reportes/tarde?supervisor='+idE,{
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

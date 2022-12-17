@@ -127,6 +127,7 @@ const Reporte_MarcasIncompletas_PDF = () =>{
     let mesF = split[1];
     let yearI = split[2];
     let yearF = split[3];
+    let idE = split[4];
 
     if(mesI.length===0)
       mesI='1';
@@ -144,7 +145,7 @@ const Reporte_MarcasIncompletas_PDF = () =>{
 
     const loadTasks = async () => {
       const response = await fetch(
-        'https://proyecto-isw1.herokuapp.com/api/reportes/incompleto',{
+        'https://proyecto-isw1.herokuapp.com/api/reportes/incompleto?supervisor='+idE,{
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

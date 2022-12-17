@@ -147,6 +147,10 @@ export default function Reporte_Asistencia_Tardia() {
   async function send_email(e) {
     let mesIn = mesI;
     let mesFin = mesF;
+
+    const response2 = await fetch("https://proyecto-isw1.herokuapp.com/api/supervisores/" + user.sub);
+    const idS = await response2.json()
+
     if (!mesI) {
       setMesI('Enero')
       mesIn = 'Enero';
@@ -164,7 +168,7 @@ export default function Reporte_Asistencia_Tardia() {
         cc: "",
         subject: "REPORTE DE ASISTENCIAS INCOMPLETAS",
         message: "SE ADJUNTA EN ESTE CORREO EL ENLACE AL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + " HASTA: " + mesF,
-        html: window.location.href + "_pdf?" + getMes(mesIn) + "&" + getMes(mesFin) + "&" + añoI + "&" + añoF
+        html: window.location.href + "_pdf?" + getMes(mesIn) + "&" + getMes(mesFin) + "&" + añoI + "&" + añoF + idS.idempleado
       })
       .then((res) => {
         toast.success("¡REPORTE DE ASISTENCIAS ENVIADO CON EXITO!");
