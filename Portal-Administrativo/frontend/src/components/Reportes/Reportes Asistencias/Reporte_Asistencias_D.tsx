@@ -137,7 +137,7 @@ const Reporte_Asistencia_D = ({mesI, mesF, dataT}) =>(
 
     const loadTasks = async () => {
       const response = await fetch(
-        'https://proyecto-isw-dev.herokuapp.com/api/reportes?supervisor='+idE,{
+        'https://proyecto-isw1.herokuapp.com/api/reportes?supervisor='+idE,{
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

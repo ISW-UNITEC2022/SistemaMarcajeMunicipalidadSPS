@@ -141,7 +141,7 @@ const Reporte_Asistencia_Tardia_PDF = () =>{
 
     const loadTasks = async () => {
       const response = await fetch(
-        'https://proyecto-isw-dev.herokuapp.com/api/reportes/tarde?supervisor='+idE,{
+        'https://proyecto-isw1.herokuapp.com/api/reportes/tarde?supervisor='+idE,{
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
