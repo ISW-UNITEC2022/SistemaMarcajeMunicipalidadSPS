@@ -1,5 +1,5 @@
 # Sistema de Marcaje de Personal de Campo Municipalidad de San Pedro Sula
-El proyecto consta de dos fases:
+El proyecto consta de dos fases:<br>
 -Portal Administrativo<br>
 -Aplicación Móvil
 
