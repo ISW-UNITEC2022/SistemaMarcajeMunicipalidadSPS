@@ -349,7 +349,7 @@ export default function Reporte_Asistencia_Tardia() {
 
     pdf(
       <Reporte_Asistencia_D mesI={getMes(mesI)} mesF={getMes(mesF)} dataT={data}></Reporte_Asistencia_D>
-    ).toBlob().then(blob => saveAs(blob, 'Reporte_Entradas_Tardias.pdf'))
+    ).toBlob().then(blob => saveAs(blob, 'Reporte_Asistencias.pdf'))
   }
 
   function handleAñoI(e) {
