@@ -43,6 +43,7 @@ export default function Reporte_Asistencia_Tardia() {
   });
 
   const getSupervisor = () => {
+    console.log('El id auth0 ' + idSuper)
     axios
       .get(url2 + idSuper)
       .then((response: any) => {
@@ -99,6 +100,7 @@ export default function Reporte_Asistencia_Tardia() {
     }
     else {
       ///api/reportes?supervisor=idSupervisor
+      console.log(_id);
       _url = "https://proyecto-isw1.herokuapp.com/api/reportes?supervisor=" + _id;
     }
 
@@ -165,10 +167,12 @@ export default function Reporte_Asistencia_Tardia() {
         reader.readAsDataURL(files[0]);
 
         reader.onload = function () {
+          console.log(reader.result);
           contenido += reader.result;
         };
 
 
+        console.log("CONTENIDO: " + input.files[0].text)
 
         if (multiple)
           resolve(files);
@@ -186,6 +190,12 @@ export default function Reporte_Asistencia_Tardia() {
 
     const response2 = await fetch("https://proyecto-isw1.herokuapp.com/api/supervisores/" + user.sub);
     const idS = await response2.json()
+    console.log('id: ',idS.idempleado)
+    let u;
+    if (user.sub === "auth0|62f3ecea26ef957bf8d3b45d")
+      u = window.location.href + "_pdf?" + getMes(mesIn) + "&" + getMes(mesFin) + "&" ;
+    else
+      u = window.location.href + "_pdf?" + getMes(mesIn) + "&" + getMes(mesFin) + "&" + idS.idempleado ;
 
     if (!mesI) {
       setMesI('Enero')
@@ -204,10 +214,11 @@ export default function Reporte_Asistencia_Tardia() {
         cc: "",
         subject: "REPORTE DE ASISTENCIAS",
         message: "SE ADJUNTA EN ESTE CORREO EL ENLACE AL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + " HASTA: " + mesF + "",
-        html: window.location.href + "_pdf?" + getMes(mesIn) + "&" + getMes(mesFin) + "&" + idS.idempleado 
+        html: u
       })
       .then((res) => {
         toast.success("¡REPORTE DE ASISTENCIAS ENVIADO CON EXITO!");
+        console.log(res.data);
       })
       .catch((error) => {
         toast.error("ERROR AL ENVIAR EL CORREO");
@@ -338,7 +349,7 @@ export default function Reporte_Asistencia_Tardia() {
 
     pdf(
       <Reporte_Asistencia_D mesI={getMes(mesI)} mesF={getMes(mesF)} dataT={data}></Reporte_Asistencia_D>
-    ).toBlob().then(blob => saveAs(blob, 'Reporte_Asistencia.pdf'))
+    ).toBlob().then(blob => saveAs(blob, 'Reporte_Entradas_Tardias.pdf'))
   }
 
   function handleAñoI(e) {

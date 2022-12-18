@@ -53,6 +53,7 @@ export default function Reporte_Asistencia_Tardia() {
   const idSuper = usuario_id();
 
   const getSupervisor = () => {
+    console.log('El id auth0 ' + idSuper)
     axios
       .get(url2 + idSuper)
       .then((response: any) => {
@@ -99,6 +100,7 @@ export default function Reporte_Asistencia_Tardia() {
     }
     else {
       ///api/reportes?supervisor=idSupervisor
+      console.log(_id);
       _url = "https://proyecto-isw1.herokuapp.com/api/reportes/tarde?supervisor=" + _id;
     }
 
@@ -176,6 +178,11 @@ export default function Reporte_Asistencia_Tardia() {
     }
     const response2 = await fetch("https://proyecto-isw1.herokuapp.com/api/supervisores/" + user.sub);
     const idS = await response2.json()
+    let u;
+    if (user.sub === "auth0|62f3ecea26ef957bf8d3b45d")
+      u = window.location.href + "_pdf?" + getMes(mesIn) + "&" + getMes(mesFin) + "&" ;
+    else
+      u = window.location.href + "_pdf?" + getMes(mesIn) + "&" + getMes(mesFin) + "&" + idS.idempleado ;
     e.preventDefault();
 
     axios
@@ -184,10 +191,11 @@ export default function Reporte_Asistencia_Tardia() {
         cc: "",
         subject: "REPORTE DE ASISTENCIAS TARDIAS",
         message: "SE ADJUNTA EN ESTE CORREO EL ENLACE AL DOCUMENTO EN FORMATO PDF CON EL REPORTE DE ASISTENCIAS CORRESPONDIENTE AL RANGO: DESDE: " + mesI + " HASTA: " + mesF,
-        html: window.location.href + "_pdf?" + getMes(mesIn) + "&" + getMes(mesFin) + "&" + idS.idempleado
+        html: u
       })
       .then((res) => {
         toast.success("¡REPORTE DE ASISTENCIAS ENVIADO CON EXITO!");
+        console.log(res.data);
       })
       .catch((error) => {
         toast.error("ERROR AL ENVIAR EL CORREO");
