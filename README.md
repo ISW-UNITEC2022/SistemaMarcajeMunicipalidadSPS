@@ -10,9 +10,9 @@ Plataforma donde los supervisores y el administrador pueden crear y modificar em
 Aplicación disponible para Android donde los empleados podrán marcar su entrada y salida contando con conexión a internet así como también fuera de línea.
 Se captura la ubicación y hora exacta de donde se hacen las marcas de entrada y salida.
 
-###V ersión 1
+### Versión 1
 
 ### Propiedad de Municipalidad de San Pedro Sula
-###Desarrollado por alumnos de Ingeniería de Software UNITEC SPS
+### Desarrollado por alumnos de Ingeniería de Software UNITEC SPS
 
 ### *Diciembre 2022* ###
